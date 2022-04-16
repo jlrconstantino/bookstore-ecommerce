@@ -1,14 +1,14 @@
 # Final Assignment
 
-Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, segundo semestre de 2022.
+Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, primeiro semestre de 2022.
 
 ## Project Report
 
 ### 0. Members
 
-- João Lucas Rodrigues Constantino, 11795763;
-- Gabriel Zanotim Manhani, 11912276;
-- Nathielle Cristhiny de Oliveira Pereira, ??;
+- João Lucas Rodrigues Constantino, 11795763
+- Gabriel Zanotim Manhani, 11912276
+- Nathielle Cristhiny de Oliveira Pereira, ???
 
 ### 1. Requirements
 
