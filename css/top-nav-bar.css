@@ -1,0 +1,18 @@
+/* Variáveis de ambiente */
+
+:root {
+    --top-nav-bar-color: #FCFCFC;
+    --top-nav-bar-shadow: 1rem 1rem 1rem black;
+    --top-nav-bar-width: 100%;
+    --top-nav-bar-height: 500px;
+}
+
+
+/* ID's */
+
+#top-nav-bar {
+    background-color: var(--top-nav-bar-color);
+    box-shadow: var(--top-nav-bar-shadow);
+    width: var(--top-nav-bar-width);
+    height: var(--top-nav-bar-height);
+}
