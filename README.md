@@ -8,7 +8,7 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 - João Lucas Rodrigues Constantino, 11795763
 - Gabriel Zanotim Manhani, 11912276
-- Nathielle Cristhiny de Oliveira Pereira, ???
+- Nathielle Cristhiny de Oliveira Pereira, 10390252
 
 ### 1. Requirements
 
