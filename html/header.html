@@ -1,29 +1,45 @@
 <!-- Barra de navegação superior -->
+<div id="header-div">
 
-<!-- Barra fixa superior -->
-<div id="header-top-bar" class="text-center"> 
+    <!-- Barra fixa superior -->
+    <div id="header-top-bar"> 
 
-    <!-- Título -->
-    <div class="header-top-bar-title">
-        <a href="index.html" class="no-style-link">
-            <h1 id="header-title-text"> Título </h1>
-        </a>
+        <!-- Título -->
+        <div id="header-top-bar-title">
+            <a href="index.html" class="no-style-link">
+                <h1 id="header-title-text" class="header-text"> Título </h1>
+            </a>
+        </div>
+
+        <!-- Campo de busca textual -->
+        <div id="header-top-bar-search">
+            <input type="text" placeholder="O que você procura?" id="header-searcher">
+            <div id="header-top-bar-search-img-container">
+                <img src="../img/search.svg" class="header-top-bar-img" id="header-top-bar-search-img">
+            </div>
+        </div>
+
+        <!-- Perfil -->
+        <div id="header-top-bar-user">
+            <img src="../img/user-circle.svg" class="header-top-bar-img" id="header-top-bar-user-img">
+            <div id="header-top-bar-user-text-container">
+                <p class="header-text" id="header-top-bar-user-p1"> Olá, bem-vindo(a)! </p>
+                <p class="header-text" id="header-top-bar-user-p2"> Entre ou cadastre-se </p>
+            </div>
+        </div>
+
+        <!-- Carrinho -->
+        <div id="header-top-bar-shop">
+            <a href="cart.html">
+                <img src="../img/shopping-bag.svg" class="header-top-bar-img" id="header-top-bar-cart-img">
+            </a>
+        </div>
+
     </div>
 
-    <!-- Campo de busca textual -->
-    <div class="header-top-bar-search"> 
-        <input type="text" placeholder="O que você procura?" id="header-searcher">
-        
+    <!-- Barra fixa inferior -->
+    <div id="header-bottom-bar" class="text-center">
+        <p> BETA </p>
     </div>
 
-    <!-- Carrinho -->
-    <div class="header-top-bar-shop">
-        <img src="../img/shopping-bag.svg" class="header-top-bar-img">
-    </div>
-
-</div>
-
-<!-- Barra fixa inferior -->
-<div id="header-bottom-bar" class="text-center">
-    <p> BETA </p>
 </div>

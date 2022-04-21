@@ -1,28 +1,33 @@
 @import "./colors.css";
-
-/* Container da barra de navegação */
-#header {
-    top: 0;
-    height: 25%;
+   
+/* Contêiner da barra de navegação */
+#header-div {
     width: 100%;
     position: fixed;
+    margin: 0 auto;
 }
+
+
+
+/* **************** SEÇÃO SUPERIOR DO HEADER **************** */
 
 /* Seção superior da barra de navegação */
 #header-top-bar {
-    padding: 1% 1%;
+    padding: 1rem 1rem;
     width: 100%;
-    height: 75%;
+    max-width: 100%;
+    max-height: 12vh;
     background-color: var(--header-top-bar-background-color);
-    display: flex;
-    justify-content: center;
+    display: inline-flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 /* Imagens para a barra superior */
 .header-top-bar-img {
-    height: 100%;
+    height: 6vh;
     width: auto;
-    filter: brightness(0%);
+    filter: brightness(0) invert(1);
 }
 
 /* Seção esquerda da barra superior */
@@ -32,37 +37,88 @@
 
 /* Texto do título (h1) */
 #header-title-text {
-    text-align: center;
     height: 100%;
+    font-size: 10vh;
+}
+
+/* Coloração do texto */
+.header-text {
+    color: var(--header-text-color);
 }
 
 /* Seção central da barra superior */
 #header-top-bar-search {
     justify-content: center;
-    display: inline-block;
+    display: flex;
 }
 
 /* Caixa de pesquisa */
 #header-searcher {
-    width: auto;
-    height: 100%;
+    justify-content: baseline;
+    width: 40vw;
+    height: 5vh;
+    background-color: var(--header-searcher-background-color);
+    border: var(--header-searcher-border);
 }
 
-/* Ícone de pesquisa */
-#header-top-bar-search-img {
-    border: 0;
+/* Posiciona a imagem de pesquisa */
+#header-top-bar-search-img-container {
+    justify-content: baseline;
+    width: 5.3vh;
+    height: 5.3vh;
+    background-color: var(--header-searcher-background-color);
+    border: var(--header-searcher-border);
 }
+
+/* Imagem para a pesquisa */
+#header-top-bar-search-img {
+    height: 5vh;
+    filter: brightness(0%);
+}
+
+/* Seção para o status de usuário */
+#header-top-bar-user {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+
+/* Imagem para o usuário */
+#header-top-bar-user-img {
+    height: 6vh;
+    justify-content: flex-start;
+}
+
+/* Contêiner dos elementos textuais */
+#header-top-bar-user-text-container {
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ajuste de posição dos textos */
+#header-top-bar-user-p1 {justify-content: flex-start;}
+#header-top-bar-user-p2 {justify-content: flex-end;}
 
 /* Seção direita da barra superior */
 #header-top-bar-shop {
     justify-content: flex-end;
 }
 
+
+
+/* **************** SEÇÃO INFERIOR DO HEADER **************** */
+
 /* Seção inferior da barra de navegação */
 #header-bottom-bar {
-    padding: 1% 1%;
+    padding: 1rem 1rem;
     width: 100%;
-    height: 25%;
+    max-height: 6vh;
     background-color: var(--header-bottom-bar-background-color);
-    box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.281);
+    box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.281);
+}
+
+/* Imagem para o carrinho */
+#header-top-bar-cart-img {
+    height: 6vh;
 }
