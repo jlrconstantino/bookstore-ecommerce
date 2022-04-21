@@ -1,12 +1,18 @@
 @import "./colors.css";
-   
+
+
+/* **************** AJUSTE DE POSICIONAMENTO DO HEADER **************** */
+
 /* Contêiner da barra de navegação */
-#header-div {
-    width: 100%;
-    position: fixed;
-    margin: 0 auto;
+#header-container {
+    padding-top: 25vh;
 }
 
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
 
 
 /* **************** SEÇÃO SUPERIOR DO HEADER **************** */
@@ -21,6 +27,7 @@
     display: inline-flex;
     justify-content: space-evenly;
     align-items: center;
+    box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.281);
 }
 
 /* Imagens para a barra superior */
@@ -29,6 +36,7 @@
     width: auto;
     filter: brightness(0) invert(1);
 }
+
 
 /* Seção esquerda da barra superior */
 #header-top-bar-title {
@@ -42,9 +50,10 @@
 }
 
 /* Coloração do texto */
-.header-text {
-    color: var(--header-text-color);
+.header-top-bar-text {
+    color: var(--header-top-bar-text-color);
 }
+
 
 /* Seção central da barra superior */
 #header-top-bar-search {
@@ -76,6 +85,7 @@
     filter: brightness(0%);
 }
 
+
 /* Seção para o status de usuário */
 #header-top-bar-user {
     justify-content: space-between;
@@ -100,9 +110,15 @@
 #header-top-bar-user-p1 {justify-content: flex-start;}
 #header-top-bar-user-p2 {justify-content: flex-end;}
 
+
 /* Seção direita da barra superior */
 #header-top-bar-shop {
     justify-content: flex-end;
+}
+
+/* Imagem para o carrinho */
+#header-top-bar-cart-img {
+    height: 6vh;
 }
 
 
@@ -116,9 +132,17 @@
     max-height: 6vh;
     background-color: var(--header-bottom-bar-background-color);
     box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.281);
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
-/* Imagem para o carrinho */
-#header-top-bar-cart-img {
-    height: 6vh;
+/* Itens com links */
+.header-bot-bar-item {
+    justify-content: baseline;
+}
+
+/* Coloração do texto */
+.header-bot-bar-text {
+    color: var(--header-bottom-bar-text-color);
 }

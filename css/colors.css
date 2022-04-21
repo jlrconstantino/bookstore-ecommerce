@@ -1,11 +1,22 @@
 /* Cores */
 :root {
+
+    /* Seção superior do header */
     --header-top-bar-background-color: #4fa7da;
-    --header-text-color: white;
+    --header-top-bar-text-color: white;
+
+    /* Seção inferior do header*/
     --header-bottom-bar-background-color: aliceblue;
+    --header-bottom-bar-text-color: rgb(26, 24, 24);
+
+    /* Caixa de pesquisa do header */
     --header-searcher-background-color: #e1e7f1;
     --header-searcher-border: 0.05rem solid black;
+
+    /* Fundo e pós-fundo */
     --background-color: #F7F7F7;
     --foreground-color: #FFFFFF;
-    --link-hover-color: #85d2ff;
+
+    /* Links */
+    --link-hover-color: #69b1db;
 }
