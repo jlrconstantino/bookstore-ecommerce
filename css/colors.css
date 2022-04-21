@@ -1,0 +1,8 @@
+/* Cores */
+:root {
+    --top-nav-upper-bar-background-color: #4fa7da;
+    --top-nav-lower-bar-background-color: aliceblue;
+    --background-color: #F7F7F7;
+    --foreground-color: #FFFFFF;
+    --link-hover-color: rgb(255, 255, 255);
+}

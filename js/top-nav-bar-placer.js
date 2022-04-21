@@ -7,7 +7,8 @@ fetch("../html/top-nav-bar.html")
     let old_element = document.querySelector("script#top-nav-bar-placer");
 
     // Cria o novo elemento com base no HTML da barra de navegação
-    let new_element = document.createElement("div");
+    let new_element = document.createElement("nav");
+    new_element.setAttribute("id", "top-nav-bar")
     new_element.innerHTML = text;
 
     // Substitui no HTML em tempo-real

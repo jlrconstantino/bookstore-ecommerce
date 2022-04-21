@@ -1,4 +1,22 @@
+@import "./colors.css";
+
 /* Cor de fundo */
 body {
-    background-color: #f7f7f7;
+    background-color: var(--background-color);
+}
+
+/* Remove estilização dos links */
+a {
+    all: unset;
+    text-decoration: none;
+}
+
+/* Links com interação */
+.hover-interaction-link {
+    transition-duration: 0.6s; 
+    transition-delay: 0.1s;
+    transition-timing-function: linear;
+}
+.hover-interaction-link:hover {
+    color: var(--link-hover-color);
 }

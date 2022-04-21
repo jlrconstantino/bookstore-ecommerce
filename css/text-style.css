@@ -1,6 +1,7 @@
 /* Definições globais de estilização de texto */
 * {font-family: Georgia, 'Times New Roman', Times, serif;}
 p {font-size: 1rem;}
+h1 {font-size: 3rem;}
 
 /* Define classes para estilização de texto */
 .text-center {text-align: center;}
