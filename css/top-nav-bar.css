@@ -1,18 +1,22 @@
-/* Variáveis de ambiente */
-
-:root {
-    --top-nav-bar-color: #FCFCFC;
-    --top-nav-bar-shadow: 1rem 1rem 1rem black;
-    --top-nav-bar-width: 100%;
-    --top-nav-bar-height: 500px;
-}
-
-
 /* ID's */
 
 #top-nav-bar {
-    background-color: var(--top-nav-bar-color);
-    box-shadow: var(--top-nav-bar-shadow);
-    width: var(--top-nav-bar-width);
-    height: var(--top-nav-bar-height);
+    top: 0;
+    box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.281);
+    width: 100%;
+    height: 7.0rem;
+    position: fixed;
+    margin-bottom: 2rem;
+}
+
+#upper-nav-bar {
+    width: 100%;
+    height: 4.5rem;
+    background-color: #a1d0eb;
+}
+
+#lower-nav-bar {
+    width: 100%;
+    height: 2.5rem;
+    background-color: aliceblue;
 }
