@@ -21,9 +21,34 @@ a {
 }
 
 /* Definições globais de estilização de texto */
-* {font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;}
+p, h1, h2, h3, h4, h5, h6 {font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;}
 p {font-size: 1rem;}
 
 /* Define classes para estilização de texto */
 .text-center {text-align: center;}
 .text-justify {text-align: justify;}
+
+/* Contêiner de conteúdo da página */
+#main-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Para subtítulos */
+.subtitle {
+    font-size: 2.5rem; 
+    color: var(--text-color);
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+/* Divisão de amostragem de livros */
+.book-displayers-div {
+    width: 90%;
+    height: auto;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}

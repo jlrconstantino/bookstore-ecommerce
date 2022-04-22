@@ -1,0 +1,37 @@
+@import "./colors.css";
+
+
+/* **************** AJUSTE DE POSICIONAMENTO DO HEADER **************** */
+
+/* Contêiner da barra de navegação */
+#footer-container {
+    padding-top: 10vh;
+    width: 100%;
+    bottom: 0;
+    overflow: hidden;
+}
+
+
+/* **************** SEÇÃO SUPERIOR DO HEADER **************** */
+
+/* Seção superior da barra de navegação */
+#footer-top-bar {
+    padding: 1rem 1rem;
+    width: 100%;
+    max-height: 6vh;
+    background-color: var(--foreground-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+
+/* **************** SEÇÃO INFERIOR DO HEADER **************** */
+
+/* Seção inferior da barra de navegação */
+#footer-bot-bar {
+    padding: 1rem 1rem;
+    width: 100%;
+    max-height: 12vh;
+    background-color: var(--footer-color);
+}

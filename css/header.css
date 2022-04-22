@@ -23,11 +23,11 @@ header {
     width: 100%;
     max-width: 100%;
     max-height: 12vh;
-    background-color: var(--header-top-bar-background-color);
+    background-color: var(--foreground-color);
     display: inline-flex;
     justify-content: space-evenly;
     align-items: center;
-    box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.281);
+    box-shadow: var(--box-shadow);
 }
 
 /* Imagens para a barra superior */
@@ -73,15 +73,16 @@ header {
 /* Posiciona a imagem de pesquisa */
 #header-top-bar-search-img-container {
     justify-content: baseline;
-    width: 5.3vh;
-    height: 5.3vh;
+    width: 5vh;
+    height: 5vh;
     background-color: var(--header-searcher-background-color);
     border: var(--header-searcher-border);
 }
 
 /* Imagem para a pesquisa */
 #header-top-bar-search-img {
-    height: 5vh;
+    width: 100%;
+    height: auto;
     filter: brightness(0%);
 }
 
