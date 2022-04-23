@@ -1,0 +1,11 @@
+/* Contêiner do banner */
+.promotional-banner {
+    width: 100%;
+    height: 48vh;
+}
+
+/* Imagem do banner */
+.promotional-banner-img {
+    width: 100%;
+    height: 100%;
+}

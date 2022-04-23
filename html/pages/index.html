@@ -1,8 +1,27 @@
 <!DOCTYPE HTML>
 <html lang="pt-br">
 
-<!-- Metadados -->
-<script id="head-placer" src="../../js/head-placer.js"></script>
+<head>
+
+    <!-- Título da página -->
+    <title> Estante </title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../img/icons/read-book.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../img/icons/read-book.png">
+
+    <!-- Charset -->
+    <meta charset="utf-8">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/header.css">
+    <link rel="stylesheet" href="../../css/footer.css">
+    <link rel="stylesheet" href="../../css/book-displayer.css">
+    <link rel="stylesheet" href="../../css/global-style.css">
+    <link rel="stylesheet" href="../../css/banner.css">
+
+</head>
 
 <body>
 
@@ -12,13 +31,27 @@
     <!-- Contêiner para o conteúdo da página -->
     <div id="main-container">
 
+        <!-- Banner promocional -->
+        <div class="promotional-banner">
+            <img class="promotional-banner-img" src="../../img/other/banner.jpg">
+        </div>
+
         <!-- Mostradores de livros -->
         <h2 class="text-center subtitle"> Sugestões </h2>
         <div class="book-displayers-div">
-            <script id="book-displayer-placer" src="../../js/book-displayer-placer.js"></script>
-            <script id="book-displayer-placer" src="../../js/book-displayer-placer.js"></script>
-            <script id="book-displayer-placer" src="../../js/book-displayer-placer.js"></script>
-            <script id="book-displayer-placer" src="../../js/book-displayer-placer.js"></script>
+            <script id="book-displayer-placer" src="../../js/book-displayer-placer.js" img-src="../../img/sample-books/arduino_led.jpg" title="Getting an Arduino LED to Blink" price="R$ 19,95" target="./product.html"></script>
+            <script id="book-displayer-placer" src="../../js/book-displayer-placer.js" img-src="../../img/sample-books/commit_messages.jpeg" title="Useless GIT Commit Messages" price="R$ 89,90" target="./product.html"></script>
+            <script id="book-displayer-placer" src="../../js/book-displayer-placer.js" img-src="../../img/sample-books/hoping_this_works.jpg" title="Hoping this Works" price="R$ 136,90" target="./product.html"></script>
+            <script id="book-displayer-placer" src="../../js/book-displayer-placer.js" img-src="../../img/sample-books/what_is_ligma.png" title="What is LIGMA" price="R$ 48,80" target="./product.html"></script>
+        </div>
+
+        <!-- Mostradores de livros -->
+        <h2 class="text-center subtitle"> Literatura </h2>
+        <div class="book-displayers-div">
+            <script id="book-displayer-placer" src="../../js/book-displayer-placer.js" img-src="../../img/sample-books/trying_stuff.jpg" title="Trying Stuff Until it Works" price="R$ 16,90" target="./product.html"></script>
+            <script id="book-displayer-placer" src="../../js/book-displayer-placer.js" img-src="../../img/sample-books/ignoring_deprecation.jpg" title="Ignoring Deprecation Warnings" price="R$ 36,60" target="./product.html"></script>
+            <script id="book-displayer-placer" src="../../js/book-displayer-placer.js" img-src="../../img/sample-books/resolving_dependencies.webp" title="Resolving Broken Dependencies" price="R$ 940,45" target="./product.html"></script>
+            <script id="book-displayer-placer" src="../../js/book-displayer-placer.js" img-src="../../img/sample-books/title_goes_here.webp" title="Title goes Here" price="R$ 9,90" target="./product.html"></script>
         </div>
     
     </div>

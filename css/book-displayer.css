@@ -24,7 +24,7 @@
 /* Imagem de capa do livro */
 .book-displayer-img {
     width: 100%;
-    height: auto;
+    height: 290px;
     position: relative;
     z-index: -2;
 }
@@ -36,6 +36,9 @@
     text-transform: uppercase;
     color: var(--text-color);
     font-size: 1.2rem;
+    height: 1.2rem;
+    max-height: 1.2rem;
+    overflow: visible;
 }
 
 /* Preço do título */
