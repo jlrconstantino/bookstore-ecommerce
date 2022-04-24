@@ -2,7 +2,6 @@
 
 /* **************** GERAIS **************** */
 
-/* Variáveis locais */
 :root {
     --product-box-border: 1px groove rgba(190, 190, 190, 0.9);
 }
@@ -125,7 +124,7 @@
     color: var(--text-darker-color);
 }
 
-/* Tabela de informações de autor e de publicadora */
+/* Tabela de informações de autor e de editora */
 #product-overview-info table {
     width: 100%;
     border-collapse: separate;
