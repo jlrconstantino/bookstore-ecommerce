@@ -7,8 +7,8 @@
     <title> Estante </title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../../img/icons/read-book.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../img/icons/read-book.png">
+    <link rel="icon" type="image/x-icon" href="../../img/icons/favicon.svg">
+    <link rel="shortcut icon" type="image/x-icon" href="../../img/icons/favicon.svg">
 
     <!-- Charset -->
     <meta charset="utf-8">
@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/header.css">
     <link rel="stylesheet" href="../../css/footer.css">
-    <link rel="stylesheet" href="../../css/book-displayer.css">
     <link rel="stylesheet" href="../../css/global-style.css">
+    <link rel="stylesheet" href="../../css/product.css">
 
 </head>
 
@@ -29,7 +29,113 @@
 
     <!-- Contêiner para o conteúdo da página -->
     <div id="main-container">
-        <h2 class="text-center subtitle"> Página do Produto </h2>
+
+        <!-- Visão geral do produto -->
+        <div class="product-container-div" id="product-overview-container">
+
+            <!-- Imagens do produto -->
+            <div id="product-overview-left-container">
+                
+                <!-- Mostrador esquerdo (visão das imagens disponíveis) -->
+                <div id="product-overview-little-images-container">
+                    <div> <img src="../../img/sample-books/commit_messages.jpeg" alt="product's image"> </div>
+                    <div> <img src="../../img/sample-books/commit_messages.jpeg" alt="product's image"> </div>
+                    <div> <img src="../../img/sample-books/commit_messages.jpeg" alt="product's image"> </div>
+                    <div> <img src="../../img/sample-books/commit_messages.jpeg" alt="product's image"> </div>
+                </div>
+
+                <!-- Imagem de exibição -->
+                <div id="product-overview-image-container">
+                    <img src="../../img/icons/arrow-left.svg" alt="previous image" class="product-arrow-image" id="product-previous-image-button">
+                    <div id="product-current-display-image-container">
+                        <img src="../../img/sample-books/commit_messages.jpeg" alt="product's image" id="product-current-display-image">
+                    </div>
+                    <img src="../../img/icons/arrow-right.svg" alt="next image" class="product-arrow-image" id="product-next-image-button">
+                </div>
+
+            </div>
+
+            <!-- Seção direita -->
+            <div id="product-overview-right-container">
+                
+                <!-- Avaliação e informações básicas -->
+                <div class="product-bordered-container">
+
+                    <!-- Avaliação -->
+                    <div id="product-review-container">
+                        <img src="../../img/icons/star.svg" alt="product's review" class="product-review-image">
+                        <img src="../../img/icons/star.svg" alt="product's review" class="product-review-image">
+                        <img src="../../img/icons/star.svg" alt="product's review" class="product-review-image">
+                        <img src="../../img/icons/star.svg" alt="product's review" class="product-review-image">
+                        <img src="../../img/icons/star.svg" alt="product's review" class="product-review-image">
+                    </div>
+
+                    <!-- Título e informações -->
+                    <div id="product-overview-info">
+                        <h2 id="product-title"> Useless Git Commit Messages </h2>
+                        <table>
+                            <tr>
+                                <td class="text-darker-color">Autor:</td>
+                                <td class="text-common-color" id="product-spec-author">@ThePracticalDev</td>
+                            </tr>
+                            <tr>
+                                <td class="text-darker-color">Editora:</td>
+                                <td class="text-common-color" id="product-spec-publisher">O RLY?</td>
+                            </tr>
+                        </table>
+                    </div>
+                
+                </div>
+
+                <!-- Compra -->
+                <div id="product-purchase-container" class="product-bordered-container">
+                    <h3 id="product-price"> R$ 192,90 </h3>
+                    <p id="product-price-alternative"> Ou em até 10x de R$ 19,29. </p>
+                    <button id="product-purchase-button"> COMPRAR </button>
+                </div>
+
+                <!-- Frete -->
+                <div id="product-shipping-container" class="product-bordered-container">
+                    <p class="text-darker-color"> Calcule o frete e o prazo de entrega: </p>
+                    <input type="text" placeholder="_____ - ___" id="product-shipping-input">
+                    <button id="product-shipping-button"> Consultar </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Descrição do produto -->
+        <div id="product-description-container" class="product-container-div product-bordered-container">
+            <h3 class="product-subtitle"> Descrição </h3>
+            <p id="product-description" class="text-common-color text-justify">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel ex imperdiet, pellentesque augue nec, interdum massa. Vivamus sed fringilla ex. Mauris tempus felis ut orci cursus, eget congue enim ornare. Phasellus eget dignissim lectus, eu congue nibh. Morbi venenatis ac odio sit amet ultrices. Praesent tempus porttitor tortor in molestie. Donec condimentum augue non leo pharetra lacinia. Mauris vitae consequat ex. Nam vitae ultricies nisl. Etiam vel neque malesuada purus ultrices posuere sed a ante. Morbi lobortis malesuada dolor id gravida. Pellentesque vitae bibendum mi. Duis hendrerit nunc cursus, iaculis urna quis, egestas augue. Praesent volutpat eros at ex aliquet mollis. Nam scelerisque metus vitae nulla ultrices vestibulum. Ut pretium enim leo, sed vulputate tellus ultricies nec.
+            </p>
+        </div>
+
+        <!-- Características adicionais do produto -->
+        <div id="product-specs-container" class="product-container-div product-bordered-container">
+            <h3 class="product-subtitle"> Características </h3>
+            <table class="text-common-color">
+                <tr> 
+                    <td>Acabamento</td>
+                    <td id="product-spec-finish">Brochura</td>
+                </tr>
+                <tr> 
+                    <td>Ano da edição</td>
+                    <td id="product-spec-edition">2009</td>
+                </tr>
+                <tr> 
+                    <td>Idioma</td>
+                    <td id="product-spec-language">Latim</td>
+                </tr>
+                <tr> 
+                    <td>Número de páginas</td>
+                    <td id="product-spec-pages">309</td>
+                </tr>
+            </table>
+        </div>
+
     </div>
 
     <!-- Barra de navegação inferior (rodapé) -->

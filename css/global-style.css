@@ -27,6 +27,8 @@ p {font-size: 1rem;}
 /* Define classes para estilização de texto */
 .text-center {text-align: center;}
 .text-justify {text-align: justify;}
+.text-common-color {color: var(--text-color);}
+.text-darker-color {color: var(--darker-text-color)}
 
 /* Contêiner de conteúdo da página */
 #main-container {
@@ -41,14 +43,4 @@ p {font-size: 1rem;}
     color: var(--text-color);
     margin-top: 5vh;
     margin-bottom: 5vh;
-}
-
-/* Divisão de amostragem de livros */
-.book-displayers-div {
-    width: 90%;
-    height: auto;
-    display: inline-flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
 }
