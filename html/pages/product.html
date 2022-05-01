@@ -24,8 +24,85 @@
 
 <body>
 
-    <!-- Barra de navegação superior (cabeçalho) -->
+    <!-- Carregamento da barra de navegação superior
     <script id="header-placer" src="../../js/header-placer.js"></script>
+    -->
+    <div id="header-container">
+        <!-- Barra de navegação superior -->
+        <header>
+
+            <!-- Barra fixa superior -->
+            <div id="header-top-bar"> 
+
+                <!-- Título -->
+                <div id="header-top-bar-title">
+                    <a href="index.html" class="no-style-link">
+                        <h1 id="header-title-text" class="header-top-bar-text"> Título </h1>
+                    </a>
+                </div>
+
+                <!-- Campo de busca textual -->
+                <div id="header-top-bar-search">
+                    <input type="text" placeholder="O que você procura?" id="header-searcher">
+                    <div id="header-top-bar-search-img-container">
+                        <a href="search.html">
+                            <img src="../../img/icons/search.svg" class="header-top-bar-img" id="header-top-bar-search-img">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Perfil -->
+                <div id="header-top-bar-user">
+                    <a href="user.html">
+                        <img src="../../img/icons/user-circle.svg" class="header-top-bar-img" id="header-top-bar-user-img">
+                    </a>
+                    <div id="header-top-bar-user-text-container">
+                        <a href="user.html" class="header-top-bar-text" id="header-top-bar-user-p1"> Olá, bem-vindo(a)! </a>
+                        <a href="user.html" class="header-top-bar-text" id="header-top-bar-user-p2"> Entre ou cadastre-se </a>
+                    </div>
+                </div>
+
+                <!-- Carrinho -->
+                <div id="header-top-bar-shop">
+                    <a href="cart.html">
+                        <img src="../../img/icons/shopping-bag.svg" class="header-top-bar-img" id="header-top-bar-cart-img">
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Barra fixa inferior -->
+            <div id="header-bottom-bar">
+                
+                <!-- Listagem de categorias -->
+                <div id="header-bot-bar-categories"> 
+                    <a href="" class="hover-interaction-link header-bot-bar-text"> Categorias </a>
+                </div>
+
+                <!-- Mais vendidos -->
+                <div class="header-bot-bar-item">
+                    <a href="" class="hover-interaction-link header-bot-bar-text"> Mais vendidos </a>
+                </div>
+
+                <!-- Promoções -->
+                <div class="header-bot-bar-item">
+                    <a href="" class="hover-interaction-link header-bot-bar-text"> Promoções </a>
+                </div>
+
+                <!-- Lançamentos -->
+                <div class="header-bot-bar-item">
+                    <a href="" class="hover-interaction-link header-bot-bar-text"> Lançamentos </a>
+                </div>
+
+                <!-- Infantil -->
+                <div class="header-bot-bar-item">
+                    <a href="" class="hover-interaction-link header-bot-bar-text"> Infantil </a>
+                </div>
+
+            </div>
+
+        </header>
+    </div>
 
     <!-- Contêiner para o conteúdo da página -->
     <div id="main-container">
@@ -138,8 +215,56 @@
 
     </div>
 
-    <!-- Barra de navegação inferior (rodapé) -->
+    <!-- Barra de navegação inferior (rodapé)
     <script id="footer-placer" src="../../js/footer-placer.js"></script>
+    -->
+    <div id="footer-container">
+        
+        <!-- Barra de navegação inferior -->
+        <footer>
+
+            <!-- Barra de separação -->
+            <div id="footer-top-bar">
+
+                <!-- Facebook -->
+                <div class="footer-social-media-container">
+                    <img class="footer-social-media-img" src="../../img/icons/facebook.svg">
+                    <p class="text-center footer-social-media-text"> @facebook </p>
+                </div>
+
+                <!-- Instagram -->
+                <div class="footer-social-media-container">
+                    <img class="footer-social-media-img" src="../../img/icons/instagram.svg">
+                    <p class="text-center footer-social-media-text"> @instagram </p>
+                </div>
+
+                <!-- Twitter -->
+                <div class="footer-social-media-container">
+                    <img class="footer-social-media-img" src="../../img/icons/twitter.svg">
+                    <p class="text-center footer-social-media-text"> @twitter </p>
+                </div>
+                
+            </div>
+
+            <!-- Conteúdo adicional -->
+            <div id="footer-bot-bar">
+
+                <!-- Logo -->
+                <div>
+                    <a href="index.html" class="no-style-link">
+                        <h3 id="footer-bot-bar-title" class="footer-bot-bar-text"> Título </h3>
+                    </a>
+                </div>
+
+                <!-- Informativo -->
+                <div>
+                    <p class="footer-bot-bar-text"> © Todos os direitos reservados. </p>
+                </div>
+
+            </div>
+
+        </footer>
+    </div>
 
 </body>
 
