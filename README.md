@@ -78,7 +78,13 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 Os mockups do projeto foram feitos por meio da plataforma Figma, e podem ser acessados para consulta <a href="https://is.gd/VWvgkI" target="_blank">aqui</a>.
 
-### 2.2. Base de dados
+### 2.2. Diagrama de navegação
+
+O diagrama de navegação planejado para os usuários (clientes e administradores) pode ser visto a seguir:
+
+![diagrama](./img/presentation/diagram.png)
+
+### 2.3. Base de dados
 
 O Modelo de Entidade Relacionamento pode ser visualizado pelo diagrama a seguir:
 
