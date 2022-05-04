@@ -72,7 +72,7 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 ## 3. Comentários sobre o código
 
-- JavaScript fora utilizado para reutilizar código HTML, o que torna a execução em ambiente local necessária para a visualização do projeto.
+-
 
 ## 4. Planos de teste
 
@@ -84,7 +84,7 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 ## 6. Procedimentos de execução
 
-- A fim de executar em ambiente local, faça o download do Node.js e o instale no sistema local. Em um terminal, execute "npm install http-server -g" para instalar os pacotes necessários; após término da instalação, ainda no terminal, navegue para o diretório contendo o projeto (final_assignment_idw-main) e execute "http-server" para iniciar o servidor em ambiente local. Por fim, em um navegador de internet, vá para "localhost:8080": por padrão, trata-se da porta em que a aplicação estará em execução. Clique em html/ e em seguida em pages/.  
+-
 
 ## 7. Problemas identificados
 
@@ -92,4 +92,4 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 ## 8. Comentários adicionais
 
-- None.
+-
