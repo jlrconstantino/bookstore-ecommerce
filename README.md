@@ -32,7 +32,7 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 - A todo usuário cadastrado, deve ser permitido acessar as páginas de perfil, de carrinho e de finalização de compra.
 
-- A todo administrador, deve ser permitido acessar a página de gerenciamento de estoque e a página de gerenciamento de usuários. Ainda, na página de gerenciamento de estoque, deve ser permitido acessar a página de gerenciamento do produto.
+- A todo administrador, deve ser permitido acessar a página de gerenciamento de estoque e a página de gerenciamento de usuários; ambas as páginas podem ser acessadas por meio de um menu lateral na página de perfil do administrador. Ainda, na página de gerenciamento de estoque, deve ser permitido acessar a página de gerenciamento do produto.
 
 ### 1.3. Produtos
 
@@ -58,7 +58,9 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 ### 1.5. Meios de pagamento
 
-- 
+- Para fins de simplificação do projeto, somente cartões de crédito podem ser cadastrados e utilizados.
+
+- Todos os meios de pagamento cadastrados devem ser apresentados em uma seção da página de perfil.
 
 ## 2. Descrição do projeto
 
