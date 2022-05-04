@@ -14,9 +14,9 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 ### 1.1. Usuários
 
-- Os usuários do Sistema são divididos em duas categorias: administradores e clientes, em que aqueles são responsáveis pelo gerenciamento do estoque comercial e dos serviços disponibilizados, e estes são os usuários-alvo da plataforma -- aos quais os produtos e serviços serão oferecidos.
+- Os usuários do Sistema são divididos em duas categorias: administradores e clientes, em que aqueles são responsáveis pelo gerenciamento do estoque comercial e dos serviços disponibilizados, e estes são os usuários-alvo da plataforma — aos quais os produtos e serviços serão oferecidos.
 
-- A todo usuário não cadastrado, deve ser permitido registrar uma conta de cliente, a qual deve receber os seguintes atributos no momento de cadastro: nome, senha, e-mail, endereço e telefone de contato, em que todos esses atributos podem ser alterados posteriormente na página de perfil. 
+- A todo usuário não cadastrado, deve ser permitido registrar uma conta de cliente, a qual deve receber os seguintes atributos no momento de cadastro: nome, senha, e-mail, endereço e telefone de contato, em que todos esses atributos podem ser alterados posteriormente na página de perfil. O Sistema deve, automaticamente, fornecer um número de identificação sintético (ID) ao cliente no momento de cadastro.
 
 - A todo administrador, deve ser permitido a promoção de uma conta de cliente previamente cadastrada para uma conta de administração.
 
@@ -28,9 +28,25 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 - A todo usuário não cadastrado, deve ser permitido acessar as páginas de apresentação, de produto, de carrinho e de pesquisa, em que esta pode envolver uma categoria cadastrada ou uma busca textual por parte do usuário.
 
-- A todo usuário cadastrado, deve ser permitido acessar a página de perfil.
+- A todo usuário cadastrado, deve ser permitido acessar a página de perfil e a página de finalização de compra.
 
-- A todo administrador, deve ser permitido acessar a página de gerenciamento de estoque e a página de gerenciamento de usuários.
+- A todo administrador, deve ser permitido acessar a página de gerenciamento de estoque e a página de gerenciamento de usuários. Ainda, na página de gerenciamento de estoque, deve ser permitido acessar a página de gerenciamento do produto.
+
+### 1.3. Produtos
+
+- A todo produto, no momento de cadastro, devem ser fornecidos um nome e uma ou mais fotografias. Em sua seção de gerenciamento, podem ser adicionados um preço, uma quantia em estoque, uma descrição e demais características — incluindo acabamento, ano da edição, idioma de exibição e número de páginas. Além disso, o Sistema deve, automaticamente, fornecer um número de identificação sintético (ID) ao produto no momento de cadastro.
+
+- O Sistema deve registrar estatísticas de venda do produto, incluindo quantia absoluta de vendas, disponibilizando-as na página de gerenciamento do produto.
+
+- Todo produto deve pertencer a uma ou mais categorias, as quais devem ser adicionadas na página de gerenciamento do produto.
+
+### 1.4. Venda
+
+- Na página de produto, devem ser disponibilizadas interfaces para o cálculo de frete e para a compra.
+
+- Ao comprar um produto por meio de sua página, uma instância dele deve ser adicionada ao carrinho — cuja atualização deve ser informada por meio de um mostrador de notificação.
+
+- Na página de carrinho, devem ser mostradas todas as instâncias de produto adicionadas; a cada instância, uma quantia de compra pode ser alterada — em que o mínimo é uma unidade, e o máximo é toda a quantia atualmente em estoque.
 
 ## 2. Descrição do projeto
 
