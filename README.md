@@ -20,7 +20,7 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 - A todo administrador, deve ser permitido a promoção de uma conta de cliente previamente cadastrada para uma conta de administração.
 
-- A todo administrador, deve ser permitido realizar visualização, alteração, adição e remoção (CRUD) de produtos em estoque.
+- A todo administrador, deve ser permitido realizar visualização, alteração, adição e remoção (CRUD) de produtos.
 
 - A todo administrador, deve ser permitido realizar CRUD dos demais usuários.
 
