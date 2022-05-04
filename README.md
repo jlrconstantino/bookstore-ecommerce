@@ -24,11 +24,13 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 - A todo administrador, deve ser permitido realizar CRUD dos demais usuários.
 
+- A todo usuário cadastrado, deve ser permitido realizar CRUD de seus meios de pagamento.
+
 ### 1.2. Páginas
 
-- A todo usuário não cadastrado, deve ser permitido acessar as páginas de apresentação, de produto, de carrinho e de pesquisa, em que esta pode envolver uma categoria cadastrada ou uma busca textual por parte do usuário.
+- A todo usuário não cadastrado, deve ser permitido acessar as páginas de apresentação, de produto e de pesquisa, em que esta pode envolver uma categoria cadastrada ou uma busca textual por parte do usuário.
 
-- A todo usuário cadastrado, deve ser permitido acessar a página de perfil e a página de finalização de compra.
+- A todo usuário cadastrado, deve ser permitido acessar as páginas de perfil, de carrinho e de finalização de compra.
 
 - A todo administrador, deve ser permitido acessar a página de gerenciamento de estoque e a página de gerenciamento de usuários. Ainda, na página de gerenciamento de estoque, deve ser permitido acessar a página de gerenciamento do produto.
 
@@ -40,13 +42,17 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 - Todo produto deve pertencer a uma ou mais categorias, as quais devem ser adicionadas na página de gerenciamento do produto.
 
-### 1.4. Venda
+### 1.4. Processo de Compra/Venda
 
 - Na página de produto, devem ser disponibilizadas interfaces para o cálculo de frete e para a compra.
 
-- Ao comprar um produto por meio de sua página, uma instância dele deve ser adicionada ao carrinho — cuja atualização deve ser informada por meio de um mostrador de notificação.
+- Ao comprar um produto por meio de sua página, caso o usuário seja cadastrado, uma instância dele deve ser adicionada ao carrinho — cuja atualização deve ser informada por meio de um mostrador de notificação —, e, em caso contrário, um pop-up deve ser apresentado — informando a necessidade de cadastro para prosseguir com a compra.
 
 - Na página de carrinho, devem ser mostradas todas as instâncias de produto adicionadas; a cada instância, uma quantia de compra pode ser alterada — em que o mínimo é uma unidade, e o máximo é toda a quantia atualmente em estoque.
+
+- Na página de carrinho, deve ser disponibilizada interface para a finalização de compra.
+
+- Na página de finalização de compra, os detalhes da operação devem ser apresentados juntamente à escolha do meio de pagamento e das informações de endereço de entrega.
 
 ## 2. Descrição do projeto
 
