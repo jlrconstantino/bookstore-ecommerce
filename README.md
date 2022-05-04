@@ -50,9 +50,15 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 - Na página de carrinho, devem ser mostradas todas as instâncias de produto adicionadas; a cada instância, uma quantia de compra pode ser alterada — em que o mínimo é uma unidade, e o máximo é toda a quantia atualmente em estoque.
 
-- Na página de carrinho, deve ser disponibilizada interface para a finalização de compra.
+- Na página de carrinho, deve ser disponibilizada uma interface para a finalização de compra.
 
 - Na página de finalização de compra, os detalhes da operação devem ser apresentados juntamente à escolha do meio de pagamento e das informações de endereço de entrega.
+
+- O carrinho deve ser esvaziado somente após finalização da compra.
+
+### 1.5. Meios de pagamento
+
+- 
 
 ## 2. Descrição do projeto
 
