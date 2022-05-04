@@ -62,6 +62,14 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 - Todos os meios de pagamento cadastrados devem ser apresentados em uma seção da página de perfil.
 
+### 1.6. Requisitos não funcionais
+
+- O Sistema deve ser responsivo.
+
+- O Sistema deve apresentar boas medidas de acessibilidade.
+
+- O Sistema deve prover boa usabilidade.
+
 ## 2. Descrição do projeto
 
 - O projeto até então são mockups em html/css/js e figma de uma loja online de livros. Os mockups do figma foram feitos para o grupo utilizar de base, e em seguida adaptamos o projeto para html/css/js. Foram criados até o momento do Milestone 1 as páginas principal, da pesquisa, do usuário, de um livro e do carrinho. As páginas são semi-funcionais, possuindo botões e links entre elas, mas sem interação com um servidor. Será futuramente implementada tal interação, alem de melhorias na experiência do usuário e um sistema de acesso para administradores. O sistema para login também sera implementado mais adiante.
