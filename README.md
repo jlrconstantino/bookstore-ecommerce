@@ -16,7 +16,7 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 - Os usuários do Sistema são divididos em duas categorias: administradores e clientes, em que aqueles são responsáveis pelo gerenciamento do estoque comercial e dos serviços disponibilizados, e estes são os usuários-alvo da plataforma — aos quais os produtos e serviços serão oferecidos.
 
-- A todo usuário não cadastrado, deve ser permitido registrar uma conta de cliente, a qual deve receber os seguintes atributos no momento de cadastro: nome, senha, e-mail, endereço e telefone de contato, em que todos esses atributos podem ser alterados posteriormente na página de perfil. O Sistema deve, automaticamente, fornecer um número de identificação sintético (ID) ao cliente no momento de cadastro.
+- A todo usuário não cadastrado, deve ser permitido registrar uma conta de cliente, a qual deve receber os seguintes atributos no momento de cadastro: nome, senha, e-mail e telefone de contato, em que todos esses atributos podem ser alterados posteriormente na página de perfil. O Sistema deve, automaticamente, fornecer um número de identificação sintético (ID) ao cliente no momento de cadastro.
 
 - A todo administrador, deve ser permitido a promoção de uma conta de cliente previamente cadastrada para uma conta de administração.
 
@@ -25,6 +25,8 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 - A todo administrador, deve ser permitido realizar CRUD dos demais usuários.
 
 - A todo usuário cadastrado, deve ser permitido realizar CRUD de seus meios de pagamento.
+
+- A todo usuário cadastrado, deve ser permitido realizar CRUD de seus endereços de entrega.
 
 ### 1.2. Páginas
 
@@ -75,6 +77,10 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 ### 2.1. Protótipo
 
 Os mockups do projeto foram feitos por meio da plataforma Figma, e podem ser acessados para consulta <a href="https://is.gd/VWvgkI" target="_blank">aqui</a>.
+
+### 2.2. Base de dados
+
+
 
 ## 3. Comentários sobre o código
 
