@@ -80,7 +80,9 @@ Os mockups do projeto foram feitos por meio da plataforma Figma, e podem ser ace
 
 ### 2.2. Base de dados
 
+O Modelo de Entidade Relacionamento pode ser visualizado pelo diagrama a seguir:
 
+![MER](./img/presentation/MER.png)
 
 ## 3. Comentários sobre o código
 
