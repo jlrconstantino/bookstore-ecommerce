@@ -76,8 +76,8 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 ### 2.1. Protótipo
 
-Os mockups do projeto foram feitos por meio da plataforma Figma, e podem ser acessados para consulta <a href="https://is.gd/VWvgkI" target="_blank">aqui</a>.
-
+Os mockups do projeto foram feitos por meio da plataforma Figma, e podem ser acessados para consulta <a href="https://is.gd/VWvgkI" target="_blank">aqui</a>. (<a href="https://github.com/jlrconstantino/bookstore-ecommerce/blob/5ac9e3286a86906763bddbc6f83ba8cca1cd7a9a/img/presentation/adm.jpg" target="_blank">adm</a>)
+https://github.com/jlrconstantino/bookstore-ecommerce/blob/5ac9e3286a86906763bddbc6f83ba8cca1cd7a9a/img/presentation/adm.jpg
 ### 2.2. Diagrama de navegação
 
 O diagrama de navegação planejado para os usuários (clientes e administradores) pode ser visto a seguir:
