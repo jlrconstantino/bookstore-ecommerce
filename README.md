@@ -30,7 +30,7 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 ### 1.2. Páginas
 
-- A todo usuário não cadastrado, deve ser permitido acessar as páginas de apresentação, de produto e de pesquisa, em que esta pode envolver uma categoria cadastrada ou uma busca textual por parte do usuário.
+- A todo usuário não cadastrado, deve ser permitido acessar as páginas inicial, de apresentação, de produto e de pesquisa, em que esta pode envolver uma categoria cadastrada ou uma busca textual por parte do usuário.
 
 - A todo usuário cadastrado, deve ser permitido acessar as páginas de perfil, de carrinho e de finalização de compra.
 
@@ -60,7 +60,7 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 ### 1.5. Meios de pagamento
 
-- Para fins de simplificação do projeto, somente cartões de crédito podem ser cadastrados e utilizados.
+- Para fins de simplificação do projeto, somente cartões de crédito podem ser cadastrados e utilizados como meios de pagamento.
 
 - Todos os meios de pagamento cadastrados devem ser apresentados em uma seção da página de perfil.
 
@@ -86,7 +86,7 @@ O diagrama de navegação planejado para os usuários (clientes e administradore
 
 ### 2.3. Base de dados
 
-O Modelo de Entidade Relacionamento pode ser visualizado pelo diagrama a seguir:
+O Modelo de Entidade Relacionamento pode ser visualizado pelo diagrama a seguir. Note que números sintéticos de registro, isto é, os ID's, não são apresentados no modelo conceitual, sendo somente introduzidos no modelo de implementação.
 
 ![MER](./img/presentation/MER.png)
 
