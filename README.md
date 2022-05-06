@@ -64,7 +64,15 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 - Todos os meios de pagamento cadastrados devem ser apresentados em uma seção da página de perfil.
 
-### 1.6. Requisitos não funcionais
+### 1.6. Sistema de classificação
+
+- Na página de produto, deve ser apresentado a classificação pública dada ao produto pelos usuários.
+
+- A classificação corrente deve ser registrada no esquema da relação de produto.
+
+- Para fins de simplificação do projeto, deve ser permitido, a todo usuário cadastrado, avaliar um produto.
+
+### 1.7. Requisitos não funcionais
 
 - O Sistema deve ser responsivo.
 
