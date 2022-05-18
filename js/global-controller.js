@@ -1,7 +1,7 @@
 "use strict"
 
 // Carregadores de conteúdo
-import { load_header, load_footer, load_main_container } from "./element-loaders.js";
+import { load_header, load_footer, load_first_page_content } from "./element-loaders.js";
 
 // Espera pelo carregamento do DOM
 window.onload = function(){
@@ -12,12 +12,12 @@ window.onload = function(){
     // Elementos principais
     const header = load_header()
     const footer = load_footer()
-    const main = load_main_container()
 
     // Construção da página-base
     body.appendChild(header)
-    body.appendChild(main)
     body.appendChild(footer)
 
-    
+    // Página inicial
+    const first_page_content = load_first_page_content()
+    body.insertBefore(first_page_content, footer)
 }

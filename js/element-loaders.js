@@ -38,11 +38,21 @@ export function load_footer() {
 }
 
 
-// Carrega o contêiner principal e retorna um elemento para ele
-export function load_main_container() {
-    let div = document.createElement("div");
-    div.id = "main-container";
-    return div;
+// Carrega o conteúdo da página inicial e retorna um elemento para ele
+export function load_first_page_content(){
+
+    // Contêiner da página inicial
+    let new_element = document.createElement("div");
+    new_element.id = "main-container";
+
+    // Adquire o arquivo
+    fetch("./elements/first-page.html")
+    .then(res => res.text())
+    .then(text => {
+
+        // Adição do conteúdo ao contêiner
+        new_element.innerHTML = text;
+    })
+
+    return new_element;
 }
-
-
