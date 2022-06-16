@@ -1,0 +1,30 @@
+/* Cores */
+:root {
+
+    /* Fundo */
+    --background-color: #F7F7F7;
+    --foreground-color: #4fa7da;
+    --footer-color: #E0E0E0;
+
+    /* Seção superior do header */
+    --header-top-bar-text-color: white;
+
+    /* Seção inferior do header*/
+    --header-bottom-bar-background-color: aliceblue;
+    --header-bottom-bar-text-color: rgb(26, 24, 24);
+
+    /* Caixa de pesquisa do header */
+    --header-searcher-background-color: #e1e7f1;
+    --header-searcher-border: 0.05rem solid black;
+
+    /* Sombra para os itens */
+    --box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.281);
+    --inner-box-shadow: inset 0px 0px 5px 2px rgba(0,0,0,0.6);
+
+    /* Links */
+    --link-hover-color: #69b1db;
+
+    /* Cor de texto */
+    --text-color: rgb(48, 48, 48);
+    --darker-text-color: rgb(32, 32, 32);
+}
