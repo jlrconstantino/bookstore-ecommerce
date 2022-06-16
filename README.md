@@ -84,19 +84,19 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 ### 2.1. Protótipo
 
-Os mockups do projeto foram feitos por meio da plataforma Figma, e podem ser acessados para consulta <a href="https://is.gd/VWvgkI" target="_blank">aqui</a>. (<a href="https://github.com/jlrconstantino/bookstore-ecommerce/blob/5ac9e3286a86906763bddbc6f83ba8cca1cd7a9a/img/presentation/adm.jpg" target="_blank">adm</a>)
+Os mockups do projeto foram feitos por meio da plataforma Figma, e podem ser acessados para consulta <a href="https://is.gd/VWvgkI" target="_blank">aqui</a>. (<a href="https://github.com/jlrconstantino/bookstore-ecommerce/blob/5ac9e3286a86906763bddbc6f83ba8cca1cd7a9a/github/adm.jpg" target="_blank">adm</a>)
 
 ### 2.2. Diagrama de navegação
 
 O diagrama de navegação planejado para os usuários (clientes e administradores) pode ser visto a seguir:
 
-![diagrama](./img/presentation/diagram.png)
+![diagrama](./github/diagram.png)
 
 ### 2.3. Base de dados
 
 O Modelo de Entidade Relacionamento pode ser visualizado pelo diagrama a seguir. Note que números sintéticos de registro, isto é, os ID's, não são apresentados no modelo conceitual, sendo somente introduzidos no modelo de implementação.
 
-![MER](./img/presentation/MER.png)
+![MER](./github/MER.png)
 
 ## 3. Comentários sobre o código
 
@@ -112,7 +112,25 @@ O Modelo de Entidade Relacionamento pode ser visualizado pelo diagrama a seguir.
 
 ## 6. Procedimentos de execução
 
--
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
 
 ## 7. Problemas identificados
 
