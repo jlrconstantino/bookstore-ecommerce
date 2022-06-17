@@ -1,77 +1,104 @@
 <!-- .:::: TEMPLATE ::::. -->
 <template>
-  <div class="book-displayer-img-container">
-      <img class="book-displayer-img">
-  </div>
-  <h3 class="text-center book-displayer-title"> </h3>
-  <h4 class="text-center book-displayer-price"> </h4>
-  <button class="book-displayer-button"> SAIBA MAIS </button>
+    <div class="book-displayer-container">
+        <div class="book-displayer-img-container">
+            <img :src="require(book.img_src)" class="book-displayer-img">
+        </div>
+        <h3 class="text-center book-displayer-title">{{book.title}}</h3>
+        <h4 class="text-center book-displayer-price">{{format_price(book.price)}}</h4>
+        <button class="book-displayer-button" @click="go_to_product_page(book)"> SAIBA MAIS </button>
+    </div>
 </template>
 
 
 <!-- .:::: SCRIPT ::::. -->
 <script>
-export default {
-  name: 'BookDisplayer',
-}
+    export default {
+        name: 'BookDisplayer',
+        props: ['book'], 
+        methods: {
+            go_to_product_page(book) {
+                this.$router.push({path: '/product', params: {book: book}, query: {id: book.id}});
+            }, 
+            format_price(price) {
+                return "R$ " + price.toFixed(2).toString().replace('.', ',');
+            }
+        }
+    }
 </script>
 
 
 <!-- .:::: STYLE ::::. -->
 <style>
-  @import "../css/colors.css";
+    @import "../css/colors.css";
 
-  /* Contém a imagem de capa do livro */
-  .book-displayer-img-container {
-      width: 84%;
-      height: auto;
-      box-shadow: var(--inner-box-shadow);
-  }
+    /* Contêiner de um mostrador de livros */
+    .book-displayer-container {
+        justify-content: baseline;
+        width: 18vw;
+        height: auto;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        box-shadow: var(--box-shadow);
+        border: 1px groove rgba(110, 110, 110, 0.829);
+        border-radius: 8px;
+        padding-top: 1rem;
+    }
 
-  /* Imagem de capa do livro */
-  .book-displayer-img {
-      width: 100%;
-      height: 290px;
-      position: relative;
-      z-index: -2;
-  }
+    /* Contém a imagem de capa do livro */
+    .book-displayer-img-container {
+        width: 84%;
+        height: auto;
+        box-shadow: var(--inner-box-shadow);
+    }
 
-  /* Título do livro */
-  .book-displayer-title {
-      margin-top: 0.6rem;
-      margin-bottom: 1.8rem;
-      text-transform: uppercase;
-      color: var(--text-color);
-      font-size: 1.2rem;
-      height: 1.2rem;
-      max-height: 1.2rem;
-      overflow: visible;
-  }
+    /* Imagem de capa do livro */
+    .book-displayer-img {
+        width: 100%;
+        height: 290px;
+        position: relative;
+        z-index: -2;
+    }
 
-  /* Preço do título */
-  .book-displayer-price {
-      margin-bottom: 1.2rem;
-      color: var(--darker-text-color);
-      font-size: 1.8rem;
-  }
+    /* Título do livro */
+    .book-displayer-title {
+        width: 80%;
+        overflow: auto;
+        margin-top: 0.6rem;
+        margin-bottom: 1.8rem;
+        text-transform: uppercase;
+        color: var(--text-color);
+        font-size: 1.2rem;
+        height: 1.2rem;
+        max-height: 1.2rem;
+        overflow: visible;
+    }
 
-  /* Botão de compra */
-  .book-displayer-button {
-      width: 80%;
-      height: 2.2rem;
-      background-color: var(--foreground-color);
-      color: antiquewhite;
-      text-transform: uppercase;
-      font-size: 1.2rem;
-      border-radius: 4px;
-      border: none;
-      margin-bottom: 1rem;
-      transition-duration: 0.1s;
-      transition-timing-function: linear;
-  }
-  .book-displayer-button:hover {
-      color: gray;
-      background-color: white;
-      border: 2px solid var(--foreground-color);
-  }
+    /* Preço do título */
+    .book-displayer-price {
+        margin-bottom: 1.2rem;
+        color: var(--darker-text-color);
+        font-size: 1.8rem;
+    }
+
+    /* Botão de compra */
+    .book-displayer-button {
+        width: 80%;
+        height: 2.2rem;
+        background-color: var(--foreground-color);
+        color: antiquewhite;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        border-radius: 4px;
+        border: none;
+        margin-bottom: 1rem;
+        transition-duration: 0.1s;
+        transition-timing-function: linear;
+    }
+    .book-displayer-button:hover {
+        color: gray;
+        background-color: white;
+        border: 2px solid var(--foreground-color);
+    }
 </style>

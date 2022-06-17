@@ -87,6 +87,7 @@ export default {
     /* Contêiner da barra de navegação */
     #header-container {
         height: 24vh;
+        width: 100%;
     }
 
     header {

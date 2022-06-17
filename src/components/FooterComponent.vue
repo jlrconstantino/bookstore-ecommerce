@@ -66,6 +66,7 @@ export default {
     #footer-container {
         padding-top: 8vh;
         width: 100%;
+        left: 0;
         bottom: 0;
         overflow: hidden;
     }
