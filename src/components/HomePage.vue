@@ -39,10 +39,10 @@
         data() {
             return {
                 books: [
-                    {title: "Trying Stuff Until it Works", price: 16.90, img_src: "../assets/sample-books/trying_stuff.jpg"}, 
-                    {title: "Getting an Arduino LED to Blink", price: 49.90, img_src: "../assets/sample-books/arduino_led.jpg"},
-                    {title: "What is LIGMA", price: 22.70, img_src: "../assets/sample-books/what_is_ligma.png"},
-                    {title: "Useless GIT Commit Messages", price: 88.49, img_src: "../assets/sample-books/commit_messages.jpeg"},
+                    {title: "Trying Stuff Until it Works", price: 16.90, img_src: require("@/assets/sample-books/trying_stuff.jpg")}, 
+                    {title: "Getting an Arduino LED to Blink", price: 49.90, img_src: require("@/assets/sample-books/arduino_led.jpg")},
+                    {title: "What is LIGMA", price: 22.70, img_src: require("@/assets/sample-books/what_is_ligma.png")},
+                    {title: "Useless GIT Commit Messages", price: 88.49, img_src: require("@/assets/sample-books/commit_messages.jpeg")},
                 ]
             }
         },
