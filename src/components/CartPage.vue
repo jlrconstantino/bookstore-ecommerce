@@ -106,12 +106,13 @@ export default {
 <!-- .:::: STYLE ::::. -->
 <style>
     @import "../css/colors.css";
+    @import "../css/global-style.css";
 
     /* **************** GERAIS **************** */
 
     /* Regras gerais para os contêineres */
     .cart-container-div {
-        width: 90%;
+        width: 80%;
         height: auto;
     }
 
@@ -138,7 +139,7 @@ export default {
     #cart-quantity-and-price-container {
         display: inline-flex;
         align-items: center;
-        justify-content: end;
+        justify-content: flex-end;
     }
 
     /* Textos flutuantes */

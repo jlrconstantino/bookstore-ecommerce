@@ -12,8 +12,6 @@
             <div id="product-overview-little-images-container">
                 <div> <img src="../assets/sample-books/commit_messages.jpeg" alt="product's image"> </div>
                 <div> <img src="../assets/sample-books/commit_messages.jpeg" alt="product's image"> </div>
-                <div> <img src="../assets/sample-books/commit_messages.jpeg" alt="product's image"> </div>
-                <div> <img src="../assets/sample-books/commit_messages.jpeg" alt="product's image"> </div>
             </div>
 
             <!-- Imagem de exibição -->
@@ -35,24 +33,24 @@
 
                 <!-- Avaliação -->
                 <div id="product-review-container">
-                    <img src="../assets/icons/star.svg" alt="product's review" class="product-review-image">
-                    <img src="../assets/icons/star.svg" alt="product's review" class="product-review-image">
-                    <img src="../assets/icons/star.svg" alt="product's review" class="product-review-image">
-                    <img src="../assets/icons/star.svg" alt="product's review" class="product-review-image">
-                    <img src="../assets/icons/star.svg" alt="product's review" class="product-review-image">
+                    <img :src="require('../assets/icons/star.svg')" alt="product's review" class="product-review-image">
+                    <img :src="require('../assets/icons/star.svg')" alt="product's review" class="product-review-image">
+                    <img :src="require('../assets/icons/star.svg')" alt="product's review" class="product-review-image">
+                    <img :src="require('../assets/icons/star.svg')" alt="product's review" class="product-review-image">
+                    <img :src="require('../assets/icons/star.svg')" alt="product's review" class="product-review-image">
                 </div>
 
                 <!-- Título e informações -->
                 <div id="product-overview-info">
-                    <h2 id="product-title"> Useless Git Commit Messages </h2>
+                    <h2 id="product-title">{{title}}</h2>
                     <table>
                         <tr>
                             <td class="text-darker-color">Autor:</td>
-                            <td class="text-common-color" id="product-spec-author">@ThePracticalDev</td>
+                            <td class="text-common-color" id="product-spec-author">{{author}}</td>
                         </tr>
                         <tr>
                             <td class="text-darker-color">Editora:</td>
-                            <td class="text-common-color" id="product-spec-publisher">O RLY?</td>
+                            <td class="text-common-color" id="product-spec-publisher">{{publisher}}</td>
                         </tr>
                     </table>
                 </div>
@@ -61,8 +59,8 @@
 
             <!-- Compra -->
             <div id="product-purchase-container" class="product-bordered-container">
-                <h3 id="product-price"> R$ 89,90 </h3>
-                <p id="product-price-alternative"> Ou em até 10x de R$ 8,90. </p>
+                <h3 id="product-price">{{format_price(price)}}</h3>
+                <p id="product-price-alternative">{{format_price_installment(price, 8)}}</p>
                 <button id="product-purchase-button" onclick="window.location.href='./cart.html'"> COMPRAR </button>
             </div>
 
@@ -80,9 +78,7 @@
     <!-- Descrição do produto -->
     <div id="product-description-container" class="product-container-div product-bordered-container">
         <h3 class="product-subtitle"> Descrição </h3>
-        <p id="product-description" class="text-common-color text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel ex imperdiet, pellentesque augue nec, interdum massa. Vivamus sed fringilla ex. Mauris tempus felis ut orci cursus, eget congue enim ornare. Phasellus eget dignissim lectus, eu congue nibh. Morbi venenatis ac odio sit amet ultrices. Praesent tempus porttitor tortor in molestie. Donec condimentum augue non leo pharetra lacinia. Mauris vitae consequat ex. Nam vitae ultricies nisl. Etiam vel neque malesuada purus ultrices posuere sed a ante. Morbi lobortis malesuada dolor id gravida. Pellentesque vitae bibendum mi. Duis hendrerit nunc cursus, iaculis urna quis, egestas augue. Praesent volutpat eros at ex aliquet mollis. Nam scelerisque metus vitae nulla ultrices vestibulum. Ut pretium enim leo, sed vulputate tellus ultricies nec.
-        </p>
+        <p id="product-description" class="text-common-color text-justify">{{description}}</p>
     </div>
 
     <!-- Características adicionais do produto -->
@@ -91,19 +87,19 @@
         <table class="text-common-color">
             <tr> 
                 <td>Acabamento</td>
-                <td id="product-spec-finish">Brochura</td>
+                <td id="product-spec-finish">{{finishing}}</td>
             </tr>
             <tr> 
                 <td>Ano da edição</td>
-                <td id="product-spec-edition">2009</td>
+                <td id="product-spec-edition">{{year}}</td>
             </tr>
             <tr> 
                 <td>Idioma</td>
-                <td id="product-spec-language">Latim</td>
+                <td id="product-spec-language">{{language}}</td>
             </tr>
             <tr> 
                 <td>Número de páginas</td>
-                <td id="product-spec-pages">309</td>
+                <td id="product-spec-pages">{{pages}}</td>
             </tr>
         </table>
     </div>
@@ -113,15 +109,45 @@
 
 <!-- .:::: SCRIPT ::::. -->
 <script>
-export default {
-  name: 'ProductPage',
-}
+
+    // Lógica local
+    export default {
+
+        // Nome do componente para exportação
+        name: 'ProductPage',
+
+        // Propriedades
+        props: {
+            title: String, 
+            price: Number, 
+            img_src: String,
+            description: String,
+            author: String,
+            publisher: String,
+            finishing: String, 
+            year: Number, 
+            language: String, 
+            pages: String, 
+            id: Number, 
+        },
+
+        // Métodos auxiliares
+        methods: {
+            format_price(price) {
+                return "R$ " + price.toFixed(2).toString().replace('.', ',');
+            }, 
+            format_price_installment(price, installments) {
+                return "Ou em até " + installments.toString() + "x de R$ " + (price/installments).toFixed(2).toString().replace('.', ',') + "."
+            }, 
+        },
+    }
 </script>
 
 
 <!-- .:::: STYLE ::::. -->
 <style>
     @import "../css/colors.css";
+    @import "../css/global-style.css";
 
     /* **************** GERAIS **************** */
 
@@ -131,7 +157,7 @@ export default {
 
     /* Divisão de itens */
     .product-container-div {
-        width: 90%;
+        width: 80%;
         height: auto;
     }
 

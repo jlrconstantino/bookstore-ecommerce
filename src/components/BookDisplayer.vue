@@ -18,7 +18,23 @@
         props: ['book'], 
         methods: {
             go_to_product_page(book) {
-                this.$router.push({path: '/product', params: {book: book}, query: {id: book.id}});
+                this.$router.push({
+                    name: 'product', 
+                    query: {id: book.id}, 
+                    params: {
+                        title: book.title, 
+                        price: book.price, 
+                        img_src: book.img_src,
+                        description: book.description,
+                        author: book.author,
+                        publisher: book.publisher,
+                        finishing: book.finishing, 
+                        year: book.year, 
+                        language: book.language, 
+                        pages: book.pages, 
+                        id: book.id, 
+                    }
+                });
             }, 
             format_price(price) {
                 return "R$ " + price.toFixed(2).toString().replace('.', ',');
