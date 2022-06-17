@@ -10,15 +10,15 @@
             
             <!-- Mostrador esquerdo (visão das imagens disponíveis) -->
             <div id="product-overview-little-images-container">
-                <div> <img src="../assets/sample-books/commit_messages.jpeg" alt="product's image"> </div>
-                <div> <img src="../assets/sample-books/commit_messages.jpeg" alt="product's image"> </div>
+                <div> <img :src="img_src" alt="product's image"> </div>
+                <div> <img :src="img_src" alt="product's image"> </div>
             </div>
 
             <!-- Imagem de exibição -->
             <div id="product-overview-image-container">
                 <img src="../assets/icons/arrow-left.svg" alt="previous image" class="product-arrow-image" id="product-previous-image-button">
                 <div id="product-current-display-image-container">
-                    <img src="../assets/sample-books/commit_messages.jpeg" alt="product's image" id="product-current-display-image">
+                    <img :src="img_src" alt="product's image" id="product-current-display-image">
                 </div>
                 <img src="../assets/icons/arrow-right.svg" alt="next image" class="product-arrow-image" id="product-next-image-button">
             </div>
