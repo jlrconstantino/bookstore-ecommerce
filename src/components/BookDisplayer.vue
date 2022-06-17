@@ -35,6 +35,7 @@
                         id: book.id, 
                     }
                 });
+                window.scrollTo(0,0);
             }, 
             format_price(price) {
                 return "R$ " + price.toFixed(2).toString().replace('.', ',');
