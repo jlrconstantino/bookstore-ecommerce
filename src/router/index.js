@@ -20,7 +20,7 @@ const routes = [
   {
     path: '/cart', 
     name: 'cart', 
-    component: CartPage
+    component: CartPage, 
   },
 
   // Página de produto

@@ -1,7 +1,5 @@
 <!-- .:::: TEMPLATE ::::. -->
 <template>
-  <div id="main-container">
-    
     <!-- Banner promocional -->
     <PromotionalBanner></PromotionalBanner>
 
@@ -12,8 +10,6 @@
     <!-- Mostradores de livros -->
     <h2 class="text-center subtitle"> Literatura </h2>
     <BookSection :books="books"></BookSection>
-
-  </div>
 </template>
 
 
@@ -21,8 +17,8 @@
 <script>
 
     // Componentes
-    import BookSection from './BookSection.vue'
-    import PromotionalBanner from './PromotionalBanner.vue'
+    import BookSection from './BookSection.vue';
+    import PromotionalBanner from './PromotionalBanner.vue';
 
     // Lógica local
     export default {
@@ -33,7 +29,7 @@
         // Atribuição dos componentes
         components: {
             BookSection, 
-            PromotionalBanner,
+            PromotionalBanner, 
         },
 
         // Dados temporários

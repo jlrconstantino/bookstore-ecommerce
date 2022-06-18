@@ -1,6 +1,5 @@
 <!-- .:::: TEMPLATE ::::. -->
 <template>
-  <div id="main-container">
 
     <!-- Visão geral do produto -->
     <div class="product-container-div" id="product-overview-container">
@@ -61,7 +60,7 @@
             <div id="product-purchase-container" class="product-bordered-container">
                 <h3 id="product-price">{{format_price(price)}}</h3>
                 <p id="product-price-alternative">{{format_price_installment(price, 8)}}</p>
-                <button id="product-purchase-button" onclick="window.location.href='./cart.html'"> COMPRAR </button>
+                <button id="product-purchase-button" @click="go_to_cart()"> COMPRAR </button>
             </div>
 
             <!-- Frete -->
@@ -103,7 +102,6 @@
             </tr>
         </table>
     </div>
-  </div>
 </template>
 
 
@@ -138,6 +136,10 @@
             }, 
             format_price_installment(price, installments) {
                 return "Ou em até " + installments.toString() + "x de R$ " + (price/installments).toFixed(2).toString().replace('.', ',') + "."
+            }, 
+            go_to_cart() {
+                this.$router.push({name: 'cart'});
+                window.scrollTo(0,0);
             }, 
         },
     }

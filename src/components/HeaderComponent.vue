@@ -100,6 +100,7 @@
 
     /* Contêiner da barra de navegação */
     #header-container {
+        top: 0;
         position: fixed;
         min-height: 20%;
         height: 20%;
@@ -110,7 +111,6 @@
     header {
         width: 100%;
         height: 100%;
-        top: 0;
     }
 
 

@@ -1,105 +1,113 @@
 <!-- .:::: TEMPLATE ::::. -->
 <template>
-  <div id="main-container">
-    
-    <!-- Título da página -->
-    <div id="cart-title-container">
-        <h2 class="subtitle"> Meu Carrinho </h2>
-    </div>
 
-    <!-- Divisão para quantidade e preço -->
-    <div id="cart-quantity-and-price-container" class="cart-container-div cart-bordered-container">
-        <h3 class="cart-header-info"> Quantidade </h3>
-        <h3 class="cart-header-info"> Preço </h3>
-    </div>
+    <!-- Contêiner -->
+    <div id="cart-container">
 
-    <!-- Divisão para o item de compra -->
-    <div class="cart-item-container cart-container-div cart-bordered-container">
-
-        <!-- Imagem do item -->
-        <div class="cart-item-image-container">
-            <img src="../assets/sample-books/commit_messages.jpeg" alt="product's image" class="cart-item-image">
+        <!-- Título da página -->
+        <div id="cart-title-container">
+            <h2 class="subtitle"> Meu Carrinho </h2>
         </div>
 
-        <!-- Descrição do item -->
-        <div class="cart-item-info-container">
-            <h4 class="cart-item-title text-darker-color"> Useless Git Commit Messages </h4>
-            <table>
-                <tr>
-                    <td class="text-darker-color"> Autor: </td>
-                    <td class="text-common-color cart-item-author"> @ThePracticalDev </td>
-                </tr>
-                <tr>
-                    <td class="text-darker-color"> Editora: </td>
-                    <td class="text-common-color cart-item-publisher"> O RLY? </td>
-                </tr>
-                <tr>
-                    <td class="text-darker-color"> Edição: </td>
-                    <td class="text-common-color cart-item-edition"> 2009 </td>
-                </tr>
-            </table>
+        <!-- Divisão para quantidade e preço -->
+        <div id="cart-quantity-and-price-container" class="cart-container-div cart-bordered-container">
+            <h3 class="cart-header-info"> Quantidade </h3>
+            <h3 class="cart-header-info"> Preço </h3>
         </div>
 
-        <!-- Quantidade do item -->
-        <input type="number" value="1" min="1" max="10" name="item-quantity" class="cart-item-quantity text-center">
+        <!-- Divisão para o item de compra -->
+        <div class="cart-item-container cart-container-div cart-bordered-container">
 
-        <!-- Preço do item -->
-        <h5 class="cart-item-price text-darker-color"> R$ 89,90 </h5>
-
-    </div>
-
-    <!-- Divisão para o frete e o subtotal -->
-    <div id="cart-shipping-and-total-container" class="cart-container-div">
-        
-        <!-- Frete -->
-        <div id="cart-shipping-container">
-            <div>
-                <p class="text-darker-color"> Calcule o frete e o prazo de entrega: </p>
+            <!-- Imagem do item -->
+            <div class="cart-item-image-container">
+                <img src="../assets/sample-books/commit_messages.jpeg" alt="product's image" class="cart-item-image">
             </div>
-            <div>
-                <input type="text" placeholder="_____ - ___" id="product-shipping-input">
-                <button id="product-shipping-button"> Consultar </button>
-            </div>
-        </div>
 
-        <!-- total -->
-        <div id="cart-total-container">
-            <div class="cart-bordered-container">
+            <!-- Descrição do item -->
+            <div class="cart-item-info-container">
+                <h4 class="cart-item-title text-darker-color"> Useless Git Commit Messages </h4>
                 <table>
                     <tr>
-                        <td class="text-darker-color"> Subtotal: </td>
-                        <td class="text-common-color cart-subtotal-value"> R$ 89,90 </td>
+                        <td class="text-darker-color"> Autor: </td>
+                        <td class="text-common-color cart-item-author"> @ThePracticalDev </td>
                     </tr>
                     <tr>
-                        <td class="text-darker-color"> Frete: </td>
-                        <td class="text-common-color cart-shipping-value"> R$ 0,00 </td>
+                        <td class="text-darker-color"> Editora: </td>
+                        <td class="text-common-color cart-item-publisher"> O RLY? </td>
+                    </tr>
+                    <tr>
+                        <td class="text-darker-color"> Edição: </td>
+                        <td class="text-common-color cart-item-edition"> 2009 </td>
                     </tr>
                 </table>
             </div>
-            <table>
-                <tr>
-                    <td class="text-darker-color"> Total: </td>
-                    <td class="text-common-color cart-total-value"> R$ 89,90 </td>
-                </tr>
-            </table>
+
+            <!-- Quantidade do item -->
+            <input type="number" value="1" min="1" max="10" name="item-quantity" class="cart-item-quantity text-center">
+
+            <!-- Preço do item -->
+            <h5 class="cart-item-price text-darker-color"> R$ 89,90 </h5>
+
         </div>
 
-    </div>
+        <!-- Divisão para o frete e o subtotal -->
+        <div id="cart-shipping-and-total-container" class="cart-container-div">
+            
+            <!-- Frete -->
+            <div id="cart-shipping-container">
+                <div>
+                    <p class="text-darker-color"> Calcule o frete e o prazo de entrega: </p>
+                </div>
+                <div>
+                    <input type="text" placeholder="_____ - ___">
+                    <button>Consultar</button>
+                </div>
+            </div>
 
-    <!-- Divisão para compra -->
-    <div class="cart-container-div" id="cart-purchase-container">
-        <a> Comprar mais produtos </a>
-        <button id="cart-purchase-button"> FINALIZAR COMPRA </button>
+            <!-- total -->
+            <div id="cart-total-container">
+                <div class="cart-bordered-container">
+                    <table>
+                        <tr>
+                            <td class="text-darker-color"> Subtotal: </td>
+                            <td class="text-common-color cart-subtotal-value"> R$ 89,90 </td>
+                        </tr>
+                        <tr>
+                            <td class="text-darker-color"> Frete: </td>
+                            <td class="text-common-color cart-shipping-value"> R$ 0,00 </td>
+                        </tr>
+                    </table>
+                </div>
+                <table>
+                    <tr>
+                        <td class="text-darker-color"> Total: </td>
+                        <td class="text-common-color cart-total-value"> R$ 89,90 </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- Divisão para compra -->
+        <div class="cart-container-div" id="cart-purchase-container">
+            <a> Comprar mais produtos </a>
+            <button id="cart-purchase-button"> FINALIZAR COMPRA </button>
+        </div>
     </div>
-  </div>
 </template>
 
 
 <!-- .:::: SCRIPT ::::. -->
 <script>
-export default {
-  name: 'CartPage',
-}
+
+    // Lógica local
+    export default {
+
+        // Nome da componente
+        name: 'CartPage',
+
+    }
+
 </script>
 
 
@@ -110,9 +118,14 @@ export default {
 
     /* **************** GERAIS **************** */
 
+    /* Contêiner principal */
+    #cart-container {
+        width: 80%;
+    }
+
     /* Regras gerais para os contêineres */
     .cart-container-div {
-        width: 80%;
+        width: 100%;
         height: auto;
     }
 
@@ -254,6 +267,7 @@ export default {
 
     /* Botão de consulta */
     #cart-shipping-container button {
+        width: auto;
         height: 2rem;
         background-color: rgb(187, 42, 73);
         color: antiquewhite;
