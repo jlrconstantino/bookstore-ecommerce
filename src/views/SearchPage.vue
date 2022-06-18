@@ -13,7 +13,7 @@
 <script>
 
     // Importação de componentes
-    import BookSection from "./BookSection.vue";
+    import BookSection from "../components/BookSection.vue";
 
     // Para manipulação da base de dados local
     import { loadLocalStorage } from "../utils/local-storage-management";

@@ -5,15 +5,15 @@
 
     <!-- Mostradores de livros -->
     <h2 class="text-center subtitle"> Sugestões </h2>
-    <BookSection :books="books.slice(0,3)"></BookSection>
+    <BookSection :books="books.slice(0,4)"></BookSection>
 
     <!-- Mostradores de livros -->
     <h2 class="text-center subtitle"> Literatura </h2>
-    <BookSection :books="books.slice(3,6)"></BookSection>
+    <BookSection :books="books.slice(4,8)"></BookSection>
 
     <!-- Mostradores de livros -->
     <h2 class="text-center subtitle"> Terror </h2>
-    <BookSection :books="books.slice(6,9)"></BookSection>
+    <BookSection :books="books.slice(8,12)"></BookSection>
 
 </template>
 
@@ -25,8 +25,8 @@
     import { loadLocalStorage } from "../utils/local-storage-management";
 
     // Componentes
-    import BookSection from './BookSection.vue';
-    import PromotionalBanner from './PromotionalBanner.vue';
+    import BookSection from '../components/BookSection.vue';
+    import PromotionalBanner from '../components/PromotionalBanner.vue';
 
     // Lógica local
     export default {

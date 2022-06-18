@@ -116,17 +116,18 @@
 
         // Propriedades
         props: {
+            id: Number, 
             title: String, 
             price: Number, 
-            img_src: String,
-            description: String,
+            rating: Number, 
             author: String,
             publisher: String,
             finishing: String, 
             year: Number, 
             language: String, 
             pages: String, 
-            id: Number, 
+            description: String,
+            img_src: String,
         },
 
         // Métodos auxiliares

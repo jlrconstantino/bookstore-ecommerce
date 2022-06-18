@@ -2,10 +2,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 // Importação dos componentes das rotas
-import CartPage from '../components/CartPage.vue';
-import HomePage from '../components/HomePage.vue';
-import ProductPage from '../components/ProductPage.vue';
-import SearchPage from '../components/SearchPage.vue';
+import CartPage from '../views/CartPage.vue';
+import HomePage from '../views/HomePage.vue';
+import ProductPage from '../views/ProductPage.vue';
+import SearchPage from '../views/SearchPage.vue';
 
 // Rotas estabelecidas
 const routes = [
@@ -31,17 +31,18 @@ const routes = [
     component: ProductPage, 
     props(route) {
       return {
+        id: Number(route.params.id), 
         title: route.params.title, 
         price: Number(route.params.price), 
-        img_src: route.params.img_src,
-        description: route.params.description,
+        rating: Number(route.params.price), 
         author: route.params.author,
         publisher: route.params.publisher,
         finishing: route.params.finishing, 
         year: Number(route.params.year), 
         language: route.params.language, 
         pages: route.params.pages, 
-        id: Number(route.params.id), 
+        description: route.params.description,
+        img_src: route.params.img_src,
       };
     },
   }, 

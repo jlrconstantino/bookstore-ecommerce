@@ -22,17 +22,18 @@
                     name: 'product', 
                     query: {id: book.id}, 
                     params: {
+                        id: book.id, 
                         title: book.title, 
                         price: book.price, 
-                        img_src: book.img_src,
-                        description: book.description,
+                        rating: book.rating, 
                         author: book.author,
                         publisher: book.publisher,
                         finishing: book.finishing, 
                         year: book.year, 
                         language: book.language, 
                         pages: book.pages, 
-                        id: book.id, 
+                        description: book.description,
+                        img_src: book.img_src,
                     }
                 });
                 window.scrollTo(0,0);
@@ -52,7 +53,7 @@
     /* Contêiner de um mostrador de livros */
     .book-displayer-container {
         justify-content: baseline;
-        width: 30%;
+        width: 20%;
         height: auto;
         display: flex;
         align-items: center;
@@ -73,7 +74,7 @@
     /* Imagem de capa do livro */
     .book-displayer-img {
         width: 100%;
-        height: 290px;
+        height: calc(290px * 0.9);
         position: relative;
         z-index: -2;
     }
