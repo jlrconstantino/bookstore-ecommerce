@@ -25,6 +25,7 @@
 
     /* Divisão de amostragem de livros */
     .book-displayers-div {
+        margin: 0 auto;
         width: 80%;
         height: auto;
         display: inline-flex;
