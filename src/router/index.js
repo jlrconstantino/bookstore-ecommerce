@@ -1,19 +1,29 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import CartPage from '../components/CartPage.vue'
-import HomePage from '../components/HomePage.vue'
-import ProductPage from '../components/ProductPage.vue'
+// Importação dos elementos necessários para a construção de rotas
+import { createRouter, createWebHistory } from 'vue-router';
 
+// Importação dos componentes das rotas
+import CartPage from '../components/CartPage.vue';
+import HomePage from '../components/HomePage.vue';
+import ProductPage from '../components/ProductPage.vue';
+
+// Rotas estabelecidas
 const routes = [
+
+  // Página principal
   {
     path: '/', 
     name: 'homepage', 
     component: HomePage
   },
+
+  // Carrinho de compras
   {
     path: '/cart', 
     name: 'cart', 
     component: CartPage
   },
+
+  // Página de produto
   {
     path: '/product', 
     name: 'product', 
@@ -33,27 +43,14 @@ const routes = [
         id: Number(route.params.id), 
       };
     },
-    /* {
-      book: {
-        title: "Undefined", 
-        price: 0.0, 
-        img_src: "Undefined",
-        description: "Undefined",
-        author: "Undefined",
-        publisher: "Undefined",
-        finishing: "Undefined", 
-        year: 0, 
-        language: "Undefined", 
-        pages: 0, 
-        id: 0, 
-      }
-    }, */
   },
-]
+];
 
+// Roteador
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
 
-export default router
+// Exportação do roteador para uso externo
+export default router;

@@ -12,12 +12,16 @@ a {
 }
 
 /* Links com interação */
-.hover-interaction-link {
+.hover-interaction-link, .hover-interaction-link-alternative {
     transition-duration: 0.3s;
     transition-timing-function: linear;
 }
 .hover-interaction-link:hover {
     color: var(--link-hover-color);
+}
+.hover-interaction-link-alternative:hover {
+    text-decoration: underline;
+    color: var(--link-hover-color-alternative);
 }
 
 /* Definições globais de estilização de texto */
@@ -35,6 +39,7 @@ p {font-size: 1rem;}
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-top: 20vh;
 }
 
 /* Para subtítulos */

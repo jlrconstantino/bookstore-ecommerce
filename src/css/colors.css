@@ -14,15 +14,17 @@
     --header-bottom-bar-text-color: rgb(26, 24, 24);
 
     /* Caixa de pesquisa do header */
-    --header-searcher-background-color: #e1e7f1;
-    --header-searcher-border: 0.05rem solid black;
+    --header-searcher-background-color: #fcfcfc;
+    --header-searcher-border: 0.05rem outset #f0f0f0;
 
     /* Sombra para os itens */
     --box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.281);
+    --box-shadow-minimized: 0.1rem 0.1rem 0.25rem rgba(0, 0, 0, 0.281);
     --inner-box-shadow: inset 0px 0px 5px 2px rgba(0,0,0,0.6);
 
     /* Links */
     --link-hover-color: #69b1db;
+    --link-hover-color-alternative: #3a3a3a;
 
     /* Cor de texto */
     --text-color: rgb(48, 48, 48);
