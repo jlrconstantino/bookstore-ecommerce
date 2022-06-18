@@ -46,12 +46,14 @@
         // Para filtragem em tempo-real
         computed: {
             filtered_books: function() {
+                console.log(this.books);
                 try{
                     let pattern = new RegExp(this.$route.query.target.toLowerCase(), "g");
                     return this.books.filter(book => {
                         return pattern.test(book.title.toLowerCase());
                     });
-                }catch(Exception){
+                }catch(exception){
+                    console.log(exception);
                     return [];
                 }
             }, 

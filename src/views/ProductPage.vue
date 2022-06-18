@@ -32,11 +32,12 @@
 
                 <!-- Avaliação -->
                 <div id="product-review-container">
-                    <img :src="require('../assets/icons/star.svg')" alt="product's review" class="product-review-image">
-                    <img :src="require('../assets/icons/star.svg')" alt="product's review" class="product-review-image">
-                    <img :src="require('../assets/icons/star.svg')" alt="product's review" class="product-review-image">
-                    <img :src="require('../assets/icons/star.svg')" alt="product's review" class="product-review-image">
-                    <img :src="require('../assets/icons/star.svg')" alt="product's review" class="product-review-image">
+                    <img :src="rating_stars[0]" alt="product's review" class="product-review-image">
+                    <img :src="rating_stars[1]" alt="product's review" class="product-review-image">
+                    <img :src="rating_stars[2]" alt="product's review" class="product-review-image">
+                    <img :src="rating_stars[3]" alt="product's review" class="product-review-image">
+                    <img :src="rating_stars[4]" alt="product's review" class="product-review-image">
+                    <p id="product-review-number-displayer">({{rating.toFixed(1)}})</p>
                 </div>
 
                 <!-- Título e informações -->
@@ -112,7 +113,23 @@
     export default {
 
         // Nome do componente para exportação
-        name: 'ProductPage',
+        name: 'ProductPage', 
+
+        // Caminhos das estrelas
+        data() {
+            return {
+                full_star: null, 
+                half_star: null, 
+                null_star: null,
+            };
+        }, 
+
+        // Obtenção dos caminhos das estrelas
+        created() {
+            this.full_star = require("@/assets/icons/full-star.svg");
+            this.half_star = require("@/assets/icons/half-star.svg");
+            this.null_star = require("@/assets/icons/null-star.svg");
+        }, 
 
         // Propriedades
         props: {
@@ -143,6 +160,32 @@
                 window.scrollTo(0,0);
             }, 
         },
+
+        // Cômputo da avaliação do produto
+        computed: {
+            rating_stars: function(){
+                let stars = [0, 0, 0, 0, 0];
+                let rating = this.rating;
+                let index = 0;
+                while(rating >= 1.0) {
+                    stars[index] = this.full_star;
+                    rating -= 1.0;
+                    index += 1;
+                }
+                if(rating >= 0.75){
+                    stars[index] = this.full_star;
+                    index += 1;
+                }else if(rating >= 0.25){
+                    stars[index] = this.half_star;
+                    index += 1;
+                }
+                while(index < 5){
+                    stars[index] = this.null_star;
+                    index += 1;
+                }
+                return stars;
+            }, 
+        }, 
     }
 </script>
 
@@ -268,6 +311,12 @@
     .product-review-image {
         width: 20%;
         height: auto;
+    }
+
+    /* Mostrador numérico da avaliação */
+    #product-review-number-displayer {
+        color: var(--review-text-color);
+        padding-left: 0.3rem;
     }
 
     /* Texto de Título */

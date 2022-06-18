@@ -198,7 +198,7 @@ export async function startLocalStorage() {
 // Para carregamento da base de dados
 export async function loadLocalStorage() {
     let books = [];
-    for(let i = 0; i < 13; i++) {
+    for(let i = 0; i < 12; i++) {
         getItem(i).then(res => {
             books.push(res);
         });

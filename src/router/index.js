@@ -34,7 +34,7 @@ const routes = [
         id: Number(route.params.id), 
         title: route.params.title, 
         price: Number(route.params.price), 
-        rating: Number(route.params.price), 
+        rating: Number(route.params.rating), 
         author: route.params.author,
         publisher: route.params.publisher,
         finishing: route.params.finishing, 
