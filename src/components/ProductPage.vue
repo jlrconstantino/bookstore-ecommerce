@@ -284,7 +284,7 @@
 
     /* Redução de cobertura de largura */
     #product-spec-author, #product-spec-publisher {
-        width: 90%;
+        width: 87%;
     }
 
     /* Contêiner da seção de compra */
@@ -337,6 +337,7 @@
         display: flex;
         align-items: center;
         justify-content: space-evenly;
+        gap: 1rem;
     }
 
     /* Entrada para inserção do CEP */
@@ -401,4 +402,5 @@
     #product-specs-container td {
         padding-top: 1rem;
     }
+
 </style>

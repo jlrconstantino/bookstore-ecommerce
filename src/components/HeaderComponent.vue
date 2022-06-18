@@ -8,12 +8,12 @@
 
                 <!-- Título -->
                 <div id="header-top-bar-title">
-                    <img src="../assets/logo/logo.png" class="header-top-bar-img" id="header-logo-img">
+                    <img @click="go_to_page('homepage')" src="../assets/logo/logo.png" class="header-top-bar-img" id="header-logo-img">
                 </div>
 
                 <!-- Campo de busca textual -->
                 <div id="header-top-bar-search">
-                    <input type="text" placeholder="O que você procura?" id="header-searcher">
+                    <input @keyup.enter="search_by_title(search_string)" v-model="search_string" type="text" placeholder="O que você procura?" id="header-searcher">
                     <!--
                     <div id="header-top-bar-search-img-container">
                         <img src="../assets/icons/search.svg" class="header-top-bar-img" id="header-top-bar-search-img">
@@ -33,7 +33,7 @@
 
                 <!-- Carrinho -->
                 <div id="header-top-bar-shop">
-                    <img src="../assets/icons/shopping-bag.svg" class="header-top-bar-img" id="header-top-bar-cart-img">
+                    <img @click="go_to_page('cart')" src="../assets/icons/shopping-bag.svg" class="header-top-bar-img" id="header-top-bar-cart-img">
                 </div>
 
             </div>
@@ -85,9 +85,26 @@
         // Dados locais
         data() {
             return {
+                search_string: "", 
                 logged: false,
             };
         }, 
+
+        // Métodos auxiliares
+        methods: {
+
+            // Navegação
+            go_to_page(name) {
+                this.$router.push({name: name});
+                window.scrollTo(0,0);
+            }, 
+
+            // Pesquisa
+            search_by_title(str) {
+                this.$router.push({name: "search", query: {target: str}});
+                window.scrollTo(0,0);
+            }, 
+        }
     }
 </script>
 
@@ -161,7 +178,7 @@
 
     /* Seção central da barra superior */
     #header-top-bar-search {
-        width: 45%;
+        width: 42%;
         height: 66%;
         justify-content: center;
         display: flex;
@@ -202,7 +219,7 @@
 
     /* Seção para o status de usuário */
     #header-top-bar-user {
-        width: 15%;
+        width: 18%;
         justify-content: safe center;
         display: flex;
         align-items: center;

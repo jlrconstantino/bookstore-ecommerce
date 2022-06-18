@@ -18,6 +18,7 @@
 
 <!-- .:::: STYLE ::::. -->
 <style>
+    @import "../css/global-style.css";
 
     /* Contêiner do banner */
     .promotional-banner {

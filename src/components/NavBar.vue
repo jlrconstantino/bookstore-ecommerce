@@ -1,16 +1,16 @@
 <!-- .:::: TEMPLATE ::::. -->
 <template>
-    <nav>
-        <div>
+    <div id="container">
+        <nav>
             <a 
                 v-for="(page, index) in pages" 
                 :key="index" 
-                class="text-common-color hover-interaction-link"
+                class="hover-interaction-link"
                 @click="go_to_page(index)"
             >{{get_route_name(page, index)}}</a>
-        </div>
-        <hr>
-    </nav>
+            <hr>
+        </nav>
+    </div>
 </template>
 
 
@@ -37,15 +37,13 @@
             // Navegação
             go_to_page(index) {
                 this.$router.push(this.routes[index]);
-                this.pages.length = index + 1;
-                this.routes.length = index + 1;
                 window.scrollTo(0,0);
             },
 
             // Nome da rota
             get_route_name(page, index) {
                 if(index > 0){
-                    return " > " + page;
+                    return "\t>\t" + page;
                 }
                 return page;
             }, 
@@ -55,8 +53,20 @@
         watch: {
             '$route': function(to) {
 
-                // Verificação de existência
-                if(this.routes.some(route => route.name === to.name) == false){
+                // Verificação indexada de rotas pré-existentes
+                let matches = 0;
+                for(let i = 0; i < this.routes.length && matches === 0; ++i){
+                    if(this.routes[i].name === to.name){
+                        matches += 1;
+
+                        // Truncamento da lista de rotas
+                        this.pages.length = i + 1;
+                        this.routes.length = i + 1;
+                    }
+                }
+
+                // Adição de rota
+                if(matches === 0){
 
                     // Construção do nome
                     let page_name = "";
@@ -66,6 +76,11 @@
                             break;
                         case "cart":
                             page_name = "Carrinho de Compras";
+                            break;
+                        case "search": 
+                            page_name = "Resultado da Busca";
+                            this.pages.length = 1;
+                            this.routes.length = 1;
                             break;
                         default: 
                             break;
@@ -83,10 +98,23 @@
 
 <!-- .:::: STYLE ::::. -->
 <style scoped>
+    @import "../css/colors.css";
+
+    #container {
+        background-color: var(--navigation-bar-background-color);
+        padding-top: 3vh;
+        padding-bottom: 1vh;
+        width: 100%;
+    }
+
     nav {
         width: 80%;
+        margin: 0 auto;
     }
-    p {
+
+    a {
         font-size: 0.9rem;
+        padding-right: 2px;
+        color: #555555;
     }
 </style>

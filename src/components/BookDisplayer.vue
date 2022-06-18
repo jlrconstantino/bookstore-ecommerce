@@ -52,7 +52,7 @@
     /* Contêiner de um mostrador de livros */
     .book-displayer-container {
         justify-content: baseline;
-        width: 18vw;
+        width: 30%;
         height: auto;
         display: flex;
         align-items: center;
@@ -81,7 +81,9 @@
     /* Título do livro */
     .book-displayer-title {
         width: 80%;
-        overflow: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         margin-top: 0.6rem;
         margin-bottom: 1.8rem;
         text-transform: uppercase;
@@ -89,7 +91,6 @@
         font-size: 1.2rem;
         height: 1.2rem;
         max-height: 1.2rem;
-        overflow: visible;
     }
 
     /* Preço do título */

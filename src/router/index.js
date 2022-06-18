@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import CartPage from '../components/CartPage.vue';
 import HomePage from '../components/HomePage.vue';
 import ProductPage from '../components/ProductPage.vue';
+import SearchPage from '../components/SearchPage.vue';
 
 // Rotas estabelecidas
 const routes = [
@@ -43,7 +44,14 @@ const routes = [
         id: Number(route.params.id), 
       };
     },
-  },
+  }, 
+
+  // Página de busca
+  {
+    path: '/search', 
+    name: 'search', 
+    component: SearchPage, 
+  }, 
 ];
 
 // Roteador
