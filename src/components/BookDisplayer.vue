@@ -18,24 +18,7 @@
         props: ['book'], 
         methods: {
             go_to_product_page(book) {
-                this.$router.push({
-                    name: 'product', 
-                    query: {id: book.id}, 
-                    params: {
-                        id: book.id, 
-                        title: book.title, 
-                        price: book.price, 
-                        rating: book.rating, 
-                        author: book.author,
-                        publisher: book.publisher,
-                        finishing: book.finishing, 
-                        year: book.year, 
-                        language: book.language, 
-                        pages: book.pages, 
-                        description: book.description,
-                        img_src: book.img_src,
-                    }
-                });
+                this.$router.push({name: 'product', query: {id: book.id}});
                 window.scrollTo(0,0);
             }, 
             format_price(price) {

@@ -2,22 +2,22 @@
 <template>
 
     <!-- Visão geral do produto -->
-    <div class="product-container-div" id="product-overview-container">
+    <div v-if="data_is_ready" class="product-container-div" id="product-overview-container">
 
         <!-- Imagens do produto -->
         <div id="product-overview-left-container">
             
             <!-- Mostrador esquerdo (visão das imagens disponíveis) -->
             <div id="product-overview-little-images-container">
-                <div> <img :src="img_src" alt="product's image"> </div>
-                <div> <img :src="img_src" alt="product's image"> </div>
+                <div> <img :src="product.img_src" alt="product's image"> </div>
+                <div> <img :src="product.img_src" alt="product's image"> </div>
             </div>
 
             <!-- Imagem de exibição -->
             <div id="product-overview-image-container">
                 <img src="../assets/icons/arrow-left.svg" alt="previous image" class="product-arrow-image" id="product-previous-image-button">
                 <div id="product-current-display-image-container">
-                    <img :src="img_src" alt="product's image" id="product-current-display-image">
+                    <img :src="product.img_src" alt="product's image" id="product-current-display-image">
                 </div>
                 <img src="../assets/icons/arrow-right.svg" alt="next image" class="product-arrow-image" id="product-next-image-button">
             </div>
@@ -37,20 +37,20 @@
                     <img :src="rating_stars[2]" alt="product's review" class="product-review-image">
                     <img :src="rating_stars[3]" alt="product's review" class="product-review-image">
                     <img :src="rating_stars[4]" alt="product's review" class="product-review-image">
-                    <p id="product-review-number-displayer">({{rating.toFixed(1)}})</p>
+                    <p id="product-review-number-displayer">({{product.rating.toFixed(1)}})</p>
                 </div>
 
                 <!-- Título e informações -->
                 <div id="product-overview-info">
-                    <h2 id="product-title">{{title}}</h2>
+                    <h2 id="product-title">{{product.title}}</h2>
                     <table>
                         <tr>
                             <td class="text-darker-color">Autor:</td>
-                            <td class="text-common-color" id="product-spec-author">{{author}}</td>
+                            <td class="text-common-color" id="product-spec-author">{{product.author}}</td>
                         </tr>
                         <tr>
                             <td class="text-darker-color">Editora:</td>
-                            <td class="text-common-color" id="product-spec-publisher">{{publisher}}</td>
+                            <td class="text-common-color" id="product-spec-publisher">{{product.publisher}}</td>
                         </tr>
                     </table>
                 </div>
@@ -59,8 +59,8 @@
 
             <!-- Compra -->
             <div id="product-purchase-container" class="product-bordered-container">
-                <h3 id="product-price">{{format_price(price)}}</h3>
-                <p id="product-price-alternative">{{format_price_installment(price, 8)}}</p>
+                <h3 id="product-price">{{format_price(product.price)}}</h3>
+                <p id="product-price-alternative">{{format_price_installment(product.price, 8)}}</p>
                 <button id="product-purchase-button" @click="go_to_cart()"> COMPRAR </button>
             </div>
 
@@ -78,7 +78,7 @@
     <!-- Descrição do produto -->
     <div id="product-description-container" class="product-container-div product-bordered-container">
         <h3 class="product-subtitle"> Descrição </h3>
-        <p id="product-description" class="text-common-color text-justify">{{description}}</p>
+        <p id="product-description" class="text-common-color text-justify">{{product.description}}</p>
     </div>
 
     <!-- Características adicionais do produto -->
@@ -87,19 +87,19 @@
         <table class="text-common-color">
             <tr> 
                 <td>Acabamento</td>
-                <td id="product-spec-finish">{{finishing}}</td>
+                <td id="product-spec-finish">{{product.finishing}}</td>
             </tr>
             <tr> 
                 <td>Ano da edição</td>
-                <td id="product-spec-edition">{{year}}</td>
+                <td id="product-spec-edition">{{product.year}}</td>
             </tr>
             <tr> 
                 <td>Idioma</td>
-                <td id="product-spec-language">{{language}}</td>
+                <td id="product-spec-language">{{product.language}}</td>
             </tr>
             <tr> 
                 <td>Número de páginas</td>
-                <td id="product-spec-pages">{{pages}}</td>
+                <td id="product-spec-pages">{{product.pages}}</td>
             </tr>
         </table>
     </div>
@@ -109,43 +109,55 @@
 <!-- .:::: SCRIPT ::::. -->
 <script>
 
+    // Para importação da base de dados local
+    import { getItem } from '@/utils/local-storage-management';
+
     // Lógica local
     export default {
 
         // Nome do componente para exportação
         name: 'ProductPage', 
 
-        // Caminhos das estrelas
+        // Dados locais
         data() {
             return {
+
+                // Caminhos das estrelas
                 full_star: null, 
                 half_star: null, 
                 null_star: null,
+
+                // Produto
+                product: {
+                    id: 0, 
+                    title: "", 
+                    price: 0.0, 
+                    rating: 0.0, 
+                    author: "",
+                    publisher: "",
+                    finishing: "", 
+                    year: 0, 
+                    language: "", 
+                    pages: 0, 
+                    description: "",
+                    img_src: "../assets/sample-books/404.jpg",
+                }, 
+                
+                // Para controle assíncrono
+                data_is_ready: false, 
             };
         }, 
 
-        // Obtenção dos caminhos das estrelas
+        // Obtenção dos caminhos das estrelas e do produto
         created() {
             this.full_star = require("@/assets/icons/full-star.svg");
             this.half_star = require("@/assets/icons/half-star.svg");
             this.null_star = require("@/assets/icons/null-star.svg");
+            getItem("book#" + this.$route.query.id).then(res => {
+                this.product = res;
+                this.data_is_ready = true;
+            });
         }, 
-
-        // Propriedades
-        props: {
-            id: Number, 
-            title: String, 
-            price: Number, 
-            rating: Number, 
-            author: String,
-            publisher: String,
-            finishing: String, 
-            year: Number, 
-            language: String, 
-            pages: String, 
-            description: String,
-            img_src: String,
-        },
 
         // Métodos auxiliares
         methods: {
@@ -165,7 +177,10 @@
         computed: {
             rating_stars: function(){
                 let stars = [0, 0, 0, 0, 0];
-                let rating = this.rating;
+                let rating = 5.0;
+                if(this.product != null){
+                    rating = this.product.rating;
+                }
                 let index = 0;
                 while(rating >= 1.0) {
                     stars[index] = this.full_star;

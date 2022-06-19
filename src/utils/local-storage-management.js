@@ -189,7 +189,7 @@ export async function startLocalStorage() {
 
     // Salva os livros
     books.forEach((book, index) => {
-        setItem(index, book);
+        setItem("book#" + (index + 1), book);
     });
 }
 
@@ -198,8 +198,8 @@ export async function startLocalStorage() {
 // Para carregamento da base de dados
 export async function loadLocalStorage() {
     let books = [];
-    for(let i = 0; i < 12; i++) {
-        getItem(i).then(res => {
+    for(let i = 1; i <= 12; i++) {
+        getItem("book#" + i).then(res => {
             books.push(res);
         });
     }

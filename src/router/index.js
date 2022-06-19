@@ -29,22 +29,6 @@ const routes = [
     path: '/product', 
     name: 'product', 
     component: ProductPage, 
-    props(route) {
-      return {
-        id: Number(route.params.id), 
-        title: route.params.title, 
-        price: Number(route.params.price), 
-        rating: Number(route.params.rating), 
-        author: route.params.author,
-        publisher: route.params.publisher,
-        finishing: route.params.finishing, 
-        year: Number(route.params.year), 
-        language: route.params.language, 
-        pages: route.params.pages, 
-        description: route.params.description,
-        img_src: route.params.img_src,
-      };
-    },
   }, 
 
   // Página de busca
