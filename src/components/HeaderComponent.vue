@@ -14,11 +14,6 @@
                 <!-- Campo de busca textual -->
                 <div id="header-top-bar-search">
                     <input @keyup.enter="search_by_title(search_string)" v-model="search_string" type="text" placeholder="O que você procura?" id="header-searcher">
-                    <!--
-                    <div id="header-top-bar-search-img-container">
-                        <img src="../assets/icons/search.svg" class="header-top-bar-img" id="header-top-bar-search-img">
-                    </div>
-                    -->
                 </div>
 
                 <!-- Perfil -->
@@ -39,7 +34,7 @@
             </div>
 
             <!-- Barra fixa inferior -->
-            <div id="header-bottom-bar">
+            <div class="header-bottom-bar" :class="{ 'header-bottom-bar--hidden': !show_bottom_bar }">
                 
                 <!-- Listagem de categorias -->
                 <div id="header-bot-bar-categories"> 
@@ -86,9 +81,19 @@
         data() {
             return {
                 search_string: "", 
-                logged: false,
+                logged: false, 
+                show_bottom_bar: true, 
+                last_scroll_position: 0, 
             };
         }, 
+
+        // Para escutar eventos de rolagem
+        mounted () {
+            window.addEventListener('scroll', this.on_scroll)
+        },
+        beforeUnmount () {
+            window.removeEventListener('scroll', this.on_scroll)
+        },
 
         // Métodos auxiliares
         methods: {
@@ -104,6 +109,19 @@
                 this.$router.push({name: "search", query: {target: str}});
                 window.scrollTo(0,0);
             }, 
+
+            // Rolagem
+            on_scroll() {
+
+                // Posição atual
+                const current_scroll_position = window.pageYOffset || document.documentElement.scrollTop;
+
+                // Verificação e atualização
+                if (Math.abs(this.last_scroll_position - current_scroll_position) > 80) {
+                    this.show_bottom_bar = current_scroll_position < this.last_scroll_position;
+                    this.last_scroll_position = current_scroll_position;
+                }
+            },
         }
     }
 </script>
@@ -138,6 +156,11 @@
         padding: 1rem 1rem;
         width: 100%;
         height: 60%;
+        max-height: 60%;
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
         background-color: var(--foreground-color);
         display: flex;
         overflow: hidden;
@@ -187,7 +210,6 @@
     /* Caixa de pesquisa */
     #header-searcher {
         justify-content: baseline;
-        /*width: 95%;*/
         width: 100%;
         height: 100%;
         border-radius: 8px;
@@ -196,25 +218,6 @@
         box-shadow: var(--box-shadow-minimized);
         padding-left: 1rem;
     }
-
-    /*
-    /\* Posiciona a imagem de pesquisa *\/
-    #header-top-bar-search-img-container {
-        justify-content: center;
-        display: flex;
-        width: 5%;
-        height: 100%;
-        background-color: var(--header-searcher-background-color);
-        border: var(--header-searcher-border);
-    }
-
-    /\* Imagem para a pesquisa *\/
-    #header-top-bar-search-img {
-        width: 100%;
-        height: 100%;
-        filter: brightness(0%);
-    }
-    */
 
 
     /* Seção para o status de usuário */
@@ -260,16 +263,25 @@
     /* **************** SEÇÃO INFERIOR DO HEADER **************** */
 
     /* Seção inferior da barra de navegação */
-    #header-bottom-bar {
-        /*padding: 1rem 1rem;*/
+    .header-bottom-bar {
         width: 100%;
         height: 40%;
+        position: absolute;
+        top: calc(60% + 2rem);
+        z-index: 0;
         background-color: var(--header-bottom-bar-background-color);
         box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.281);
         display: inline-flex;
         justify-content: space-around;
         align-items: center;
+        transform: translate3d(0, 0, 0);
+        transition: 0.1s all ease-out;
     }
+    .header-bottom-bar--hidden {
+        box-shadow: none;
+        transform: translate3d(0, -100%, 0);
+    }
+    
 
     /* Itens com links */
     .header-bot-bar-item {

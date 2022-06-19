@@ -53,7 +53,7 @@
     /* Contêiner de um mostrador de livros */
     .book-displayer-container {
         justify-content: baseline;
-        width: 20%;
+        width: 22%;
         height: auto;
         display: flex;
         align-items: center;
@@ -66,7 +66,7 @@
 
     /* Contém a imagem de capa do livro */
     .book-displayer-img-container {
-        width: 84%;
+        width: 70%;
         height: auto;
         box-shadow: var(--inner-box-shadow);
     }
@@ -74,7 +74,7 @@
     /* Imagem de capa do livro */
     .book-displayer-img {
         width: 100%;
-        height: calc(290px * 0.9);
+        height: calc(290px * 0.7);
         position: relative;
         z-index: -2;
     }
@@ -82,16 +82,16 @@
     /* Título do livro */
     .book-displayer-title {
         width: 80%;
-        white-space: nowrap;
+        white-space: normal;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-top: 0.6rem;
+        margin-top: 0.8rem;
         margin-bottom: 1.8rem;
         text-transform: uppercase;
         color: var(--text-color);
         font-size: 1.2rem;
-        height: 1.2rem;
-        max-height: 1.2rem;
+        height: 2.6rem;
+        max-height: 2.6rem;
     }
 
     /* Preço do título */
