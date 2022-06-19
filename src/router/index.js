@@ -8,7 +8,6 @@ import HomeView from '../views/HomeView.vue';
 import ProductView from '../views/ProductView.vue';
 import SearchView from '../views/SearchView.vue';
 
-
 // Rotas estabelecidas
 const routes = [
 

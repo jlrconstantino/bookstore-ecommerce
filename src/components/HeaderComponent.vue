@@ -45,7 +45,7 @@
                     </div>
                     <div v-if="show_categories_menu && show_bottom_bar" id="header-categories-hidden-menu">
                         <a 
-                            v-for="category in menu_categories" 
+                            v-for="category in this.$store.state.menu_categories" 
                             :key="category" 
                             @click="search_by_category(category)" 
                             class="hover-interaction-link header-bot-bar-text"
@@ -55,7 +55,7 @@
                 
                 <!-- Listagem de categorias em ênfase -->
                 <a 
-                    v-for="category in featured_categories" 
+                    v-for="category in this.$store.state.featured_categories" 
                     :key="category" 
                     @click="search_by_category(category)" 
                     class="hover-interaction-link header-bot-bar-text"
@@ -92,25 +92,6 @@
                 // Para controle da barra inferior do cabeçalho
                 show_bottom_bar: true, 
                 last_scroll_position: 0, 
-
-                // Para definir as categorias em ênfase
-                featured_categories: [
-                    "Mais Vendidos", 
-                    "Promoções", 
-                    "Lançamentos", 
-                    "Infantil", 
-                ], 
-
-                // Para definir as categorias no menu
-                menu_categories: [
-                    "Literatura Internacional", 
-                    "Literatura Brasileira", 
-                    "Ficção Científica", 
-                    "História", 
-                    "Biografia", 
-                    "Autoajuda", 
-                    "Psicologia",
-                ], 
 
                 // Para controlar o menu dropdown
                 show_categories_menu: false, 
