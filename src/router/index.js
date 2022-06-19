@@ -7,6 +7,7 @@ import CategoryView from '../views/CategoryView.vue';
 import HomeView from '../views/HomeView.vue';
 import ProductView from '../views/ProductView.vue';
 import SearchView from '../views/SearchView.vue';
+import UserView from '../views/UserView.vue';
 
 // Rotas estabelecidas
 const routes = [
@@ -44,6 +45,13 @@ const routes = [
     path: '/category', 
     name: 'category', 
     component: CategoryView, 
+  }, 
+
+  // Página de usuário
+  {
+    path: '/user', 
+    name: 'user', 
+    component: UserView, 
   }, 
 ];
 

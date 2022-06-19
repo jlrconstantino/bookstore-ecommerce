@@ -33,10 +33,9 @@
             <div id="footer-bot-left-section">
                 <h3 class="footer-bot-bar-text">Book Store</h3>
                 <p class="footer-bot-bar-text">© Todos os direitos reservados.</p>
-            </div>
 
-            <!-- Links -->
-            <div class="footer-bot-center-section">
+                <!-- Links -->
+                <br><br>
                 <h4 class="footer-bot-bar-text">Seções:</h4>
                 <a @click="go_to_page('home')" class="hover-interaction-link header-bot-bar-text">Página Principal</a>
                 <a @click="go_to_page('user')" class="hover-interaction-link header-bot-bar-text">Página de Usuário</a>
@@ -175,12 +174,14 @@
     }
 
     /* Organização espacial */
-    .footer-bot-center-section {
+    #footer-bot-left-section {
+        position: flex-start;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
     }
     #footer-bot-right-section {
+        position: flex-end;
         text-align: justify;
         width: 40%;
     }

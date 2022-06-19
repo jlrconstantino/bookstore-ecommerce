@@ -102,6 +102,13 @@
                             this.routes.length = 1;
                             break;
                         
+                        // Página de usuário
+                        case "user":
+                            page_name = "Usuário";
+                            this.pages.length = 1;
+                            this.routes.length = 1;
+                            break;
+                        
                         // Outros
                         default: 
                             break;

@@ -12,7 +12,7 @@ a {
 }
 
 /* Links com interação */
-.hover-interaction-link, .hover-interaction-link-alternative {
+.hover-interaction-link, .hover-interaction-link-alternative, .hover-interaction-link-darker {
     transition-duration: 0.3s;
     transition-timing-function: linear;
 }
@@ -22,6 +22,9 @@ a {
 .hover-interaction-link-alternative:hover {
     text-decoration: underline;
     color: var(--link-hover-color-alternative);
+}
+.hover-interaction-link-darker:hover {
+    color: var(--link-darker-hover-color);
 }
 
 /* Definições globais de estilização de texto */

@@ -191,6 +191,33 @@ export async function start_local_storage() {
     books.forEach((book, index) => {
         set_item("book#" + (index + 1), book);
     });
+
+    // Usuários
+    const users = [
+        {
+            id: 0, 
+            name: "Cliente", 
+            email: "customer@email.com", 
+            password: "123", 
+            birth: "16/09/1995", 
+            tel: "1199998888", 
+            role: "customer", 
+        }, 
+        {
+            id: 1, 
+            name: "Administrador", 
+            email: "admin@email.com", 
+            password: "123", 
+            birth: "02/11/2007", 
+            tel: "99111112222", 
+            role: "admin", 
+        }, 
+    ];
+
+    // Salva os usuários
+    users.forEach((user, index) => {
+        set_item("user#" + (index + 1), user);
+    });
 }
 
 

@@ -28,16 +28,29 @@ export default createStore({
 
     // Usuário ativo
     user: {
-      name: null, 
       id: null, 
+      name: null, 
+      role: null, 
     },
 
   },
 
+  // Métodos acessores customizados
   getters: {
   },
+
+  // Métodos modificadores
   mutations: {
+
+    // Modifica o usuário
+    set_user(state, id, name, role) {
+      state.user.id = id;
+      state.user.name = name;
+      state.user.role = role;
+    }, 
+
   },
+
   actions: {
   },
   modules: {

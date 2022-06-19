@@ -21,13 +21,16 @@
     --navigation-bar-background-color: #f2f2f2;;
 
     /* Sombra para os itens */
+    --box-border: 1px groove rgba(190, 190, 190, 0.9);
+    --box-red-border: 1px groove rgba(189, 75, 75, 0.9);
     --box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.281);
     --box-shadow-minimized: 0.1rem 0.1rem 0.25rem rgba(0, 0, 0, 0.281);
     --inner-box-shadow: inset 0px 0px 5px 2px rgba(0,0,0,0.6);
 
     /* Links */
     --link-hover-color: #69b1db;
-    --link-hover-color-alternative: #e6e6e6;
+    --link-hover-color-alternative: #d8d8d8;
+    --link-darker-hover-color: #2878a7;
 
     /* Cor de texto */
     --text-color: rgb(48, 48, 48);
