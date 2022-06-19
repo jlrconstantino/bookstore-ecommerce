@@ -27,7 +27,7 @@
         data() {
             return {
                 pages: ["Página Principal"], 
-                routes: [{name: "homepage"}], 
+                routes: [{name: "home"}], 
             };
         }, 
 

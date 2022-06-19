@@ -8,7 +8,7 @@
 
                 <!-- Título -->
                 <div id="header-top-bar-title">
-                    <img @click="go_to_page('homepage')" src="../assets/logo/logo.png" class="header-top-bar-img" id="header-logo-img">
+                    <img @click="go_to_page('home')" src="../assets/logo/logo.png" class="header-top-bar-img" id="header-logo-img">
                 </div>
 
                 <!-- Campo de busca textual -->

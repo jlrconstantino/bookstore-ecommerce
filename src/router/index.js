@@ -15,7 +15,7 @@ const routes = [
   // Página principal
   {
     path: '/', 
-    name: 'HomeView', 
+    name: 'home', 
     component: HomeView
   },
 
