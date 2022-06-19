@@ -2,10 +2,11 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-import { startLocalStorage } from "./utils/local-storage-management.js";
+import store from './store';
+import { start_local_storage } from "./utils/local-storage-management.js";
 
 // Inicialização do repositório local
-startLocalStorage();
+start_local_storage();
 
 // Criação do aplicativo
-createApp(App).use(router).mount('#app');
+createApp(App).use(store).use(router).mount('#app');

@@ -19,7 +19,7 @@
     export default {
         
         // Nome do componente
-        name: "SearchPage", 
+        name: "CategoryPage", 
 
         // Atribuição de componentes externos
         components: {
@@ -29,12 +29,14 @@
         // Para filtragem em tempo-real
         computed: {
             filtered_books: function() {
+                console.log(this.books);
                 try{
                     let pattern = new RegExp(this.$route.query.target.toLowerCase(), "g");
                     return this.$store.getters.books.filter(book => {
                         return pattern.test(book.title.toLowerCase());
                     });
                 }catch(exception){
+                    console.log(exception);
                     return [];
                 }
             }, 

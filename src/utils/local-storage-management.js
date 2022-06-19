@@ -2,18 +2,18 @@
 function later() {
     return new Promise((resolve) => setTimeout(resolve, 100));
 }
-export async function getItem(key) {
+export async function get_item(key) {
     later(); 
     return JSON.parse(localStorage.getItem(key));
 }
-export async function setItem(key, value) {
+export async function set_item(key, value) {
     later(); 
     localStorage.setItem(key, JSON.stringify(value));
 }
 
 
 // Inicialização do armazenamento local
-export async function startLocalStorage() {
+export async function start_local_storage() {
 
     // Livros
     let books = [
@@ -189,17 +189,17 @@ export async function startLocalStorage() {
 
     // Salva os livros
     books.forEach((book, index) => {
-        setItem("book#" + (index + 1), book);
+        set_item("book#" + (index + 1), book);
     });
 }
 
 
 
 // Para carregamento da base de dados
-export async function loadLocalStorage() {
+export async function load_local_storage_books() {
     let books = [];
     for(let i = 1; i <= 12; i++) {
-        getItem("book#" + i).then(res => {
+        get_item("book#" + i).then(res => {
             books.push(res);
         });
     }

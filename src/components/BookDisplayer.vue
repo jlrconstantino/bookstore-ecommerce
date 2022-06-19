@@ -18,7 +18,7 @@
         props: ['book'], 
         methods: {
             go_to_product_page(book) {
-                this.$router.push({name: 'product', query: {id: book.id}});
+                this.$router.push({name: 'product', query: {id: book.id}, params: {title: book.title}});
                 window.scrollTo(0,0);
             }, 
             format_price(price) {
@@ -73,8 +73,8 @@
         text-transform: uppercase;
         color: var(--text-color);
         font-size: 1.2rem;
-        height: 2.6rem;
-        max-height: 2.6rem;
+        height: 2.4rem;
+        max-height: 2.4rem;
     }
 
     /* Preço do título */

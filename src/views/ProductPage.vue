@@ -110,7 +110,7 @@
 <script>
 
     // Para importação da base de dados local
-    import { getItem } from '@/utils/local-storage-management';
+    import { get_item } from '@/utils/local-storage-management';
 
     // Lógica local
     export default {
@@ -153,7 +153,7 @@
             this.full_star = require("@/assets/icons/full-star.svg");
             this.half_star = require("@/assets/icons/half-star.svg");
             this.null_star = require("@/assets/icons/null-star.svg");
-            getItem("book#" + this.$route.query.id).then(res => {
+            get_item("book#" + this.$route.query.id).then(res => {
                 this.product = res;
                 this.data_is_ready = true;
             });

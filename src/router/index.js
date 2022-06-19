@@ -6,6 +6,7 @@ import CartPage from '../views/CartPage.vue';
 import HomePage from '../views/HomePage.vue';
 import ProductPage from '../views/ProductPage.vue';
 import SearchPage from '../views/SearchPage.vue';
+import CategoryPage from '../views/CategoryPage.vue';
 
 // Rotas estabelecidas
 const routes = [
@@ -36,6 +37,13 @@ const routes = [
     path: '/search', 
     name: 'search', 
     component: SearchPage, 
+  }, 
+
+  // Página de busca por categoria
+  {
+    path: '/category', 
+    name: 'category', 
+    component: CategoryPage, 
   }, 
 ];
 

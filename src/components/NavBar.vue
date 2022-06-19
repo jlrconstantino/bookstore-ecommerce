@@ -73,6 +73,9 @@
                     switch(to.name) {
                         case "product":
                             page_name = this.$route.params.title;
+                            if(page_name == null){
+                                page_name = "Produto";
+                            }
                             break;
                         case "cart":
                             page_name = "Carrinho de Compras";

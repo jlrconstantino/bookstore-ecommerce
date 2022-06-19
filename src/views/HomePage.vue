@@ -21,9 +21,6 @@
 <!-- .:::: SCRIPT ::::. -->
 <script>
 
-    // Para manipulação da base de dados local
-    import { loadLocalStorage } from "../utils/local-storage-management";
-
     // Componentes
     import BookSection from '../components/BookSection.vue';
     import PromotionalBanner from '../components/PromotionalBanner.vue';
@@ -43,16 +40,9 @@
         // Dados temporários
         data() {
             return {
-                books: [],
+                books: this.$store.getters.books,
             }
         },
-
-        // Carregamento da base de dados
-        created() {
-            loadLocalStorage().then(res => {
-                this.books = res;
-            });
-        }, 
     }
 </script>
 
