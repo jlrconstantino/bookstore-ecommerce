@@ -38,7 +38,7 @@
                 <br><br>
                 <h4 class="footer-bot-bar-text">Seções:</h4>
                 <a @click="go_to_page('home')" class="hover-interaction-link header-bot-bar-text">Página Principal</a>
-                <a @click="go_to_page('user')" class="hover-interaction-link header-bot-bar-text">Página de Usuário</a>
+                <a @click="go_to_page('account')" class="hover-interaction-link header-bot-bar-text">Página de Usuário</a>
                 <a @click="go_to_page('cart')" class="hover-interaction-link header-bot-bar-text">Carrinho de Compras</a>
                 <br>
                 <h4 class="footer-bot-bar-text">Principais Categorias:</h4>

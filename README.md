@@ -134,7 +134,7 @@ npm run lint
 
 ## 7. Problemas identificados
 
-- Problema de responsividade em ambientes variados: o BANNER na página principal fica um pouco deslocado para baixo em certos navegadores.
+- 
 
 ## 8. Comentários adicionais
 

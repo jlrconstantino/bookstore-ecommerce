@@ -2,12 +2,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 // Importação dos componentes das rotas
+import AccountView from '../views/AccountView.vue';
 import CartView from '../views/CartView.vue';
 import CategoryView from '../views/CategoryView.vue';
 import HomeView from '../views/HomeView.vue';
 import ProductView from '../views/ProductView.vue';
 import SearchView from '../views/SearchView.vue';
-import UserView from '../views/UserView.vue';
 
 // Rotas estabelecidas
 const routes = [
@@ -16,7 +16,7 @@ const routes = [
   {
     path: '/', 
     name: 'home', 
-    component: HomeView
+    component: HomeView, 
   },
 
   // Carrinho de compras
@@ -49,9 +49,12 @@ const routes = [
 
   // Página de usuário
   {
-    path: '/user', 
-    name: 'user', 
-    component: UserView, 
+    path: '/account', 
+    name: 'account', 
+    component: AccountView, 
+    children: [
+
+    ], 
   }, 
 ];
 

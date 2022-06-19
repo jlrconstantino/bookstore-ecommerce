@@ -18,11 +18,11 @@
 
                 <!-- Perfil -->
                 <div id="header-top-bar-user">
-                    <img @click="go_to_page('user')" src="../assets/icons/user-circle.svg" class="header-top-bar-img" id="header-top-bar-user-img">
+                    <img @click="go_to_page('account')" src="../assets/icons/user-circle.svg" class="header-top-bar-img" id="header-top-bar-user-img">
                     <div id="header-top-bar-user-text-container">
                         <p v-if="logged===false" class="header-top-bar-text header-top-bar-user-p1">Olá, bem-vindo(a)!</p>
-                        <p v-if="logged===false" @click="go_to_page('user')" class="hover-interaction-link-alternative header-top-bar-text header-top-bar-user-p2">Entre ou cadastre-se</p>
-                        <p v-if="logged===true" @click="go_to_page('user')" class="hover-interaction-link-alternative header-top-bar-text header-top-bar-user-p1">{{username}}</p>
+                        <p v-if="logged===false" @click="go_to_page('account')" class="hover-interaction-link-alternative header-top-bar-text header-top-bar-user-p2">Entre ou cadastre-se</p>
+                        <p v-if="logged===true" @click="go_to_page('account')" class="hover-interaction-link-alternative header-top-bar-text header-top-bar-user-p1">{{username}}</p>
                     </div>
                 </div>
 

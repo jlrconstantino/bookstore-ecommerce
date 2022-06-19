@@ -16,11 +16,12 @@
                 v-model="login_email"
                 @keyup.enter="login()"
                 :class="{
-                    'failed-input': !login_email_is_valid || login_email_is_empty, 
-                    'normal-input': login_email_is_valid && !login_email_is_empty
+                    'failed-input': !login_email_is_valid || login_email_is_empty || !login_email_is_registered, 
+                    'normal-input': login_email_is_valid && !login_email_is_empty && login_email_is_registered
                 }">
             <p v-if="!login_email_is_valid" class="failed-input-text">O e-mail informado é inválido.</p>
             <p v-if="login_email_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            <p v-if="!login_email_is_registered" class="failed-input-text">O e-mail informado não está cadastrado.</p>
 
             <!-- Seção de senha -->
             <p class="text-darker-color">Senha</p>
@@ -148,6 +149,7 @@
                 // Controle de email de login
                 login_email: "", 
                 login_email_is_valid: true, 
+                login_email_is_registered: true, 
                 login_email_is_empty: false, 
 
                 // Controle de senha de login
@@ -200,19 +202,38 @@
                 let pattern = "";
 
                 // Validação de e-mail
+                // Verificação de string vazia
                 if(this.login_email === ""){
                     this.login_email_is_empty = true;
                     this.login_email_is_valid = true;
+                    this.login_email_is_registered = true;
                     output = false;
-                }else{
+                }
+                // E-mail fornecido
+                else{
                     this.login_email_is_empty = false;
+
+                    // Padrão REGEX; não remover os comentários
                     /* eslint-disable */
                     pattern = new RegExp("^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+", "g");
                     /* eslint-enable */
+
+                    // Teste de formatação
                     if(pattern.test(this.login_email)){
                         this.login_email_is_valid = true;
-                    }else{
+
+                        // Verificação de usuário pré-existente
+                        if(this.users.some(user => {return user.email === this.login_email})) {
+                            this.login_email_is_registered = true;
+                        }else{
+                            this.login_email_is_registered = false;
+                            output = false;
+                        }
+                    }
+                    // Formatação inválida
+                    else{
                         this.login_email_is_valid = false;
+                        this.login_email_is_registered = true;
                         output = false;
                     }
                 }
