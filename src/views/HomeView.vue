@@ -32,7 +32,7 @@
     export default {
 
         // Nome do componente
-        name: 'HomePage',
+        name: 'HomeView',
 
         // Atribuição dos componentes
         components: {

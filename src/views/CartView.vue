@@ -104,7 +104,7 @@
     export default {
 
         // Nome da componente
-        name: 'CartPage',
+        name: 'CartView',
 
     }
 

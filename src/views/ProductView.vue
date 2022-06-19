@@ -116,7 +116,7 @@
     export default {
 
         // Nome do componente para exportação
-        name: 'ProductPage', 
+        name: 'ProductView', 
 
         // Dados locais
         data() {

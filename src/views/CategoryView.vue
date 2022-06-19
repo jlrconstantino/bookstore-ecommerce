@@ -1,9 +1,8 @@
 <!-- .:::: TEMPLATE ::::. -->
 <template>
     <div id="container">
-        <h2 class="subtitle">Resultado da Busca</h2>
+        <h2 class="subtitle">{{this.$route.query.target}}</h2>
         <p class="text-common-color">Produtos encontrados: {{filtered_books.length}}</p>
-        <p class="text-common-color">Pesquisa realizada: <span style="font-weight: bold;">{{this.$route.query.target}}</span></p>
     </div>
     <BookSection :books="filtered_books"></BookSection>
 </template>
@@ -22,7 +21,7 @@
     export default {
         
         // Nome do componente
-        name: "SearchPage", 
+        name: "CategoryView", 
 
         // Atribuição de componentes externos
         components: {

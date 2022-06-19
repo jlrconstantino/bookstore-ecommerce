@@ -30,15 +30,14 @@
         <div id="footer-bot-bar">
 
             <!-- Logo -->
-            <div>
-                <a href="index.html" class="no-style-link">
-                    <h3 id="footer-bot-bar-title" class="footer-bot-bar-text"> Título </h3>
-                </a>
+            <div style="position:flex-start;">
+                <h3 class="footer-bot-bar-text"> Book Store </h3>
+                <p class="footer-bot-bar-text"> © Todos os direitos reservados. </p>
             </div>
 
-            <!-- Informativo -->
-            <div>
-                <p class="footer-bot-bar-text"> © Todos os direitos reservados. </p>
+            <!-- Links -->
+            <div style="position:flex-end;">
+                <h4>Seções:</h4>
             </div>
 
         </div>
@@ -114,7 +113,7 @@
 
     /* Seção inferior da barra de navegação */
     #footer-bot-bar {
-        padding: 1rem 1rem;
+        padding: 2rem;
         width: 100%;
         max-height: 12vh;
         background-color: var(--footer-color);
@@ -123,29 +122,18 @@
         justify-content: space-around;
     }
 
-    /* Divisões */
-    #footer-bot-bar div {
-        justify-content: baseline;
-        align-items: center;
-        width: 30vw;
-        height: 8vh;
-    }
-
     /* Texto do título */
-    #footer-bot-bar-title {
-        height: 100%;
-        font-size: 5vh;
-
-        /* MEDIDA TEMPORÁRIA: REMOVER POSTERIORMENTE */
-        margin-left: 24vw;
+    #footer-bot-bar h3 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    #footer-bot-bar h4 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
     }
 
     /* Texto de rodapé */
     .footer-bot-bar-text {
-        font: 4vh;
         color: var(--text-color);
-
-        /* MEDIDA TEMPORÁRIA: REMOVER POSTERIORMENTE */
-        margin-right: 12vw;
     }
 </style>
