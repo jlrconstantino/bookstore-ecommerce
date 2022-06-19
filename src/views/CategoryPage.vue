@@ -1,9 +1,8 @@
 <!-- .:::: TEMPLATE ::::. -->
 <template>
     <div id="container">
-        <h2 class="subtitle">Resultado da Busca</h2>
+        <h2 class="subtitle">{{this.$route.query.target}}</h2>
         <p class="text-common-color">Produtos encontrados: {{filtered_books.length}}</p>
-        <p class="text-common-color">Pesquisa realizada: <span style="font-weight: bold;">{{this.$route.query.target}}</span></p>
     </div>
     <BookSection :books="filtered_books"></BookSection>
 </template>
@@ -14,6 +13,9 @@
 
     // Importação de componentes
     import BookSection from "../components/BookSection.vue";
+
+    // Para manipulação da base de dados local
+    import { load_local_storage_books } from "../utils/local-storage-management";
 
     // Lógica local
     export default {
@@ -26,17 +28,29 @@
             BookSection,
         }, 
 
+        // Dados locais
+        data() {
+            return {
+                books: [],
+            };
+        }, 
+
+        // Carregamento da base de dados
+        created() {
+            load_local_storage_books().then(res => {
+                this.books = res;
+            });
+        }, 
+
         // Para filtragem em tempo-real
         computed: {
             filtered_books: function() {
-                console.log(this.books);
                 try{
                     let pattern = new RegExp(this.$route.query.target.toLowerCase(), "g");
-                    return this.$store.getters.books.filter(book => {
+                    return this.books.filter(book => {
                         return pattern.test(book.title.toLowerCase());
                     });
                 }catch(exception){
-                    console.log(exception);
                     return [];
                 }
             }, 

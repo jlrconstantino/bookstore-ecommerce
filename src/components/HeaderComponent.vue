@@ -4,7 +4,7 @@
         <header>
 
             <!-- Barra fixa superior -->
-            <div id="header-top-bar"> 
+            <div id="header-top-bar" @mouseover="show_categories_menu = false"> 
 
                 <!-- Título -->
                 <div id="header-top-bar-title">
@@ -22,7 +22,7 @@
                     <div id="header-top-bar-user-text-container">
                         <p v-if="logged===false" class="header-top-bar-text header-top-bar-user-p1">Olá, bem-vindo(a)!</p>
                         <p v-if="logged===false" class="hover-interaction-link-alternative header-top-bar-text header-top-bar-user-p2">Entre ou cadastre-se</p>
-                        <p v-if="logged===true" class="hover-interaction-link-alternative header-top-bar-text header-top-bar-user-p1">Usuário</p>
+                        <p v-if="logged===true" class="hover-interaction-link-alternative header-top-bar-text header-top-bar-user-p1">{{username}}</p>
                     </div>
                 </div>
 
@@ -35,31 +35,32 @@
 
             <!-- Barra fixa inferior -->
             <div class="header-bottom-bar" :class="{ 'header-bottom-bar--hidden': !show_bottom_bar }">
+
+                <!-- Menu de categorias -->
+                <div id="header-categories-wrapper" @mouseover="show_categories_menu = true">
+                    <div id="header-categories-interface">
+                        <img src="../assets/icons/bars.svg">
+                        <button>Categorias</button>
+                        <img src="../assets/icons/angle-down.svg" :class="{'header-categories-image-hover': show_categories_menu}">
+                    </div>
+                    <div v-if="show_categories_menu && show_bottom_bar" id="header-categories-hidden-menu">
+                        <a 
+                            v-for="category in menu_categories" 
+                            :key="category" 
+                            @click="search_by_category(category)" 
+                            class="hover-interaction-link header-bot-bar-text"
+                        >{{category}}</a>
+                    </div>
+                </div>
                 
-                <!-- Listagem de categorias -->
-                <div id="header-bot-bar-categories"> 
-                    <a href="" class="hover-interaction-link header-bot-bar-text"> Categorias </a>
-                </div>
-
-                <!-- Mais vendidos -->
-                <div class="header-bot-bar-item">
-                    <a href="" class="hover-interaction-link header-bot-bar-text"> Mais vendidos </a>
-                </div>
-
-                <!-- Promoções -->
-                <div class="header-bot-bar-item">
-                    <a href="" class="hover-interaction-link header-bot-bar-text"> Promoções </a>
-                </div>
-
-                <!-- Lançamentos -->
-                <div class="header-bot-bar-item">
-                    <a href="" class="hover-interaction-link header-bot-bar-text"> Lançamentos </a>
-                </div>
-
-                <!-- Infantil -->
-                <div class="header-bot-bar-item">
-                    <a href="" class="hover-interaction-link header-bot-bar-text"> Infantil </a>
-                </div>
+                <!-- Listagem de categorias em ênfase -->
+                <a 
+                    v-for="category in featured_categories" 
+                    :key="category" 
+                    @click="search_by_category(category)" 
+                    class="hover-interaction-link header-bot-bar-text"
+                    @mouseover="show_categories_menu = false"
+                >{{category}}</a>
 
             </div>
 
@@ -80,25 +81,56 @@
         // Dados locais
         data() {
             return {
+
+                // Para pesquisa textual
                 search_string: "", 
+
+                // Para controle de usuário
+                username: null, 
                 logged: false, 
+
+                // Para controle da barra inferior do cabeçalho
                 show_bottom_bar: true, 
                 last_scroll_position: 0, 
+
+                // Para definir as categorias em ênfase
+                featured_categories: [
+                    "Mais Vendidos", 
+                    "Promoções", 
+                    "Lançamentos", 
+                    "Infantil", 
+                ], 
+
+                // Para definir as categorias no menu
+                menu_categories: [
+                    "Literatura Internacional", 
+                    "Literatura Brasileira", 
+                    "Ficção Científica", 
+                    "História", 
+                    "Biografia", 
+                    "Autoajuda", 
+                    "Psicologia",
+                ], 
+
+                // Para controlar o menu dropdown
+                show_categories_menu: false, 
             };
         }, 
 
-        // Para escutar eventos de rolagem
+        // Para escutar eventos de rolagem e de clique
         mounted () {
-            window.addEventListener('scroll', this.on_scroll)
+            window.addEventListener('scroll', this.on_scroll);
+            window.addEventListener('click', this.on_click);
         },
         beforeUnmount () {
-            window.removeEventListener('scroll', this.on_scroll)
+            window.removeEventListener('scroll', this.on_scroll);
+            window.removeEventListener('click', this.on_click);
         },
 
         // Métodos auxiliares
         methods: {
 
-            // Navegação
+            // Navegação comum
             go_to_page(name) {
                 this.$router.push({name: name});
                 window.scrollTo(0,0);
@@ -106,7 +138,16 @@
 
             // Pesquisa
             search_by_title(str) {
-                this.$router.push({name: "search", query: {target: str}});
+                if(str != ""){
+                    this.$router.push({name: "search", query: {target: str}});
+                    window.scrollTo(0,0);
+                    this.search_string = "";
+                }
+            }, 
+
+            // Busca por categoria
+            search_by_category(str){
+                this.$router.push({name: "category", query: {target: str}});
                 window.scrollTo(0,0);
             }, 
 
@@ -122,6 +163,25 @@
                     this.last_scroll_position = current_scroll_position;
                 }
             },
+
+            // Clique
+            on_click() {
+                this.show_categories_menu = false;
+            }
+        }, 
+
+        // Observação
+        watch: {
+
+            // Observa modificações de login
+            '$store.state.user'(to) {
+                this.username = to.name;
+                if(this.username != null){
+                    this.logged = true;
+                }else{
+                    this.logged = false;
+                }
+            }, 
         }
     }
 </script>
@@ -201,8 +261,8 @@
 
     /* Seção central da barra superior */
     #header-top-bar-search {
-        width: 42%;
-        height: 66%;
+        width: 45%;
+        height: 60%;
         justify-content: center;
         display: flex;
     }
@@ -249,7 +309,7 @@
 
     /* Seção direita da barra superior */
     #header-top-bar-shop {
-        width: 10%;
+        width: auto;
         justify-content: flex-end;
     }
 
@@ -272,7 +332,7 @@
         background-color: var(--header-bottom-bar-background-color);
         box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.281);
         display: inline-flex;
-        justify-content: space-around;
+        justify-content: space-evenly;
         align-items: center;
         transform: translate3d(0, 0, 0);
         transition: 0.1s all ease-out;
@@ -280,6 +340,63 @@
     .header-bottom-bar--hidden {
         box-shadow: none;
         transform: translate3d(0, -100%, 0);
+    }
+
+
+    /* Envólucro do menu de categorias */
+    #header-categories-wrapper {
+        width: auto;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    /* Menu de categorias */
+    #header-categories-interface {
+        height: 90%;
+        width: auto;
+        display: inline-flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    /* Botão do menu de categorias */
+    #header-categories-interface button {
+        height: 90%;
+        background-color: var(--header-bottom-bar-background-color);
+        font-size: 1rem;
+        padding-left: 1.5rem;
+        padding-right: 3.5rem;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        border: 0;
+    }
+
+    /* Ícones do menu de categorias */
+    #header-categories-interface img{
+        height: 60%;
+        filter: grayscale(1);
+        transition: 0.3s all ease-out;
+    }
+    .header-categories-image-hover {
+        transform: rotate(180deg);
+    }
+
+    /* Menu oculto */
+    #header-categories-hidden-menu {
+        position: absolute;
+        top: 100%;
+        width: 20%;
+        min-height: 10px;
+        background-color: var(--header-bottom-bar-background-color);
+        box-shadow: var(--box-shadow-minimized);
+        animation: menu 0.3s ease forwards;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.8rem;
+        gap: 0.8rem;
     }
     
 

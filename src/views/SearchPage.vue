@@ -15,6 +15,9 @@
     // Importação de componentes
     import BookSection from "../components/BookSection.vue";
 
+    // Para manipulação da base de dados local
+    import { load_local_storage_books } from "../utils/local-storage-management";
+
     // Lógica local
     export default {
         
@@ -26,12 +29,26 @@
             BookSection,
         }, 
 
+        // Dados locais
+        data() {
+            return {
+                books: [],
+            };
+        }, 
+
+        // Carregamento da base de dados
+        created() {
+            load_local_storage_books().then(res => {
+                this.books = res;
+            });
+        }, 
+
         // Para filtragem em tempo-real
         computed: {
             filtered_books: function() {
                 try{
                     let pattern = new RegExp(this.$route.query.target.toLowerCase(), "g");
-                    return this.$store.getters.books.filter(book => {
+                    return this.books.filter(book => {
                         return pattern.test(book.title.toLowerCase());
                     });
                 }catch(exception){

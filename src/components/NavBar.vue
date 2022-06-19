@@ -56,7 +56,7 @@
                 // Verificação indexada de rotas pré-existentes
                 let matches = 0;
                 for(let i = 0; i < this.routes.length && matches === 0; ++i){
-                    if(this.routes[i].name === to.name){
+                    if(this.routes[i].name === to.name && to.name != 'category'){
                         matches += 1;
 
                         // Truncamento da lista de rotas
@@ -71,20 +71,38 @@
                     // Construção do nome
                     let page_name = "";
                     switch(to.name) {
+
+                        // Página de produto
                         case "product":
                             page_name = this.$route.params.title;
                             if(page_name == null){
                                 page_name = "Produto";
                             }
                             break;
+
+                        // Carrinho de compras
                         case "cart":
                             page_name = "Carrinho de Compras";
                             break;
+
+                        // Página de busca textual
                         case "search": 
                             page_name = "Resultado da Busca";
                             this.pages.length = 1;
                             this.routes.length = 1;
                             break;
+                        
+                        // Página de busca por categoria
+                        case "category":
+                            page_name = this.$route.query.target;
+                            if(page_name == null){
+                                page_name = "Categoria";
+                            }
+                            this.pages.length = 1;
+                            this.routes.length = 1;
+                            break;
+                        
+                        // Outros
                         default: 
                             break;
                     }

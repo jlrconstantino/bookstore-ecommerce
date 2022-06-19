@@ -57,7 +57,7 @@
     /* Imagem de capa do livro */
     .book-displayer-img {
         width: 100%;
-        height: calc(290px * 0.7);
+        height: calc(290px * 0.8);
         position: relative;
         z-index: -2;
     }
