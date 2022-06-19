@@ -43,10 +43,10 @@ export default createStore({
   mutations: {
 
     // Modifica o usuário
-    set_user(state, id, name, role) {
-      state.user.id = id;
-      state.user.name = name;
-      state.user.role = role;
+    set_user(state, user) {
+      state.user.id = user.id;
+      state.user.name = user.name;
+      state.user.role = user.role;
     }, 
 
   },

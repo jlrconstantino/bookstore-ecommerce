@@ -72,6 +72,9 @@
 <!-- .:::: SCRIPT ::::. -->
 <script>
 
+    // Vuex
+    import store from '@/store/index.js';
+
     // Lógica local
     export default {
 
@@ -84,10 +87,6 @@
 
                 // Para pesquisa textual
                 search_string: "", 
-
-                // Para controle de usuário
-                username: null, 
-                logged: false, 
 
                 // Para controle da barra inferior do cabeçalho
                 show_bottom_bar: true, 
@@ -151,17 +150,15 @@
             }
         }, 
 
-        // Observação
-        watch: {
+        // Atributos computados
+        computed: {
 
             // Observa modificações de login
-            '$store.state.user'(to) {
-                this.username = to.name;
-                if(this.username != null){
-                    this.logged = true;
-                }else{
-                    this.logged = false;
-                }
+            logged: () => {
+                return store.state.user.id != null;
+            }, 
+            username: () => {
+                return store.state.user.name;
             }, 
         }
     }

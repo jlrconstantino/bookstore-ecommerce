@@ -38,7 +38,7 @@
             <a class="text-common-color hover-interaction-link-darker">Esqueceu sua senha?</a>
 
             <!-- Submit -->
-            <button @click="login()">Entrar</button>
+            <button @click="login()" @keyup.enter="login()">Entrar</button>
 
         </div>
 
@@ -119,7 +119,7 @@
             <p v-if="telephone_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
             
             <!-- Submit -->
-            <button @click="register()">Cadastrar</button>
+            <button @click="register()" @keyup.enter="register()">Cadastrar</button>
 
         </div>
     </div>
@@ -243,8 +243,7 @@
                             this.login_password_is_valid = true;
 
                             // Login
-                            this.$store.commit("set_user", filtered_users[0].id, filtered_users[0].name, filtered_users[0].role);
-                            alert("Login!");
+                            this.$store.commit("set_user", filtered_users[0]);
                         }
                         
                         // Senha inválida
@@ -376,7 +375,7 @@
                     this.users.push(new_user);
 
                     // Login
-                    this.$store.commit("set_user", new_user.id, new_user.name, new_user.role);
+                    this.$store.commit("set_user", new_user);
                 }
             }, 
 
