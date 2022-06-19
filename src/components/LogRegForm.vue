@@ -13,6 +13,8 @@
             <input 
                 type="email" 
                 placeholder="email@eee.com" 
+                v-model="login_email"
+                @keyup.enter="login()"
                 :class="{
                     'failed-input': !login_email_is_valid || login_email_is_empty, 
                     'normal-input': login_email_is_valid && !login_email_is_empty
@@ -24,7 +26,9 @@
             <p class="text-darker-color">Senha</p>
             <input 
                 type="password" 
+                v-model="login_password"
                 placeholder="⋅⋅⋅"
+                @keyup.enter="login()"
                 :class="{
                     'failed-input': !login_password_is_valid || login_password_is_empty, 
                     'normal-input': login_password_is_valid && !login_password_is_empty
@@ -34,7 +38,7 @@
             <a class="text-common-color hover-interaction-link-darker">Esqueceu sua senha?</a>
 
             <!-- Submit -->
-            <button>Entrar</button>
+            <button @click="login()">Entrar</button>
 
         </div>
 
@@ -48,19 +52,23 @@
             <p class="text-darker-color">Nome</p>
             <input 
                 type="text" 
+                v-model="name"
                 placeholder="" 
+                @keyup.enter="register()"
                 :class="{
                     'failed-input': !name_is_valid || name_is_empty, 
                     'normal-input': name_is_valid && !name_is_empty
                 }">
-            <p v-if="!name_is_valid" class="failed-input-text">O nome informado é inválido.</p>
+            <p v-if="!name_is_valid" class="failed-input-text">O nome informado é inválido (deve conter somente letras).</p>
             <p v-if="name_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
 
             <!-- Seção de e-mail -->
             <p class="text-darker-color">E-mail</p>
             <input 
                 type="email" 
+                v-model="reg_email"
                 placeholder="email@eee.com" 
+                @keyup.enter="register()"
                 :class="{
                     'failed-input': !reg_email_is_valid || reg_email_is_empty, 
                     'normal-input': reg_email_is_valid && !reg_email_is_empty
@@ -72,18 +80,22 @@
             <p class="text-darker-color">Senha</p>
             <input 
                 type="password" 
+                v-model="reg_password"
+                @keyup.enter="register()"
                 placeholder="⋅⋅⋅"
                 :class="{
                     'failed-input': !reg_password_is_valid || reg_password_is_empty, 
                     'normal-input': reg_password_is_valid && !reg_password_is_empty
                 }">
-            <p v-if="!reg_password_is_valid" class="failed-input-text">A senha informada é inválida.</p>
+            <p v-if="!reg_password_is_valid" class="failed-input-text">A senha deve conter, no mínimo, três caracteres.</p>
             <p v-if="reg_password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
 
             <!-- Seção de data de nascimento -->
             <p class="text-darker-color">Data de nascimento</p>
             <input 
                 type="date" 
+                v-model="birth_date"
+                @keyup.enter="register()"
                 placeholder="dd/mm/yyyy"
                 :class="{
                     'failed-input': !birth_date_is_valid || birth_date_is_empty, 
@@ -96,16 +108,18 @@
             <p class="text-darker-color">Telefone</p>
             <input 
                 type="tel" 
+                v-model="telephone"
+                @keyup.enter="register()"
                 placeholder="(99)99999-9999"
                 :class="{
-                    'failed-input': !phone_is_valid || phone_is_empty, 
-                    'normal-input': phone_is_valid && !phone_is_empty
+                    'failed-input': !telephone_is_valid || telephone_is_empty, 
+                    'normal-input': telephone_is_valid && !telephone_is_empty
                 }">
-            <p v-if="!phone_is_valid" class="failed-input-text">O telefone informado é inválido.</p>
-            <p v-if="phone_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            <p v-if="!telephone_is_valid" class="failed-input-text">O telefone informado é inválido.</p>
+            <p v-if="telephone_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
             
             <!-- Submit -->
-            <button>Cadastrar</button>
+            <button @click="register()">Cadastrar</button>
 
         </div>
     </div>
@@ -115,6 +129,9 @@
 <!-- .:::: SCRIPT ::::. -->
 <script>
 
+    // Para manipulação de base de dados local
+    import { set_item, load_local_storage_users } from "../utils/local-storage-management.js";
+
     // Lógica local
     export default {
 
@@ -123,37 +140,247 @@
         
         // Dados locais
         data() {
-            return {
+            return { 
+
+                // Usuários da base de dados
+                users: null, 
                 
                 // Controle de email de login
+                login_email: "", 
                 login_email_is_valid: true, 
                 login_email_is_empty: false, 
 
                 // Controle de senha de login
+                login_password: "", 
                 login_password_is_valid: true, 
                 login_password_is_empty: false, 
 
                 // Controle de nome de cadastro
+                name: "", 
                 name_is_valid: true, 
                 name_is_empty: false, 
 
                 // Controle de email de cadastro
+                reg_email: "", 
                 reg_email_is_valid: true, 
                 reg_email_is_empty: false, 
 
                 // Controle de senha de cadastro
+                reg_password: "", 
                 reg_password_is_valid: true, 
                 reg_password_is_empty: false, 
 
                 // Controle de data de nascimento de cadastro
+                birth_date: "", 
                 birth_date_is_valid: true, 
                 birth_date_is_empty: false, 
 
                 // Controle de telefone de cadastro
-                phone_is_valid: true, 
-                phone_is_empty: false, 
+                telephone: "", 
+                telephone_is_valid: true, 
+                telephone_is_empty: false, 
             };
-        }
+        }, 
+
+        // Leitura dos usuários da base de dados
+        created() {
+            load_local_storage_users().then(res => {
+                this.users = res;
+            });
+        }, 
+
+        // Métodos auxiliares
+        methods: {
+
+            // Validação de login
+            validate_login() {
+
+                // Para controle do resultado
+                let output = true;
+                let pattern = "";
+
+                // Validação de e-mail
+                if(this.login_email === ""){
+                    this.login_email_is_empty = true;
+                    this.login_email_is_valid = true;
+                    output = false;
+                }else{
+                    this.login_email_is_empty = false;
+                    /* eslint-disable */
+                    pattern = new RegExp("^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+", "g");
+                    /* eslint-enable */
+                    if(pattern.test(this.login_email)){
+                        this.login_email_is_valid = true;
+                    }else{
+                        this.login_email_is_valid = false;
+                        output = false;
+                    }
+                }
+
+                // Validação de senha (somente verificação de nulidade)
+                if(this.login_password === ""){
+                    this.login_password_is_empty = true;
+                    output = false;
+                }else{
+                    this.login_password_is_empty = false;
+                }
+
+                return output;
+            }, 
+
+            // Realização de login
+            login() {
+
+                // Validação inicial
+                if(this.validate_login() === true){
+
+                    // Busca pelo usuário
+                    let filtered_users = this.users.filter(user => {return user.email === this.login_email});
+                    if(filtered_users.length > 0){
+
+                        // Validação de senha
+                        if(filtered_users[0].password === this.login_password){
+                            this.login_password_is_valid = true;
+
+                            // Login
+                            this.$store.commit("set_user", filtered_users[0].id, filtered_users[0].name, filtered_users[0].role);
+                            alert("Login!");
+                        }
+                        
+                        // Senha inválida
+                        else{
+                            this.login_password_is_valid = false;
+                        }
+                    }else{
+                        this.login_password_is_valid = false;
+                    }
+                }
+            }, 
+
+            // Validação de registro
+            validate_register() {
+
+                // Para controle do resultado
+                let output = true;
+                let pattern = "";
+
+                // Validação de nome
+                if(this.name === ""){
+                    this.name_is_empty = true;
+                    this.name_is_valid = true;
+                    output = false;
+                }else{
+                    this.name_is_empty = false;
+                    pattern = new RegExp("^[a-zA-Z ]+$", "g");
+                    if(pattern.test(this.name)){
+                        this.name_is_valid = true;
+                    }else{
+                        this.name_is_valid = false;
+                        output = false;
+                    }
+                }
+
+                // Validação de e-mail
+                if(this.reg_email === ""){
+                    this.reg_email_is_empty = true;
+                    this.reg_email_is_valid = true;
+                    output = false;
+                }else{
+                    this.reg_email_is_empty = false;
+                    /* eslint-disable */
+                    pattern = new RegExp("^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+", "g");
+                    /* eslint-enable */
+                    if(pattern.test(this.reg_email)){
+                        this.reg_email_is_valid = true;
+                    }else{
+                        this.reg_email_is_valid = false;
+                        output = false;
+                    }
+                }
+
+                // Validação de senha
+                if(this.reg_password === ""){
+                    this.reg_password_is_empty = true;
+                    this.reg_password_is_valid = true;
+                    output = false;
+                }else{
+                    this.reg_password_is_empty = false;
+                    if(this.reg_password.length >= 3){
+                        this.reg_password_is_valid = true;
+                    }else{
+                        this.reg_password_is_valid = false;
+                        output = false;
+                    }
+                }
+
+                // Validação de data de nascimento
+                if(this.birth_date === ""){
+                    this.birth_date_is_empty = true;
+                    this.birth_date_is_valid = true;
+                    output = false;
+                }else{
+                    this.birth_date_is_empty = false;
+                    /* eslint-disable */
+                    pattern = new RegExp("^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "g");
+                    /* eslint-enable */
+                    if(pattern.test(this.birth_date)){
+                        this.birth_date_is_valid = true;
+                    }else{
+                        this.birth_date_is_valid = false;
+                        output = false;
+                    }
+                }
+
+                // Validação de telefone
+                if(this.telephone === ""){
+                    this.telephone_is_empty = true;
+                    this.telephone_is_valid = true;
+                    output = false;
+                }else{
+                    this.telephone_is_empty = false;
+                    /* eslint-disable */
+                    pattern = new RegExp("[0-9]+", "g");
+                    /* eslint-enable */
+                    if(pattern.test(this.telephone)){
+                        this.telephone_is_valid = true;
+                    }else{
+                        this.telephone_is_valid = false;
+                        output = false;
+                    }
+                }
+
+                return output;
+            }, 
+
+            // Cadastro de uma nova conta
+            register() {
+
+                // Validação
+                if(this.validate_register()){
+
+                    // Criação da nova conta
+                    let new_user = {
+                        id: this.users.length, 
+                        name: this.name, 
+                        email: this.reg_email, 
+                        password: this.reg_password, 
+                        birth: this.birth_date, 
+                        tel: this.tel, 
+                        role: "customer", 
+                    };
+
+                    // Adição da nova conta
+                    set_item("user#" + this.users.length, new_user);
+
+                    // Atualização dos usuários
+                    this.users.push(new_user);
+
+                    // Login
+                    this.$store.commit("set_user", new_user.id, new_user.name, new_user.role);
+                }
+            }, 
+
+        }, 
     }
 
 </script>
@@ -223,6 +450,7 @@
     }
     .failed-input-text {
         color: rgba(221, 52, 52, 0.9);
+        margin-bottom: 1rem;
     }
 
     /* Botão */

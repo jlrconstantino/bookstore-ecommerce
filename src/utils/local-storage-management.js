@@ -216,19 +216,36 @@ export async function start_local_storage() {
 
     // Salva os usuários
     users.forEach((user, index) => {
-        set_item("user#" + (index + 1), user);
+        set_item("user#" + index, user);
     });
 }
-
 
 
 // Para carregamento da base de dados
 export async function load_local_storage_books() {
     let books = [];
-    for(let i = 1; i <= 12; i++) {
-        get_item("book#" + i).then(res => {
-            books.push(res);
-        });
+    for(let i = 1;; i++) {
+        let response = await get_item("book#" + i);
+        if(response != null){
+            books.push(response);
+        }else{
+            break;
+        }
     }
     return books;
+}
+
+
+// Para carregamento dos usuários
+export async function load_local_storage_users() {
+    let users = [];
+    for(let i = 0;; i++) {
+        let response = await get_item("user#" + i);
+        if(response != null){
+            users.push(response);
+        }else{
+            break;
+        }
+    }
+    return users;
 }
