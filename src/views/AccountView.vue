@@ -1,7 +1,7 @@
 <!-- .:::: TEMPLATE ::::. -->
 <template>
     <LogRegForm v-if="!logged"></LogRegForm>
-    <UserPage v-if="logged"></UserPage>
+    <AccountNavigator v-if="logged"></AccountNavigator>
 </template>
 
 
@@ -13,7 +13,7 @@
 
     // Importação de componentes
     import LogRegForm from "../components/LogRegForm.vue";
-    import UserPage from "../components/UserPage.vue";
+    import AccountNavigator from "../components/AccountNavigator.vue";
 
     // Lógica local
     export default {
@@ -24,7 +24,7 @@
         // Registro de componentes
         components: {
             LogRegForm, 
-            UserPage, 
+            AccountNavigator, 
         }, 
 
         // Atributos computados

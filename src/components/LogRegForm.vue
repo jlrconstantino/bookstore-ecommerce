@@ -97,7 +97,7 @@
                 type="date" 
                 v-model="birth_date"
                 @keyup.enter="register()"
-                placeholder="dd/mm/yyyy"
+                placeholder="dd/mm/aaaa"
                 :class="{
                     'failed-input': !birth_date_is_valid || birth_date_is_empty, 
                     'normal-input': birth_date_is_valid && !birth_date_is_empty

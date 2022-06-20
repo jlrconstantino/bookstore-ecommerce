@@ -25,6 +25,7 @@
     --box-red-border: 1px groove rgba(189, 75, 75, 0.9);
     --box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.281);
     --box-shadow-minimized: 0.1rem 0.1rem 0.25rem rgba(0, 0, 0, 0.281);
+    --box-shadow-left: -0.175rem 0.175rem 0.5rem rgba(0, 0, 0, 0.281);
     --inner-box-shadow: inset 0px 0px 5px 2px rgba(0,0,0,0.6);
 
     /* Links */
