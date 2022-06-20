@@ -103,8 +103,8 @@
                             break;
                         
                         // Página de usuário
-                        case "user":
-                            page_name = "Usuário";
+                        case "account":
+                            page_name = "Minha Conta";
                             this.pages.length = 1;
                             this.routes.length = 1;
                             break;
