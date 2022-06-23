@@ -1,13 +1,17 @@
 // Importação dos elementos necessários para a construção de rotas
 import { createRouter, createWebHistory } from 'vue-router';
 
-// Importação dos componentes das rotas
+// Importação dos componentes de visão das rotas
 import AccountView from '../views/AccountView.vue';
 import CartView from '../views/CartView.vue';
 import CategoryView from '../views/CategoryView.vue';
 import HomeView from '../views/HomeView.vue';
 import ProductView from '../views/ProductView.vue';
 import SearchView from '../views/SearchView.vue';
+
+// Importação dos componentes auxiliares das rotas
+import LogRegForm from '@/components/LogRegForm.vue';
+import AccountNavigator from '@/components/AccountNavigator.vue';
 
 // Rotas estabelecidas
 const routes = [
@@ -53,7 +57,8 @@ const routes = [
     name: 'account', 
     component: AccountView, 
     children: [
-
+      {path: 'profile', component: AccountNavigator}, 
+      {path: 'login', component: LogRegForm}, 
     ], 
   }, 
 ];

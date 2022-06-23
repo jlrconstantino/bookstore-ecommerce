@@ -75,7 +75,8 @@
         min-height: 12.0rem;
         padding: 1rem;
         float: right;
-        border: 1px groove rgba(230, 230, 230, 0.9);
+        border: var(--box-light-border);
+        box-shadow: var(--box-shadow-left);
     }
 
     /* Elementos do menu lateral */
@@ -88,6 +89,7 @@
         font-size: 1.2rem;
         color: var(--text-color);
         box-shadow: var(--box-shadow-left);
+        /*border: var(--box-light-border);*/
         transition-duration: 0.3s;
         transition-timing-function: linear;
     }

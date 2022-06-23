@@ -27,6 +27,11 @@ a {
     color: var(--link-darker-hover-color);
 }
 
+/* Cursor de link */
+a, router-link, .hover-interaction-link:hover, .hover-interaction-link-alternative:hover, .hover-interaction-link-darker:hover {
+    cursor: pointer;
+}
+
 /* Definições globais de estilização de texto */
 p, h1, h2, h3, h4, h5, h6 {font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;}
 p, a {font-size: 1rem;}
