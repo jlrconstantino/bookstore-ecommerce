@@ -1,17 +1,21 @@
 // Importação dos elementos necessários para a construção de rotas
 import { createRouter, createWebHistory } from 'vue-router';
 
-// Importação dos componentes de visão das rotas
-import AccountView from '../views/AccountView.vue';
-import CartView from '../views/CartView.vue';
-import CategoryView from '../views/CategoryView.vue';
-import HomeView from '../views/HomeView.vue';
-import ProductView from '../views/ProductView.vue';
-import SearchView from '../views/SearchView.vue';
+// Importação do Vuex
+import store from '@/store/index.js';
 
-// Importação dos componentes auxiliares das rotas
+// Importação dos componentes das rotas
+import AccountWrapperView from '@/views/AccountWrapperView.vue';
+import AccountNavigationView from '@/views/AccountNavigationView.vue';
+import CartView from '@/views/CartView.vue';
+import CategoryView from '@/views/CategoryView.vue';
+import HomeView from '@/views/HomeView.vue';
 import LogRegForm from '@/components/LogRegForm.vue';
-import AccountNavigator from '@/components/AccountNavigator.vue';
+import ProductView from '@/views/ProductView.vue';
+import ProfileData from '@/components/ProfileData.vue';
+import ProfileSecurity from '@/components/ProfileSecurity.vue';
+import ProfilePayment from '@/components/ProfilePayment.vue';
+import SearchView from '@/views/SearchView.vue';
 
 // Rotas estabelecidas
 const routes = [
@@ -51,14 +55,49 @@ const routes = [
     component: CategoryView, 
   }, 
 
-  // Página de usuário
+  // Página da conta de usuário
   {
     path: '/account', 
     name: 'account', 
-    component: AccountView, 
+    component: AccountWrapperView, 
     children: [
-      {path: 'profile', component: AccountNavigator}, 
-      {path: 'login', component: LogRegForm}, 
+
+      // Página de login/registro
+      {
+        path: 'login', 
+        name: 'login', 
+        component: LogRegForm
+      }, 
+
+      // Página de perfil do usuário (requer autenticação)
+      {
+        path: 'profile', 
+        name: 'profile', 
+        component: AccountNavigationView, 
+        meta: {
+          requires_authentication: true, 
+        }, 
+        children: [
+
+          // Página de dados pessoais do usuário
+          {
+            path: 'data', 
+            component: ProfileData
+          }, 
+
+          // Página de métodos de pagamento do usuário
+          {
+            path: 'payment-methods', 
+            component: ProfilePayment
+          }, 
+
+          // Página de dados de segurança do usuário
+          {
+            path: 'security', 
+            component: ProfileSecurity
+          }, 
+        ], 
+      }, 
     ], 
   }, 
 ];
@@ -68,6 +107,19 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
+
+// Para verificação de autenticação do usuário
+router.beforeEach((to, _, next) => {
+  if (to.matched.some(record => record.meta.requires_authentication)) {
+    if (store.getters.is_authenticated) {
+      next();
+    } else {
+      next({name: 'login'})
+    }
+  } else {
+    next();
+  }
+})
 
 // Exportação do roteador para uso externo
 export default router;

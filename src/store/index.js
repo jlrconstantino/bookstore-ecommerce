@@ -2,7 +2,7 @@
 import { createStore } from 'vuex';
 
 // Para compartilhamento de estados
-export default createStore({
+const store = createStore({
 
   // Estados compartilhados
   state: {
@@ -37,6 +37,12 @@ export default createStore({
 
   // Métodos acessores customizados
   getters: {
+
+    // Para verificar autenticação
+    is_authenticated(state) {
+      return state.user.id != null;
+    },
+
   },
 
   // Métodos modificadores
@@ -56,3 +62,6 @@ export default createStore({
   modules: {
   }
 })
+
+// Exportação
+export default store;

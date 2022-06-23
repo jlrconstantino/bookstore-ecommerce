@@ -8,14 +8,14 @@
 
             <!-- Menu lateral -->
             <div id="left-container" class="">
-                <a class="left-container-item">Dados Pessoais</a>
-                <a class="left-container-item">Formas de Pagamento</a>
-                <a class="left-container-item">Segurança</a>
+                <router-link to="/account/profile/data" class="left-container-item">Dados Pessoais</router-link>
+                <router-link to="/account/profile/payment-methods" class="left-container-item">Formas de Pagamento</router-link>
+                <router-link to="/account/profile/security" class="left-container-item">Segurança</router-link>
             </div>
 
             <!-- Seção de visualização -->
             <div id="right-container">
-                <p>A</p>
+                <router-view></router-view>
             </div>
 
         </div>
@@ -30,7 +30,7 @@
     export default {
 
         // Nome do componente
-        name: 'AccountNavigator', 
+        name: 'AccountNavigationView', 
 
         // Atributos computados
         computed: {

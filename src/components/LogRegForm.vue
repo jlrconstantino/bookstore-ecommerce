@@ -265,6 +265,7 @@
 
                             // Login
                             this.$store.commit("set_user", filtered_users[0]);
+                            this.$router.push({name: 'home'});
                         }
                         
                         // Senha inválida
@@ -397,6 +398,7 @@
 
                     // Login
                     this.$store.commit("set_user", new_user);
+                    this.$router.push({name: 'home'});
                 }
             }, 
 
