@@ -8,9 +8,13 @@
 
             <!-- Menu lateral -->
             <div id="left-container" class="">
-                <router-link to="/account/profile/data" class="left-container-item">Dados Pessoais</router-link>
-                <router-link to="/account/profile/payment-methods" class="left-container-item">Formas de Pagamento</router-link>
-                <router-link to="/account/profile/security" class="left-container-item">Segurança</router-link>
+                <router-link 
+                    v-for="option in sidebar_options" 
+                    @click="set_title(option.title)"
+                    :key="option" 
+                    :to="option.to" 
+                    class="left-container-item"
+                >{{option.title}}</router-link>
             </div>
 
             <!-- Seção de visualização -->
@@ -32,15 +36,29 @@
         // Nome do componente
         name: 'AccountNavigationView', 
 
-        // Atributos computados
-        computed: {
+        // Dados locais
+        data() {
+            return {
 
-            // Título da página
-            page_title: () => {
-                return "Dados Pessoais";
-            }, 
+                // Para controle do título da página
+                page_title: "Dados Pessoais", 
 
-        },
+                // Opções do menu lateral
+                sidebar_options: [
+                    {to: {name: 'profile-data'}, title: "Dados Pessoais"}, 
+                    {to: {name: 'profile-payment-methods'}, title: "Métodos de Pagamento"}, 
+                    {to: {name: 'profile-security'}, title: "Segurança"}, 
+                ], 
+
+            };
+        }, 
+
+        // Métodos auxiliares
+        methods: {
+            set_title(title) {
+                this.page_title = title;
+            }
+        }, 
     }
 
 </script>

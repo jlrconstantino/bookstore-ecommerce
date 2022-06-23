@@ -55,14 +55,18 @@
 
                 // Verificação indexada de rotas pré-existentes
                 let matches = 0;
-                for(let i = 0; i < this.routes.length && matches === 0; ++i){
-                    if(this.routes[i].name === to.name && to.name != 'category'){
-                        matches += 1;
+                try {
+                    for(let i = 0; i < this.routes.length && matches === 0; ++i){
+                        if(this.routes[i].name === to.name && to.name != 'category'){
+                            matches += 1;
 
-                        // Truncamento da lista de rotas
-                        this.pages.length = i + 1;
-                        this.routes.length = i + 1;
+                            // Truncamento da lista de rotas
+                            this.pages.length = i + 1;
+                            this.routes.length = i + 1;
+                        }
                     }
+                }catch(_){
+                    // Nada a fazer
                 }
 
                 // Adição de rota
@@ -102,15 +106,44 @@
                             this.routes.length = 1;
                             break;
                         
-                        // Página de usuário
-                        case "account":
+                        // Login
+                        case "login":
+                            page_name = "Login";
+                            this.pages.length = 1;
+                            this.routes.length = 1;
+                            break;
+                        
+                        // Página de perfil
+                        case "profile" || "account":
                             page_name = "Minha Conta";
+                            this.pages.length = 1;
+                            this.routes.length = 1;
+                            break;
+                        
+                        // Dados pessoais
+                        case "profile-data":
+                            page_name = "Dados Pessoais";
+                            this.pages.length = 1;
+                            this.routes.length = 1;
+                            break;
+                        
+                        // Métodos de pagamento
+                        case "profile-payment-methods":
+                            page_name = "Métodos de Pagamento";
+                            this.pages.length = 1;
+                            this.routes.length = 1;
+                            break;
+                        
+                        // Segurança de conta
+                        case "profile-security":
+                            page_name = "Segurança";
                             this.pages.length = 1;
                             this.routes.length = 1;
                             break;
                         
                         // Outros
                         default: 
+                            page_name = "Página"
                             break;
                     }
 

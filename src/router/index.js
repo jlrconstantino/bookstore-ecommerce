@@ -59,6 +59,7 @@ const routes = [
   {
     path: '/account', 
     name: 'account', 
+    redirect: {name: 'login'}, 
     component: AccountWrapperView, 
     children: [
 
@@ -74,6 +75,7 @@ const routes = [
         path: 'profile', 
         name: 'profile', 
         component: AccountNavigationView, 
+        redirect: {name: 'profile-data'}, 
         meta: {
           requires_authentication: true, 
         }, 
@@ -81,18 +83,21 @@ const routes = [
 
           // Página de dados pessoais do usuário
           {
+            name: 'profile-data', 
             path: 'data', 
             component: ProfileData
           }, 
 
           // Página de métodos de pagamento do usuário
           {
+            name: 'profile-payment-methods', 
             path: 'payment-methods', 
             component: ProfilePayment
           }, 
 
           // Página de dados de segurança do usuário
           {
+            name: 'profile-security', 
             path: 'security', 
             component: ProfileSecurity
           }, 
