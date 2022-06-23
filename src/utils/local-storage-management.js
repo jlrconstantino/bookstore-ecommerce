@@ -10,6 +10,10 @@ export async function set_item(key, value) {
     later(); 
     localStorage.setItem(key, JSON.stringify(value));
 }
+export async function delete_item(key) {
+    later();
+    localStorage.delete_item(key);
+}
 
 
 // Inicialização do armazenamento local
