@@ -12,6 +12,7 @@ import CategoryView from '@/views/CategoryView.vue';
 import HomeView from '@/views/HomeView.vue';
 import LogRegForm from '@/components/LogRegForm.vue';
 import ProductView from '@/views/ProductView.vue';
+import ProfileAddresses from '@/components/ProfileAddresses.vue';
 import ProfileData from '@/components/ProfileData.vue';
 import ProfilePayment from '@/components/ProfilePayment.vue';
 import SearchView from '@/views/SearchView.vue';
@@ -92,6 +93,13 @@ const routes = [
             name: 'profile-payment-methods', 
             path: 'payment-methods', 
             component: ProfilePayment
+          }, 
+
+          // Página de endereços de entrega do usuário
+          {
+            name: 'profile-addresses', 
+            path: 'addresses', 
+            component: ProfileAddresses
           }, 
         ], 
       }, 

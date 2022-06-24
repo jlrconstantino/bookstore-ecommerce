@@ -48,6 +48,7 @@
                 sidebar_options: [
                     {to: {name: 'profile-data'}, title: "Dados Pessoais"}, 
                     {to: {name: 'profile-payment-methods'}, title: "Métodos de Pagamento"}, 
+                    {to: {name: 'profile-addresses'}, title: "Endereços de Entrega"}, 
                 ], 
 
             };
