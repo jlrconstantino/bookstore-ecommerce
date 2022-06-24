@@ -30,7 +30,7 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 ### 1.2. Páginas
 
-- A todo usuário não cadastrado, deve ser permitido acessar as páginas inicial, de apresentação, de produto e de pesquisa, em que esta pode envolver uma categoria cadastrada ou uma busca textual por parte do usuário.
+- A todo usuário não cadastrado, deve ser permitido acessar as páginas inicial, de produto e de pesquisa, em que esta pode envolver uma categoria cadastrada ou uma busca textual por parte do usuário.
 
 - A todo usuário cadastrado, deve ser permitido acessar as páginas de perfil, de carrinho e de finalização de compra.
 
