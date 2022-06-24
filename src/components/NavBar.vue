@@ -140,6 +140,20 @@
                             this.pages.length = 1;
                             this.routes.length = 1;
                             break;
+
+                        // Gerenciar usuários
+                        case "manage-users":
+                            page_name = "Gerenciar Usuários";
+                            this.pages.length = 1;
+                            this.routes.length = 1;
+                            break;
+
+                        // Gerenciar produtos
+                        case "manage-products":
+                            page_name = "Gerenciar Produtos";
+                            this.pages.length = 1;
+                            this.routes.length = 1;
+                            break;
                         
                         // Outros
                         default: 
