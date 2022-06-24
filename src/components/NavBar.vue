@@ -133,6 +133,13 @@
                             this.pages.length = 1;
                             this.routes.length = 1;
                             break;
+
+                        // Endereços de entrega
+                        case "profile-addresses":
+                            page_name = "Endereços de Entrega";
+                            this.pages.length = 1;
+                            this.routes.length = 1;
+                            break;
                         
                         // Outros
                         default: 

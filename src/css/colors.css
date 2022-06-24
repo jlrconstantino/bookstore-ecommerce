@@ -5,7 +5,8 @@
     --background-color: #F7F7F7;
     --foreground-color: #4fa7da;
     --footer-color: #E0E0E0;
-    --emphasis-color: rgba(240, 208, 208, 0.7);;
+    --blue-emphasis-color: rgba(208, 228, 240, 0.7);
+    --red-emphasis-color: rgba(240, 208, 208, 0.7);
 
     /* Botões */
     --standard-button-color: #4fa7da;

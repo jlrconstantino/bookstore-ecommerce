@@ -43,6 +43,11 @@ const store = createStore({
       return state.user.id != null;
     },
 
+    // Para verificar permissões administrativas
+    is_admin(state) {
+      return state.user.role === 'admin';
+    },
+
   },
 
   // Métodos modificadores

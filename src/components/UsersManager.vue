@@ -1,7 +1,7 @@
 <!-- .:::: TEMPLATE ::::. -->
 <template>
     <div>
-        <p>Métodos de Pagamento</p>
+        <p>Gerenciar Usuários</p>
     </div>
 </template>
 
@@ -13,7 +13,7 @@
     export default {
 
         // Nome do componente
-        name: "ProfilePayment", 
+        name: "UsersManager", 
 
     }
 

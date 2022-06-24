@@ -11,11 +11,13 @@ import CartView from '@/views/CartView.vue';
 import CategoryView from '@/views/CategoryView.vue';
 import HomeView from '@/views/HomeView.vue';
 import LogRegForm from '@/components/LogRegForm.vue';
+import ProductsManager from '@/components/ProductsManager.vue';
 import ProductView from '@/views/ProductView.vue';
 import ProfileAddresses from '@/components/ProfileAddresses.vue';
 import ProfileData from '@/components/ProfileData.vue';
 import ProfilePayment from '@/components/ProfilePayment.vue';
 import SearchView from '@/views/SearchView.vue';
+import UsersManager from '@/components/UsersManager.vue';
 
 // Rotas estabelecidas
 const routes = [
@@ -101,6 +103,26 @@ const routes = [
             path: 'addresses', 
             component: ProfileAddresses
           }, 
+
+          // Página de gerenciamento de usuários
+          {
+            name: 'manage-users', 
+            path: 'manage-users', 
+            component: UsersManager, 
+            meta: {
+              requires_admin_role: true, 
+            }, 
+          }, 
+
+          // Página de gerenciamento de produtos
+          {
+            name: 'manage-products', 
+            path: 'manage-products', 
+            component: ProductsManager, 
+            meta: {
+              requires_admin_role: true, 
+            }, 
+          }, 
         ], 
       }, 
     ], 
@@ -115,13 +137,41 @@ const router = createRouter({
 
 // Para verificação de autenticação do usuário
 router.beforeEach((to, _, next) => {
+
+  // Verifica necessidade de autenticação
   if (to.matched.some(record => record.meta.requires_authentication)) {
+
+    // Verifica autenticação
     if (store.getters.is_authenticated) {
-      next();
-    } else {
-      next({name: 'login'})
+
+      // Verifica necessidade de permissões administrativas
+      if (to.matched.some(record => record.meta.requires_admin_role)) {
+
+        // Verifica permissão administrativa
+        if(store.getters.is_admin){
+          next();
+        }
+
+        // Não é um administrador
+        else{
+          next({name: 'login'})
+        }
+      }
+
+      // Não necessita de permissões administrativas
+      else{
+        next();
+      }
+    } 
+    
+    // Usuário não autenticado
+    else {
+      next({name: 'login'});
     }
-  } else {
+  } 
+  
+  // Página não necessita autenticação
+  else {
     next();
   }
 })

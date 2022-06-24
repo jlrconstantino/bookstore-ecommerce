@@ -1,7 +1,7 @@
 <!-- .:::: TEMPLATE ::::. -->
 <template>
     <div>
-        <p>Formas de Pagamento</p>
+        <p>Endereços de Entrega</p>
     </div>
 </template>
 

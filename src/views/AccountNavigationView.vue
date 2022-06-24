@@ -7,7 +7,9 @@
         <div id="main-container">
 
             <!-- Menu lateral -->
-            <div id="left-container" class="">
+            <div id="left-container">
+
+                <!-- Itens comuns -->
                 <router-link 
                     v-for="option in sidebar_options" 
                     @click="set_title(option.title)"
@@ -15,6 +17,19 @@
                     :to="option.to" 
                     class="left-container-item"
                 >{{option.title}}</router-link>
+
+                <!-- Itens administrativos -->
+                <template v-if="this.$store.getters.is_admin">
+                    <router-link 
+                        v-for="option in sidebar_admin_options" 
+                        @click="set_title(option.title)"
+                        :key="option" 
+                        :to="option.to" 
+                        class="left-container-item admin-item"
+                    >{{option.title}}</router-link>
+                </template>
+
+                <!-- Logout -->
                 <a id="logout-text" class="left-container-item" @click="logout()">Sair</a>
             </div>
 
@@ -50,7 +65,12 @@
                     {to: {name: 'profile-payment-methods'}, title: "Métodos de Pagamento"}, 
                     {to: {name: 'profile-addresses'}, title: "Endereços de Entrega"}, 
                 ], 
-
+                
+                // Opções administrativas do menu lateral
+                sidebar_admin_options: [
+                    {to: {name: 'manage-users'}, title: "Gerenciar Usuários"}, 
+                    {to: {name: 'manage-products'}, title: "Gerenciar Produtos"}, 
+                ], 
             };
         }, 
 
@@ -120,13 +140,17 @@
     .left-container-item:hover {
         color: var(--link-hover-color);
     }
+    .admin-item {
+        color: var(--review-text-color);
+        background-color: var(--blue-emphasis-color);
+    }
 
     /* Logout */
     #logout-text {
         font-size: 1.2rem;
         color: var(--red-text-color);
         text-decoration: underline;
-        background-color: var(--emphasis-color);
+        background-color: var(--red-emphasis-color);
     }
     #logout-text:hover {
         color: var(--dark-red-text-color);
