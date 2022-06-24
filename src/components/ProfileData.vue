@@ -1,6 +1,11 @@
 <!-- .:::: TEMPLATE ::::. -->
 <template>
-    <div>
+
+    <!-- Informações -->
+    <h2 v-if="!updating_data && !updating_security">Informações</h2>
+    <button @click="start_data_updates()" v-if="!updating_data && !updating_security" class="standard-button">Alterar Dados</button>
+    <div v-if="updating_data">
+
         <!-- Nome -->
         <h2>Nome</h2>
         <p class="info-container normal-input-text" v-if="!updating_data">{{user_data.name}}</p>
@@ -62,10 +67,48 @@
             <p v-if="password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
         </div>
             
-        <!-- Alterar -->
-        <button @click="updating_data = true" v-if="!updating_data" class="standard-button">Alterar Dados</button>
-        <button @click="update_data()" v-if="updating_data" class="standard-button">Salvar Alterações</button>
+        <!-- Alterar dados pessoais -->
+        <div v-if="updating_data" class="update-buttons-section">
+            <button @click="update_data()" class="standard-button">Salvar Alterações</button>
+            <button @click="cancel_data_updates(true)" class="gray-button">Cancelar</button>
+        </div>
     </div>
+
+    <!-- Segurança -->
+    <h2 v-if="!updating_security && !updating_data" id="security-label">Segurança</h2>
+    <button @click="start_security_updates()" v-if="!updating_security && !updating_data" class="standard-button">Alterar Senha</button>
+    <div v-if="updating_security">
+
+        <!-- Senha antiga -->
+        <h2>Senha Anterior</h2>
+        <input 
+            v-model="old_password" 
+            placeholder="⋅⋅⋅"
+            type="password" 
+            class="info-container text"
+            :class="{'normal-input-text': old_password_is_valid && !old_password_is_empty}">
+        <p v-if="!old_password_is_valid" class="failed-input-text">A senha informada é inválida.</p>
+        <p v-if="old_password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+
+        <!-- Nova Senha -->
+        <h2>Nova Senha</h2>
+        <input 
+            v-model="new_password" 
+            placeholder="⋅⋅⋅"
+            type="password" 
+            class="info-container text"
+            :class="{'normal-input-text': new_password_is_valid && !new_password_is_empty}">
+        <p v-if="!new_password_is_valid" class="failed-input-text">A senha informada é inválida.</p>
+        <p v-if="new_password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+
+        <!-- Botões de alteração -->
+        <div class="update-buttons-section">
+            <button @click="update_security()" class="standard-button">Salvar Senha</button>
+            <button @click="cancel_security_updates(true)" class="gray-button">Cancelar</button>
+        </div>
+
+    </div>
+
 </template>
 
 
@@ -99,6 +142,7 @@
 
                 // Para controlar habilitação de alterações
                 updating_data: false, 
+                updating_security: false, 
 
                 // Controle de nome de alteração
                 name_is_valid: true, 
@@ -116,10 +160,18 @@
                 telephone_is_valid: true, 
                 telephone_is_empty: false, 
 
-                // Controle de senha
+                // Controle de senha (dados pessoais)
                 input_password: "", 
                 password_is_valid: true, 
                 password_is_empty: false, 
+
+                // Controle de senha (segurança)
+                old_password: "", 
+                new_password: "", 
+                old_password_is_valid: true, 
+                old_password_is_empty: false, 
+                new_password_is_valid: true, 
+                new_password_is_empty: false, 
             };
         }, 
 
@@ -133,8 +185,16 @@
         // Métodos auxiliares
         methods: {
 
-            // Validação de alterações
-            validate_updates() {
+            // Inicializa as alterações dos dados pessoais
+            start_data_updates() {
+                this.updating_data = true;
+                if(this.updating_security === true){
+                    this.cancel_security_updates();
+                }
+            }, 
+
+            // Validação de alterações dos dados pessoais
+            validate_data_updates() {
 
                 // Para controle do resultado
                 let output = true;
@@ -228,16 +288,136 @@
                 return output;
             }, 
 
-            // Atualização dos dados
+            // Atualização dos dados pessoais
             update_data() {
-                if(this.validate_updates()) {
+
+                // Cancela possíveis atualizações de segurança
+                if(this.update_security === true){
+                    this.cancel_security_updates(false);
+                }
+
+                // Valida os dados pessoais
+                if(this.validate_data_updates()) {
+
+                    // Verifica a senha fornecida
                     if(this.input_password === this.user_data.password){
+                        
+                        // Controle
                         this.password_is_valid = true;
-                        set_item("user#" + this.user_data.id.toString(), this.user_data);
                         this.updating_data = false;
-                    }else{
+                        this.input_password = "";
+                        
+                        // Modificação do usuário
+                        set_item("user#" + this.user_data.id.toString(), this.user_data);
+                        this.$store.commit("set_user", this.user_data);
+
+                        // Informa ao usuário
+                        alert("Dados pessoais atualizados com sucesso.");
+                    }
+                    
+                    // Senha inválida
+                    else{
                         this.password_is_valid = false;
                     }
+                }
+            }, 
+
+            // Cancela as atualizações dos dados pessoais
+            cancel_data_updates(scroll) {
+                get_item("user#" + store.state.user.id.toString()).then(res => {
+                    this.user_data = res;
+                })
+                this.updating_data = false;
+                if(scroll === true){
+                    window.scrollTo(0,60);
+                }
+            }, 
+
+            // Inicializa as alterações de segurança
+            start_security_updates() {
+                this.updating_security = true;
+                if(this.updating_data === true){
+                    this.cancel_data_updates();
+                }
+            }, 
+
+            // Valida as informações de segurança
+            validate_security() {
+
+                // Para controle do resultado
+                let output = true;
+
+                // Validação da senha antiga
+                if(this.old_password === ""){
+                    this.old_password_is_empty = true;
+                    this.old_password_is_valid = true;
+                    output = false;
+                }else{
+                    this.old_password_is_empty = false;
+                    if(this.old_password.length >= 3){
+                        this.old_password_is_valid = true;
+                    }else{
+                        this.old_password_is_valid = false;
+                        output = false;
+                    }
+                }
+
+                // Validação da nova senha
+                if(this.new_password === ""){
+                    this.new_password_is_empty = true;
+                    this.new_password_is_valid = true;
+                    output = false;
+                }else{
+                    this.new_password_is_empty = false;
+                    if(this.new_password.length >= 3){
+                        this.new_password_is_valid = true;
+                    }else{
+                        this.new_password_is_valid = false;
+                        output = false;
+                    }
+                }
+
+                return output;
+            }, 
+
+            // Atualiza a senha
+            update_security() {
+
+                // Cancela possíveis atualizações de dados pessoais em andamento
+                if(this.update_data === true){
+                    this.cancel_data_updates(false);
+                }
+
+                // Validação das senhas fornecidas
+                if(this.validate_security()) {
+                    if(this.old_password === this.user_data.password){
+
+                        // Controle
+                        this.updating_security = false;
+                        this.old_password_is_valid = true;
+                        this.user_data.password = this.new_password;
+                        this.old_password = "";
+                        this.new_password = "";
+
+                        // Modificação do usuário
+                        set_item("user#" + this.user_data.id.toString(), this.user_data);
+
+                        // Informa ao usuário
+                        alert("Nova senha cadastrada com sucesso.");
+                    }
+                    
+                    // Senha inválida
+                    else{
+                        this.old_password_is_valid = false;
+                    }
+                }
+            }, 
+
+            // Cancela as alterações de segurança
+            cancel_security_updates(scroll) {
+                this.updating_security = false;
+                if(scroll === true){
+                    window.scrollTo(0,60);
                 }
             }, 
         }, 
@@ -256,6 +436,9 @@
         font-size: 2.0rem;
         color: var(--text-common-color);
         margin-bottom: 1.0rem;
+    }
+    #security-label {
+        margin-top: 2.0rem;
     }
 
     /* Containers de informação */
@@ -281,8 +464,16 @@
         margin-bottom: 2.0rem;
     }
     .failed-input-text {
-        color: rgba(221, 52, 52, 0.9);
+        color: var(--red-text-color);
         margin-bottom: 1rem;
+    }
+
+    /* Para organizar os botões */
+    .update-buttons-section {
+        width: 100%;
+        display: inline-flex;
+        justify-content: space-around;
+        align-items: center;
     }
 
 </style>

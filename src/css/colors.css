@@ -5,6 +5,11 @@
     --background-color: #F7F7F7;
     --foreground-color: #4fa7da;
     --footer-color: #E0E0E0;
+    --emphasis-color: rgba(240, 208, 208, 0.7);;
+
+    /* Botões */
+    --standard-button-color: #4fa7da;
+    --gray-button-color: #a7a7a7;
 
     /* Seção superior do header */
     --header-top-bar-text-color: white;
@@ -38,4 +43,6 @@
     --text-color: rgb(48, 48, 48);
     --darker-text-color: rgb(32, 32, 32);
     --review-text-color: #2484bb;
+    --red-text-color: rgba(221, 52, 52, 0.9);
+    --dark-red-text-color: rgba(150, 3, 3, 0.9);
 }

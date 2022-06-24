@@ -55,6 +55,13 @@ const store = createStore({
       state.user.role = user.role;
     }, 
 
+    // Realiza logout
+    logout(state) {
+      state.user.id = null;
+      state.user.name = null;
+      state.user.role = null;
+    }, 
+
   },
 
   actions: {

@@ -15,6 +15,7 @@
                     :to="option.to" 
                     class="left-container-item"
                 >{{option.title}}</router-link>
+                <a id="logout-text" class="left-container-item" @click="logout()">Sair</a>
             </div>
 
             <!-- Seção de visualização -->
@@ -47,7 +48,6 @@
                 sidebar_options: [
                     {to: {name: 'profile-data'}, title: "Dados Pessoais"}, 
                     {to: {name: 'profile-payment-methods'}, title: "Métodos de Pagamento"}, 
-                    {to: {name: 'profile-security'}, title: "Segurança"}, 
                 ], 
 
             };
@@ -57,7 +57,12 @@
         methods: {
             set_title(title) {
                 this.page_title = title;
-            }
+            },
+            logout(){
+                this.$store.commit("logout");
+                this.$router.push({name: "home"});
+                window.scrollTo(0,0);
+            }, 
         }, 
     }
 
@@ -90,7 +95,7 @@
     }
     #right-container {
         width: calc(80% - 2rem);
-        min-height: 12.0rem;
+        /*min-height: 16.0rem;*/
         padding: 1rem;
         float: right;
         border: var(--box-light-border);
@@ -113,5 +118,16 @@
     }
     .left-container-item:hover {
         color: var(--link-hover-color);
+    }
+
+    /* Logout */
+    #logout-text {
+        font-size: 1.2rem;
+        color: var(--red-text-color);
+        text-decoration: underline;
+        background-color: var(--emphasis-color);
+    }
+    #logout-text:hover {
+        color: var(--dark-red-text-color);
     }
 </style>

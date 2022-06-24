@@ -134,13 +134,6 @@
                             this.routes.length = 1;
                             break;
                         
-                        // Segurança de conta
-                        case "profile-security":
-                            page_name = "Segurança";
-                            this.pages.length = 1;
-                            this.routes.length = 1;
-                            break;
-                        
                         // Outros
                         default: 
                             page_name = "Página"

@@ -36,7 +36,7 @@
                 }">
             <p v-if="!login_password_is_valid" class="failed-input-text">A senha informada é inválida.</p>
             <p v-if="login_password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
-            <a class="text-common-color hover-interaction-link-darker">Esqueceu sua senha?</a>
+            <a class="text-common-color hover-interaction-link-darker" @click="forgot_password()">Esqueceu sua senha?</a>
 
             <!-- Submit -->
             <button class="standard-button" @click="login()" @keyup.enter="login()">Entrar</button>
@@ -193,6 +193,11 @@
 
         // Métodos auxiliares
         methods: {
+
+            // Esquecimento da senha
+            forgot_password() {
+                alert("Infelizmente, não há algo que possa ser feito sobre no momento.");
+            }, 
 
             // Validação de login
             validate_login() {

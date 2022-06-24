@@ -13,7 +13,6 @@ import HomeView from '@/views/HomeView.vue';
 import LogRegForm from '@/components/LogRegForm.vue';
 import ProductView from '@/views/ProductView.vue';
 import ProfileData from '@/components/ProfileData.vue';
-import ProfileSecurity from '@/components/ProfileSecurity.vue';
 import ProfilePayment from '@/components/ProfilePayment.vue';
 import SearchView from '@/views/SearchView.vue';
 
@@ -93,13 +92,6 @@ const routes = [
             name: 'profile-payment-methods', 
             path: 'payment-methods', 
             component: ProfilePayment
-          }, 
-
-          // Página de dados de segurança do usuário
-          {
-            name: 'profile-security', 
-            path: 'security', 
-            component: ProfileSecurity
           }, 
         ], 
       }, 
