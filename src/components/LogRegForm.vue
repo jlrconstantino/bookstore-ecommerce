@@ -39,7 +39,7 @@
             <a class="text-common-color hover-interaction-link-darker">Esqueceu sua senha?</a>
 
             <!-- Submit -->
-            <button @click="login()" @keyup.enter="login()">Entrar</button>
+            <button class="standard-button" @click="login()" @keyup.enter="login()">Entrar</button>
 
         </div>
 
@@ -120,7 +120,7 @@
             <p v-if="telephone_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
             
             <!-- Submit -->
-            <button @click="register()" @keyup.enter="register()">Cadastrar</button>
+            <button class="standard-button" @click="register()" @keyup.enter="register()">Cadastrar</button>
 
         </div>
     </div>
@@ -386,7 +386,7 @@
                         email: this.reg_email, 
                         password: this.reg_password, 
                         birth: this.birth_date, 
-                        tel: this.tel, 
+                        tel: this.telephone, 
                         role: "customer", 
                     };
 
@@ -480,21 +480,9 @@
         width: auto;
         min-width: 30%;
         height: 2.2rem;
-        background-color: var(--foreground-color);
-        color: antiquewhite;
-        text-transform: uppercase;
         font-size: 1.2rem;
-        border-radius: 4px;
-        border: none;
         margin-bottom: 1rem;
         margin-top: 1.5rem;
-        transition-duration: 0.1s;
-        transition-timing-function: linear;
-    }
-    button:hover {
-        color: gray;
-        background-color: white;
-        border: 2px solid var(--foreground-color);
     }
 
 </style>

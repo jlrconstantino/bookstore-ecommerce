@@ -61,7 +61,7 @@
             <div id="product-purchase-container" class="product-bordered-container">
                 <h3 id="product-price">{{format_price(product.price)}}</h3>
                 <p id="product-price-alternative">{{format_price_installment(product.price, 8)}}</p>
-                <button id="product-purchase-button" @click="go_to_cart()"> COMPRAR </button>
+                <button id="product-purchase-button" class="standard-button" @click="go_to_cart()"> COMPRAR </button>
             </div>
 
             <!-- Frete -->
@@ -379,19 +379,7 @@
     #product-purchase-button {
         width: 40%;
         height: 3.6rem;
-        background-color: var(--foreground-color);
-        color: antiquewhite;
-        text-transform: uppercase;
         font-size: 1.8rem;
-        border-radius: 4px;
-        border: none;
-        transition-duration: 0.1s;
-        transition-timing-function: linear;
-    }
-    #product-purchase-button:hover {
-        color: gray;
-        background-color: white;
-        border: 2px solid var(--foreground-color);
     }
 
 

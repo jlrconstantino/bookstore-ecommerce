@@ -6,7 +6,7 @@
         </div>
         <h3 class="text-center book-displayer-title">{{book.title}}</h3>
         <h4 class="text-center book-displayer-price">{{format_price(book.price)}}</h4>
-        <button class="book-displayer-button" @click="go_to_product_page(book)"> SAIBA MAIS </button>
+        <button class="book-displayer-button standard-button" @click="go_to_product_page(book)"> SAIBA MAIS </button>
     </div>
 </template>
 
@@ -88,19 +88,7 @@
     .book-displayer-button {
         width: 80%;
         height: 2.2rem;
-        background-color: var(--foreground-color);
-        color: antiquewhite;
-        text-transform: uppercase;
         font-size: 1.2rem;
-        border-radius: 4px;
-        border: none;
         margin-bottom: 1rem;
-        transition-duration: 0.1s;
-        transition-timing-function: linear;
-    }
-    .book-displayer-button:hover {
-        color: gray;
-        background-color: white;
-        border: 2px solid var(--foreground-color);
     }
 </style>
