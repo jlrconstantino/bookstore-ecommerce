@@ -75,7 +75,7 @@
     </div>
 
     <!-- Segurança -->
-    <h2 v-if="!updating_security && !updating_data" id="security-label">Segurança</h2>
+    <h2 v-if="!updating_security && !updating_data" class="top-label-with-margin">Segurança</h2>
     <button @click="start_security_updates()" v-if="!updating_security && !updating_data" class="standard-button">Alterar Senha</button>
     <div v-if="updating_security">
 
@@ -427,53 +427,6 @@
 
 
 <!-- .:::: STYLE ::::. -->
-<style scoped>
-
-    @import "../css/colors.css";
-
-    /* Texto */
-    h2 {
-        font-size: 2.0rem;
-        color: var(--text-common-color);
-        margin-bottom: 1.0rem;
-    }
-    #security-label {
-        margin-top: 2.0rem;
-    }
-
-    /* Containers de informação */
-    .info-container {
-        width: calc(100% - 2rem);
-        border: 0;
-        border-left: 4px ridge var(--review-text-color);
-        padding: 1rem;
-        background-color: var(--navigation-bar-background-color);
-        color: var(--text-common-color);
-    }
-
-    /* Botão */
-    button {
-        font-size: 1.2rem;
-        height: 2.4rem;
-        width: auto;
-        min-width: 30%;
-    }
-
-    /* Textos normal e indicador de falhas */
-    .normal-input-text {
-        margin-bottom: 2.0rem;
-    }
-    .failed-input-text {
-        color: var(--red-text-color);
-        margin-bottom: 1rem;
-    }
-
-    /* Para organizar os botões */
-    .update-buttons-section {
-        width: 100%;
-        display: inline-flex;
-        justify-content: space-around;
-        align-items: center;
-    }
-
+<style>
+    @import "../css/profile-form.css";
 </style>
