@@ -12,7 +12,7 @@ export async function set_item(key, value) {
 }
 export async function delete_item(key) {
     later();
-    localStorage.delete_item(key);
+    localStorage.removeItem(key);
 }
 
 

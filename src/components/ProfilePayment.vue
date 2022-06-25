@@ -2,7 +2,7 @@
 <template>
 
     <!-- Seção de cartões -->
-    <div v-if="!adding_card">
+    <div v-if="!adding_card && !updating_card">
 
         <!-- Informações de rodapé -->
         <h2>Cartões de Crédito</h2>
@@ -30,7 +30,7 @@
                     <label>{{card.number.substring(0,5) + "..."}}</label>
                 </td>
                 <td>
-                    <a>Modificar</a>
+                    <a @click="start_card_update(card)">Modificar</a>
                 </td>
             </tr>
 
@@ -42,7 +42,7 @@
     </div>
 
     <!-- Seção de adição de novo cartão -->
-    <div v-if="adding_card">
+    <div v-if="adding_card || updating_card">
 
         <!-- Título do cartão -->
         <h2>Título do Cartão</h2>
@@ -52,7 +52,7 @@
             type="text"
             class="info-container text"
             :class="{'normal-input-text': card_title_is_valid && !card_title_is_empty}">
-        <p v-if="!card_title_is_valid" class="failed-input-text">O título informado é inválido (deve conter somente letras).</p>
+        <p v-if="!card_title_is_valid" class="failed-input-text">O título informado é inválido (deve conter somente caracteres alfanuméricos).</p>
         <p v-if="card_title_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
 
         <!-- Número do cartão -->
@@ -113,11 +113,20 @@
 
         <!-- Botões de ação -->
         <div class="update-buttons-section">
-            <button @click="add_card()" class="standard-button">Salvar Cartão</button>
-            <button @click="cancel_card_addition()" class="gray-button">Cancelar</button>
+
+            <!-- Adição -->
+            <button v-if="adding_card" @click="add_card()" class="standard-button">Salvar Cartão</button>
+            <button v-if="adding_card" @click="cancel_card_addition()" class="gray-button">Cancelar</button>
+
+            <!-- Atualização -->
+            <button v-if="updating_card" @click="update_card()" class="standard-button">Salvar Cartão</button>
+            <button v-if="updating_card" @click="delete_card()" class="red-button">Remover Cartão</button>
+            <button v-if="updating_card" @click="cancel_card_update()" class="gray-button">Cancelar</button>
+
         </div>
 
     </div>
+
 </template>
 
 
@@ -126,7 +135,7 @@
 
     // Para manipulação do banco de dados
     import store from '@/store';
-    import { get_item, set_item, load_local_storage_credit_cards } from '@/utils/local-storage-management';
+    import { get_item, set_item, delete_item, load_local_storage_credit_cards } from '@/utils/local-storage-management';
 
     // Lógica local
     export default {
@@ -141,9 +150,11 @@
                 // Cartões de Crédito
                 total_database_cards: 0, 
                 cards_data: [], 
+                target_card_id: "", 
 
-                // Para controle de adição de cartões de crédito
+                // Para controle de adição e modificação de cartões de crédito
                 adding_card: false, 
+                updating_card: false, 
 
                 // Controle de título
                 card_title: "", 
@@ -195,6 +206,9 @@
             
             // Inicializa a adição de um novo cartão de crédito
             start_card_addition() {
+                if(this.updating_card === true){
+                    this.cancel_card_update();
+                }
                 this.adding_card = true;
                 window.scrollTo(0,60);
             }, 
@@ -254,7 +268,7 @@
                     output = false;
                 }else{
                     this.card_title_is_empty = false;
-                    pattern = new RegExp("^[a-zA-Z ]+$", "g");
+                    pattern = new RegExp("^[a-zA-Z0-9 ]+$", "g");
                     if(pattern.test(this.card_title)){
                         this.card_title_is_valid = true;
                     }else{
@@ -347,61 +361,172 @@
                 return output;
             }, 
 
-            // Adiciona o novo cartão
-            add_card: async function() {
-
-                // Validação das informações
-                if(this.validate_card_info()) {
-
-                    // Obtém a senha do usuário
-                    try{
-                        let password = "";
-                        await get_item("user#" + store.state.user.id.toString()).then(res => {
-                            if(res != null){
-                                password = res.password;
-                            }else{
-                                alert("Ocorreu um erro ao tentar comunicação com a base de dados. Por favor, tente novamente.");
-                                return;
-                            }
-                        });
-
-                        // Verifica correspondência das senhas
-                        if(password === this.password){
-
-                            // Cria o novo cartão
-                            let credit_card = {
-                                id: this.total_database_cards, 
-                                user: store.state.user.id, 
-                                title: this.card_title, 
-                                number: this.card_number, 
-                                holder: this.cardholder, 
-                                date: this.expiration_date, 
-                                code: this.security_code, 
-                            };
-
-                            // Adição do novo cartão
-                            set_item("card#" + credit_card.id.toString(), credit_card);
-
-                            // Atualização dos dados da página
-                            this.total_database_cards += 1;
-                            this.cards_data.push(credit_card);
-                            this.cancel_card_addition();
-
-                            // Avisa o usuário
-                            alert("Novo cartão de crédito cadastrado com sucesso.");
+            // Valida a senha do usuário
+            validate_password: async function() {
+                
+                // Obtém a senha do usuário
+                try{
+                    let user_password = "";
+                    await get_item("user#" + store.state.user.id.toString()).then(res => {
+                        if(res != null){
+                            user_password = res.password;
+                        }else{
+                            alert("Ocorreu um erro ao tentar comunicação com a base de dados. Por favor, tente novamente.");
+                            return false;
                         }
-                        
-                        // Senha inválida
-                        else{
-                            this.password_is_valid = false;
-                        }
-                    }
+                    });
 
-                    // Erro de consulta
-                    catch(_){
-                        alert("Ocorreu um erro ao tentar comunicação com a base de dados. Por favor, tente novamente.");
+                    // Verifica correspondência das senhas
+                    if(user_password === this.password){
+                        return true;
                     }
+                    
+                    // Senha inválida
+                    this.password_is_valid = false;
                 }
+
+                // Erro de consulta
+                catch(_){
+                    alert("Ocorreu um erro ao tentar comunicação com a base de dados. Por favor, tente novamente.");
+                }
+
+                return false;
+            }, 
+
+            // Valida as informações e a senha do usuário
+            validate_card_info_and_password: async function() {
+
+                // Para controle da saída
+                let output = false;
+
+                // Validação das informações e da senha
+                if(this.validate_card_info() === true) {
+                    await this.validate_password().then(res => {
+                        if(res === true){
+                            output = true;
+                        }
+                    });
+                }
+
+                return output;
+            }, 
+
+            // Adiciona um novo cartão
+            add_card: async function() {
+                
+                // Validação dos dados e da senha
+                this.validate_card_info_and_password().then(res => {
+                    console.log(res);
+                    if(res === true){
+
+                        // Cria o novo cartão
+                        let credit_card = {
+                            id: this.total_database_cards, 
+                            user: store.state.user.id, 
+                            title: this.card_title, 
+                            number: this.card_number, 
+                            holder: this.cardholder, 
+                            date: this.expiration_date, 
+                            code: this.security_code, 
+                        };
+
+                        // Adição do novo cartão
+                        set_item("card#" + credit_card.id.toString(), credit_card);
+
+                        // Atualização dos dados da página
+                        this.total_database_cards += 1;
+                        this.cards_data.push(credit_card);
+                        this.cancel_card_addition();
+
+                        // Avisa o usuário
+                        alert("Novo cartão de crédito cadastrado com sucesso.");
+                    }
+                });
+            }, 
+
+            // Inicializa a modificação de um cartão pré-existente
+            start_card_update(card) {
+
+                // Verifica se está adicionando um cartão
+                if(this.adding_card === true){
+                    this.cancel_card_addition();
+                }
+
+                // Obtenção dos dados do cartão alvo
+                this.target_card_id = card.id;
+                this.card_title = card.title;
+                this.card_number = card.number;
+                this.cardholder = card.holder;
+                this.expiration_date = card.date;
+                this.security_code = card.code;
+
+                // Atualização da página
+                this.updating_card = true;
+                window.scrollTo(0,60);
+            }, 
+
+            // Cancela a modificação de um cartão pré-existente
+            cancel_card_update() {
+                this.updating_card = false;
+                window.scrollTo(0,60);
+                this.reset_card_form();
+            }, 
+
+            // Atualiza um cartão pré-existente
+            update_card: async function() {
+
+                // Validação dos dados e da senha
+                this.validate_card_info_and_password().then(res => {
+                    if(res === true){
+
+                        // Cria o novo cartão
+                        let credit_card = {
+                            id: this.target_card_id, 
+                            user: store.state.user.id, 
+                            title: this.card_title, 
+                            number: this.card_number, 
+                            holder: this.cardholder, 
+                            date: this.expiration_date, 
+                            code: this.security_code, 
+                        };
+
+                        // Atualização do cartão
+                        set_item("card#" + this.target_card_id.toString(), credit_card);
+
+                        // Atualização dos dados da página
+                        let card_index = this.cards_data.findIndex(element => {return element.id === credit_card.id});
+                        if(card_index >= 0){
+                            this.cards_data[card_index] = credit_card;
+                        }
+                        this.cancel_card_update();
+
+                        // Avisa o usuário
+                        alert("Cartão de crédito atualizado com sucesso.");
+                    }
+                });
+            }, 
+
+            // Remove um cartão de crédito pré-existente
+            delete_card: async function() {
+
+                // Validação senha
+                this.validate_password().then(res => {
+                    if(res === true){
+
+                        // Remoção do cartão
+                        delete_item("card#" + this.target_card_id.toString());
+
+                        // Atualização dos dados da página
+                        let card_index = this.cards_data.findIndex(element => {return element.id === this.target_card_id});
+                        if(card_index >= 0){
+                            this.cards_data.splice(card_index, 1);
+                        }
+                        this.cancel_card_update();
+
+                        // Avisa o usuário
+                        alert("Cartão de crédito removido com sucesso.");
+                    }
+                });
             }, 
         }, 
     }
