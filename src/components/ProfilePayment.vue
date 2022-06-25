@@ -8,6 +8,34 @@
         <h2>Cartões de Crédito</h2>
         <p class="text-common-color">Quantia de elementos cadastrados: {{cards_data.length}}.</p><br>
 
+        <!-- Cartões de crédito cadastrados -->
+        <table v-if="cards_data.length > 0">
+
+            <!-- Cabeçalho da tabela -->
+            <tr class="table-header-row">
+                <th class="table-title-item">Título do Cartão</th>
+                <th class="table-center-item">Número do Cartão</th>
+                <th class="table-last-item">Modificar Cartão</th>
+            </tr>
+
+            <!-- Itens da tabela -->
+            <tr 
+                v-for="(card, index) in cards_data" 
+                :key="card" 
+                :class="index % 2 === 0 ? 'table-item-row-0' : 'table-item-row-1'">
+                <td>
+                    <label>{{card.title}}</label>
+                </td>
+                <td>
+                    <label>{{card.number.substring(0,5) + "..."}}</label>
+                </td>
+                <td>
+                    <a>Modificar</a>
+                </td>
+            </tr>
+
+        </table>
+
         <!-- Botão de adição de cartão -->
         <button @click="start_card_addition()" class="standard-button">Adicionar cartão</button>
 
@@ -344,6 +372,7 @@
                             let credit_card = {
                                 id: this.total_database_cards, 
                                 user: store.state.user.id, 
+                                title: this.card_title, 
                                 number: this.card_number, 
                                 holder: this.cardholder, 
                                 date: this.expiration_date, 
