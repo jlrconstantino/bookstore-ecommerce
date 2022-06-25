@@ -253,3 +253,18 @@ export async function load_local_storage_users() {
     }
     return users;
 }
+
+
+// Para carregamento dos cartões de crédito
+export async function load_local_storage_credit_cards() {
+    let cards = [];
+    for(let i = 0;; i++) {
+        let response = await get_item("card#" + i);
+        if(response != null){
+            cards.push(response);
+        }else{
+            break;
+        }
+    }
+    return cards;
+}

@@ -55,20 +55,18 @@
         <p v-if="telephone_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
 
         <!-- Confirmar senha -->
-        <div v-if="updating_data">
-            <h2>Confirme sua Senha</h2>
-            <input 
-                v-model="input_password" 
-                placeholder="⋅⋅⋅"
-                type="password" 
-                class="info-container text"
-                :class="{'normal-input-text': password_is_valid && !password_is_empty}">
-            <p v-if="!password_is_valid" class="failed-input-text">A senha informada é inválida.</p>
-            <p v-if="password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
-        </div>
+        <h2>Confirme sua Senha</h2>
+        <input 
+            v-model="input_password" 
+            placeholder="⋅⋅⋅"
+            type="password" 
+            class="info-container text"
+            :class="{'normal-input-text': password_is_valid && !password_is_empty}">
+        <p v-if="!password_is_valid" class="failed-input-text">A senha informada é inválida.</p>
+        <p v-if="password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
             
         <!-- Alterar dados pessoais -->
-        <div v-if="updating_data" class="update-buttons-section">
+        <div class="update-buttons-section">
             <button @click="update_data()" class="standard-button">Salvar Alterações</button>
             <button @click="cancel_data_updates(true)" class="gray-button">Cancelar</button>
         </div>
@@ -427,6 +425,6 @@
 
 
 <!-- .:::: STYLE ::::. -->
-<style>
+<style scoped>
     @import "../css/profile-form.css";
 </style>
