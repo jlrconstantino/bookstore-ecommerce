@@ -2,108 +2,108 @@
 <template>
 
     <!-- Informações -->
-    <h2 v-if="!updating_data && !updating_security">Informações</h2>
-    <button @click="start_data_updates()" v-if="!updating_data && !updating_security" class="standard-button">Alterar Dados</button>
+    <h2 class="form-h2" v-if="!updating_data && !updating_security">Informações</h2>
+    <button @click="start_data_updates()" v-if="!updating_data && !updating_security" class="form-button standard-button">Alterar Dados</button>
     <div v-if="updating_data">
 
         <!-- Nome -->
-        <h2>Nome</h2>
-        <p class="info-container normal-input-text" v-if="!updating_data">{{user_data.name}}</p>
+        <h2 class="form-h2">Nome</h2>
+        <p class="form-info-container form-normal-input-text" v-if="!updating_data">{{user_data.name}}</p>
         <input 
             v-model="user_data.name" 
             type="text" 
-            class="info-container text" 
+            class="form-info-container text" 
             v-if="updating_data"
-            :class="{'normal-input-text': name_is_valid && !name_is_empty}">
-        <p v-if="!name_is_valid" class="failed-input-text">O nome informado é inválido (deve conter somente letras).</p>
-        <p v-if="name_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            :class="{'form-normal-input-text': name_is_valid && !name_is_empty}">
+        <p v-if="!name_is_valid" class="form-failed-input-text">O nome informado é inválido (deve conter somente letras).</p>
+        <p v-if="name_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
         <!-- E-Mail -->
-        <h2>E-Mail</h2>
-        <p class="info-container normal-input-text" v-if="!updating_data">{{user_data.email}}</p>
+        <h2 class="form-h2">E-Mail</h2>
+        <p class="form-info-container form-normal-input-text" v-if="!updating_data">{{user_data.email}}</p>
         <input 
             v-model="user_data.email" 
             type="email" 
-            class="info-container text" 
+            class="form-info-container text" 
             v-if="updating_data"
-            :class="{'normal-input-text': email_is_valid && !email_is_empty}">
-        <p v-if="!email_is_valid" class="failed-input-text">O e-mail informado é inválido.</p>
-        <p v-if="email_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            :class="{'form-normal-input-text': email_is_valid && !email_is_empty}">
+        <p v-if="!email_is_valid" class="form-failed-input-text">O e-mail informado é inválido.</p>
+        <p v-if="email_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
         
         <!-- Data de Nascimento -->
-        <h2>Data de Nascimento</h2>
-        <p class="info-container normal-input-text" v-if="!updating_data">{{user_data.birth}}</p>
+        <h2 class="form-h2">Data de Nascimento</h2>
+        <p class="form-info-container form-normal-input-text" v-if="!updating_data">{{user_data.birth}}</p>
         <input 
             v-model="user_data.birth" 
             type="date" 
-            class="info-container text" 
+            class="form-info-container text" 
             v-if="updating_data"
-            :class="{'normal-input-text': birth_date_is_valid && !birth_date_is_empty}">
-        <p v-if="!birth_date_is_valid" class="failed-input-text">A data informada é inválida.</p>
-        <p v-if="birth_date_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            :class="{'form-normal-input-text': birth_date_is_valid && !birth_date_is_empty}">
+        <p v-if="!birth_date_is_valid" class="form-failed-input-text">A data informada é inválida.</p>
+        <p v-if="birth_date_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
         <!-- Telefone -->
-        <h2>Telefone</h2>
-        <p class="info-container normal-input-text" v-if="!updating_data">{{user_data.tel}}</p>
+        <h2 class="form-h2">Telefone</h2>
+        <p class="form-info-container form-normal-input-text" v-if="!updating_data">{{user_data.tel}}</p>
         <input 
             v-model="user_data.tel" 
             type="tel" 
             pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
-            class="info-container text" 
+            class="form-info-container text" 
             v-if="updating_data"
-            :class="{'normal-input-text': telephone_is_valid && !telephone_is_empty}">
-        <p v-if="!telephone_is_valid" class="failed-input-text">O telefone informado é inválido.</p>
-        <p v-if="telephone_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            :class="{'form-normal-input-text': telephone_is_valid && !telephone_is_empty}">
+        <p v-if="!telephone_is_valid" class="form-failed-input-text">O telefone informado é inválido.</p>
+        <p v-if="telephone_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
         <!-- Confirmar senha -->
-        <h2>Confirme sua Senha</h2>
+        <h2 class="form-h2">Confirme sua Senha</h2>
         <input 
             v-model="input_password" 
             placeholder="⋅⋅⋅"
             type="password" 
-            class="info-container text"
-            :class="{'normal-input-text': password_is_valid && !password_is_empty}">
-        <p v-if="!password_is_valid" class="failed-input-text">A senha informada é inválida.</p>
-        <p v-if="password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            class="form-info-container text"
+            :class="{'form-normal-input-text': password_is_valid && !password_is_empty}">
+        <p v-if="!password_is_valid" class="form-failed-input-text">A senha informada é inválida.</p>
+        <p v-if="password_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             
         <!-- Alterar dados pessoais -->
-        <div class="update-buttons-section">
-            <button @click="update_data()" class="standard-button">Salvar Alterações</button>
-            <button @click="cancel_data_updates(true)" class="gray-button">Cancelar</button>
+        <div class="form-update-buttons-section">
+            <button @click="update_data()" class="form-button standard-button">Salvar Alterações</button>
+            <button @click="cancel_data_updates(true)" class="form-button gray-button">Cancelar</button>
         </div>
     </div>
 
     <!-- Segurança -->
-    <h2 v-if="!updating_security && !updating_data" class="top-label-with-margin">Segurança</h2>
-    <button @click="start_security_updates()" v-if="!updating_security && !updating_data" class="standard-button">Alterar Senha</button>
+    <h2 v-if="!updating_security && !updating_data" class="form-h2 form-top-label-with-margin">Segurança</h2>
+    <button @click="start_security_updates()" v-if="!updating_security && !updating_data" class="form-button standard-button">Alterar Senha</button>
     <div v-if="updating_security">
 
         <!-- Senha antiga -->
-        <h2>Senha Anterior</h2>
+        <h2 class="form-h2">Senha Anterior</h2>
         <input 
             v-model="old_password" 
             placeholder="⋅⋅⋅"
             type="password" 
-            class="info-container text"
-            :class="{'normal-input-text': old_password_is_valid && !old_password_is_empty}">
-        <p v-if="!old_password_is_valid" class="failed-input-text">A senha informada é inválida.</p>
-        <p v-if="old_password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            class="form-info-container text"
+            :class="{'form-normal-input-text': old_password_is_valid && !old_password_is_empty}">
+        <p v-if="!old_password_is_valid" class="form-failed-input-text">A senha informada é inválida.</p>
+        <p v-if="old_password_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
         <!-- Nova Senha -->
-        <h2>Nova Senha</h2>
+        <h2 class="form-h2">Nova Senha</h2>
         <input 
             v-model="new_password" 
             placeholder="⋅⋅⋅"
             type="password" 
-            class="info-container text"
-            :class="{'normal-input-text': new_password_is_valid && !new_password_is_empty}">
-        <p v-if="!new_password_is_valid" class="failed-input-text">A senha informada é inválida.</p>
-        <p v-if="new_password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            class="form-info-container text"
+            :class="{'form-normal-input-text': new_password_is_valid && !new_password_is_empty}">
+        <p v-if="!new_password_is_valid" class="form-failed-input-text">A senha informada é inválida.</p>
+        <p v-if="new_password_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
         <!-- Botões de alteração -->
-        <div class="update-buttons-section">
-            <button @click="update_security()" class="standard-button">Salvar Senha</button>
-            <button @click="cancel_security_updates(true)" class="gray-button">Cancelar</button>
+        <div class="form-update-buttons-section">
+            <button @click="update_security()" class="form-button standard-button">Salvar Senha</button>
+            <button @click="cancel_security_updates(true)" class="form-button gray-button">Cancelar</button>
         </div>
 
     </div>
@@ -426,6 +426,6 @@
 
 
 <!-- .:::: STYLE ::::. -->
-<style scoped>
+<style>
     @import "../css/profile-form.css";
 </style>

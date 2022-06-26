@@ -5,24 +5,24 @@
     <div v-if="!adding_card && !updating_card">
 
         <!-- Informações de rodapé -->
-        <h2>Cartões de Crédito</h2>
+        <h2 class="form-h2">Cartões de Crédito</h2>
         <p class="text-common-color">Quantia de elementos cadastrados: {{cards_data.length}}.</p><br>
 
         <!-- Cartões de crédito cadastrados -->
-        <table v-if="cards_data.length > 0">
+        <table class="form-table" v-if="cards_data.length > 0">
 
             <!-- Cabeçalho da tabela -->
-            <tr class="table-header-row">
-                <th class="table-title-item">Título do Cartão</th>
-                <th class="table-center-item">Número do Cartão</th>
-                <th class="table-last-item">Modificar Cartão</th>
+            <tr class="form-table-header-row">
+                <th class="form-table-title-item">Título do Cartão</th>
+                <th class="form-table-center-item">Número do Cartão</th>
+                <th class="form-table-last-item">Modificar Cartão</th>
             </tr>
 
             <!-- Itens da tabela -->
             <tr 
                 v-for="(card, index) in cards_data" 
                 :key="card" 
-                :class="index % 2 === 0 ? 'table-item-row-0' : 'table-item-row-1'">
+                :class="index % 2 === 0 ? 'form-table-item-row-0' : 'form-table-item-row-1'">
                 <td>
                     <label>{{card.title}}</label>
                 </td>
@@ -37,7 +37,7 @@
         </table>
 
         <!-- Botão de adição de cartão -->
-        <button @click="start_card_addition()" class="standard-button">Adicionar cartão</button>
+        <button @click="start_card_addition()" class="form-button standard-button">Adicionar cartão</button>
 
     </div>
 
@@ -45,99 +45,99 @@
     <div v-if="adding_card || updating_card">
 
         <!-- Título do cartão -->
-        <h2>Título do Cartão</h2>
+        <h2 class="form-h2">Título do Cartão</h2>
         <p class="text-common-color" style="margin-bottom: 1rem;">(somente para referência)</p>
         <input 
             v-model="card_title" 
             type="text"
-            class="info-container text"
-            :class="{'normal-input-text': card_title_is_valid && !card_title_is_empty}">
-        <p v-if="!card_title_is_valid" class="failed-input-text">O título informado é inválido (deve conter somente caracteres alfanuméricos).</p>
-        <p v-if="card_title_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            class="form-info-container text"
+            :class="{'form-normal-input-text': card_title_is_valid && !card_title_is_empty}">
+        <p v-if="!card_title_is_valid" class="form-failed-input-text">O título informado é inválido (deve conter somente caracteres alfanuméricos).</p>
+        <p v-if="card_title_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
-        <div class="double-form-section">
+        <div class="form-double-section">
 
             <!-- Número do cartão -->
-            <div class="vertical-form-section">
-                <h2>Número do Cartão</h2>
+            <div class="form-vertical-section">
+                <h2 class="form-h2">Número do Cartão</h2>
                 <input 
                     v-model="card_number" 
                     type="text" 
                     placeholder="1111 2222 3333 4444"
                     maxlength="19"
-                    class="info-container text"
-                    :class="{'normal-input-text': card_number_is_valid && !card_number_is_empty}">
-                <p v-if="!card_number_is_valid" class="failed-input-text">O número informado é inválido.</p>
-                <p v-if="card_number_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+                    class="form-info-container text"
+                    :class="{'form-normal-input-text': card_number_is_valid && !card_number_is_empty}">
+                <p v-if="!card_number_is_valid" class="form-failed-input-text">O número informado é inválido.</p>
+                <p v-if="card_number_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
 
             <!-- Proprietário do Cartão -->
-            <div class="vertical-form-section">
-                <h2>Proprietário do Cartão</h2>
+            <div class="form-vertical-section">
+                <h2 class="form-h2">Proprietário do Cartão</h2>
                 <input 
                     v-model="cardholder" 
                     placeholder=""
                     type="text" 
-                    class="info-container text"
-                    :class="{'normal-input-text': cardholder_is_valid && !cardholder_is_empty}">
-                <p v-if="!cardholder_is_valid" class="failed-input-text">O nome informado é inválido.</p>
-                <p v-if="cardholder_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+                    class="form-info-container text"
+                    :class="{'form-normal-input-text': cardholder_is_valid && !cardholder_is_empty}">
+                <p v-if="!cardholder_is_valid" class="form-failed-input-text">O nome informado é inválido.</p>
+                <p v-if="cardholder_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
         
         </div>
 
-        <div class="double-form-section">
+        <div class="form-double-section">
 
             <!-- Data de validade do cartão -->
-            <div class="vertical-form-section">
-                <h2>Data de Validade</h2>
+            <div class="form-vertical-section">
+                <h2 class="form-h2">Data de Validade</h2>
                 <input 
                     v-model="expiration_date" 
                     type="month" 
-                    class="info-container text"
-                    :class="{'normal-input-text': expiration_date_is_valid && !expiration_date_is_empty}">
-                <p v-if="!expiration_date_is_valid" class="failed-input-text">A data informada é inválida.</p>
-                <p v-if="expiration_date_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+                    class="form-info-container text"
+                    :class="{'form-normal-input-text': expiration_date_is_valid && !expiration_date_is_empty}">
+                <p v-if="!expiration_date_is_valid" class="form-failed-input-text">A data informada é inválida.</p>
+                <p v-if="expiration_date_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
 
             <!-- Código de Segurança -->
-            <div class="vertical-form-section">
-                <h2>Código de Segurança</h2>
+            <div class="form-vertical-section">
+                <h2 class="form-h2">Código de Segurança</h2>
                 <input 
                     v-model="security_code" 
                     placeholder=""
                     type="text" 
                     maxlength="3"
-                    class="info-container text"
-                    :class="{'normal-input-text': security_code_is_valid && !security_code_is_empty}">
-                <p v-if="!security_code_is_valid" class="failed-input-text">O código informado é inválido.</p>
-                <p v-if="security_code_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+                    class="form-info-container text"
+                    :class="{'form-normal-input-text': security_code_is_valid && !security_code_is_empty}">
+                <p v-if="!security_code_is_valid" class="form-failed-input-text">O código informado é inválido.</p>
+                <p v-if="security_code_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
 
         </div>
 
         <!-- Confirmação de senha -->
-        <h2>Confirme sua Senha</h2>
+        <h2 class="form-h2">Confirme sua Senha</h2>
         <input 
             v-model="password" 
             placeholder="⋅⋅⋅"
             type="password" 
-            class="info-container text"
-            :class="{'normal-input-text': password_is_valid && !password_is_empty}">
-        <p v-if="!password_is_valid" class="failed-input-text">A senha informada é inválida.</p>
-        <p v-if="password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            class="form-info-container text"
+            :class="{'form-normal-input-text': password_is_valid && !password_is_empty}">
+        <p v-if="!password_is_valid" class="form-failed-input-text">A senha informada é inválida.</p>
+        <p v-if="password_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
         <!-- Botões de ação -->
-        <div class="update-buttons-section">
+        <div class="form-update-buttons-section">
 
             <!-- Adição -->
-            <button v-if="adding_card" @click="add_card()" class="standard-button">Salvar Cartão</button>
-            <button v-if="adding_card" @click="cancel_card_addition()" class="gray-button">Cancelar</button>
+            <button v-if="adding_card" @click="add_card()" class="form-button standard-button">Salvar Cartão</button>
+            <button v-if="adding_card" @click="cancel_card_addition()" class="form-button gray-button">Cancelar</button>
 
             <!-- Atualização -->
-            <button v-if="updating_card" @click="update_card()" class="standard-button">Salvar Cartão</button>
-            <button v-if="updating_card" @click="delete_card()" class="red-button">Remover Cartão</button>
-            <button v-if="updating_card" @click="cancel_card_update()" class="gray-button">Cancelar</button>
+            <button v-if="updating_card" @click="update_card()" class="form-button standard-button">Salvar Cartão</button>
+            <button v-if="updating_card" @click="delete_card()" class="form-button red-button">Remover Cartão</button>
+            <button v-if="updating_card" @click="cancel_card_update()" class="form-button gray-button">Cancelar</button>
 
         </div>
 
@@ -550,6 +550,6 @@
 
 
 <!-- .:::: STYLE ::::. -->
-<style scoped>
+<style>
     @import "../css/profile-form.css";
 </style>

@@ -5,24 +5,24 @@
     <div v-if="!adding_address && !updating_address">
 
         <!-- Informações de rodapé -->
-        <h2>Endereços de Entrega</h2>
+        <h2 class="form-h2">Endereços de Entrega</h2>
         <p class="text-common-color">Quantia de elementos cadastrados: {{addresses_data.length}}.</p><br>
 
         <!-- Endereços cadastrados -->
-        <table v-if="addresses_data.length > 0">
+        <table class="form-table" v-if="addresses_data.length > 0">
 
             <!-- Cabeçalho da tabela -->
-            <tr class="table-header-row">
-                <th class="table-title-item">Título do Endereço</th>
-                <th class="table-center-item">Prévia do Endereço</th>
-                <th class="table-last-item">Modificar Endereço</th>
+            <tr class="form-table-header-row">
+                <th class="form-table-title-item">Título do Endereço</th>
+                <th class="form-table-center-item">Prévia do Endereço</th>
+                <th class="form-table-last-item">Modificar Endereço</th>
             </tr>
 
             <!-- Itens da tabela -->
             <tr 
                 v-for="(address, index) in addresses_data" 
                 :key="address" 
-                :class="index % 2 === 0 ? 'table-item-row-0' : 'table-item-row-1'">
+                :class="index % 2 === 0 ? 'form-table-item-row-0' : 'form-table-item-row-1'">
                 <td>
                     <label>{{address.title}}</label>
                 </td>
@@ -37,7 +37,7 @@
         </table>
 
         <!-- Botão de adição de endereço -->
-        <button @click="start_address_addition()" class="standard-button">Adicionar endereço</button>
+        <button @click="start_address_addition()" class="form-button standard-button">Adicionar endereço</button>
 
     </div>
 
@@ -45,142 +45,142 @@
     <div v-if="adding_address || updating_address">
 
         <!-- Título do endereço -->
-        <h2>Título do endereço</h2>
+        <h2 class="form-h2">Título do endereço</h2>
         <p class="text-common-color" style="margin-bottom: 1rem;">(somente para referência)</p>
         <input 
             v-model="address_title" 
             type="text"
-            class="info-container text"
-            :class="{'normal-input-text': address_title_is_valid && !address_title_is_empty}">
-        <p v-if="!address_title_is_valid" class="failed-input-text">O título informado é inválido (deve conter somente caracteres alfanuméricos).</p>
-        <p v-if="address_title_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            class="form-info-container text"
+            :class="{'form-normal-input-text': address_title_is_valid && !address_title_is_empty}">
+        <p v-if="!address_title_is_valid" class="form-failed-input-text">O título informado é inválido (deve conter somente caracteres alfanuméricos).</p>
+        <p v-if="address_title_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
 
         <!-- CEP do endereço -->
-        <h2>CEP</h2>
+        <h2 class="form-h2">CEP</h2>
         <input 
             v-model="cep" 
             type="text" 
             placeholder="12345-123"
-            class="info-container text"
-            :class="{'normal-input-text': cep_is_valid && !cep_is_empty}">
-        <p v-if="!cep_is_valid" class="failed-input-text">O CEP informado é inválido.</p>
-        <p v-if="cep_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            class="form-info-container text"
+            :class="{'form-normal-input-text': cep_is_valid && !cep_is_empty}">
+        <p v-if="!cep_is_valid" class="form-failed-input-text">O CEP informado é inválido.</p>
+        <p v-if="cep_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
 
-        <div class="double-form-section">
+        <div class="form-double-section">
 
             <!-- Estado do endereço -->
-            <div class="vertical-form-section">
-                <h2>Estado</h2>
+            <div class="form-vertical-section">
+                <h2 class="form-h2">Estado</h2>
                 <select 
                     v-model="address_state" 
-                    class="info-container text"
-                    :class="{'normal-input-text': address_state_is_valid && !address_state_is_empty}">
+                    class="form-info-container text"
+                    :class="{'form-normal-input-text': address_state_is_valid && !address_state_is_empty}">
                     <option v-for="element in states_list" :key="element" :value="element">{{element}}</option>
                 </select>
-                <p v-if="!address_state_is_valid" class="failed-input-text">O estado informado é inválido.</p>
-                <p v-if="address_state_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+                <p v-if="!address_state_is_valid" class="form-failed-input-text">O estado informado é inválido.</p>
+                <p v-if="address_state_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
 
             <!-- Cidade do endereço -->
-            <div class="vertical-form-section">
-                <h2>Cidade</h2>
+            <div class="form-vertical-section">
+                <h2 class="form-h2">Cidade</h2>
                 <input 
                     v-model="city" 
                     type="text" 
-                    class="info-container text"
-                    :class="{'normal-input-text': city_is_valid && !city_is_empty}">
-                <p v-if="!city_is_valid" class="failed-input-text">A cidade informada é inválida.</p>
-                <p v-if="city_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+                    class="form-info-container text"
+                    :class="{'form-normal-input-text': city_is_valid && !city_is_empty}">
+                <p v-if="!city_is_valid" class="form-failed-input-text">A cidade informada é inválida.</p>
+                <p v-if="city_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
 
         </div>
 
 
-        <div class="double-form-section">
+        <div class="form-double-section">
 
             <!-- Bairro do endereço -->
-            <div class="vertical-form-section">
-                <h2>Bairro</h2>
+            <div class="form-vertical-section">
+                <h2 class="form-h2">Bairro</h2>
                 <input 
                     v-model="district" 
                     type="text" 
-                    class="info-container text"
-                    :class="{'normal-input-text': district_is_valid && !district_is_empty}">
-                <p v-if="!district_is_valid" class="failed-input-text">O bairro informado é inválido.</p>
-                <p v-if="district_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+                    class="form-info-container text"
+                    :class="{'form-normal-input-text': district_is_valid && !district_is_empty}">
+                <p v-if="!district_is_valid" class="form-failed-input-text">O bairro informado é inválido.</p>
+                <p v-if="district_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
 
             <!-- Rua do endereço -->
-            <div class="vertical-form-section">
-                <h2>Rua</h2>
+            <div class="form-vertical-section">
+                <h2 class="form-h2">Rua</h2>
                 <input 
                     v-model="street" 
                     type="text" 
-                    class="info-container text"
-                    :class="{'normal-input-text': street_is_valid && !street_is_empty}">
-                <p v-if="!street_is_valid" class="failed-input-text">A rua informada é inválida.</p>
-                <p v-if="street_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+                    class="form-info-container text"
+                    :class="{'form-normal-input-text': street_is_valid && !street_is_empty}">
+                <p v-if="!street_is_valid" class="form-failed-input-text">A rua informada é inválida.</p>
+                <p v-if="street_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
 
         </div>
 
 
-        <div class="double-form-section">
+        <div class="form-double-section">
 
             <!-- Número do endereço -->
-            <div class="vertical-form-section">
-                <h2 style="margin-bottom: 3.0rem;">Número</h2>
+            <div class="form-vertical-section">
+                <h2 class="form-h2" style="margin-bottom: 3.0rem;">Número</h2>
                 <input 
                     v-model="number" 
                     type="text" 
                     maxlength="8"
-                    class="info-container text"
-                    :class="{'normal-input-text': number_is_valid && !number_is_empty}">
-                <p v-if="!number_is_valid" class="failed-input-text">O número informado é inválido.</p>
-                <p v-if="number_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+                    class="form-info-container text"
+                    :class="{'form-normal-input-text': number_is_valid && !number_is_empty}">
+                <p v-if="!number_is_valid" class="form-failed-input-text">O número informado é inválido.</p>
+                <p v-if="number_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
 
             <!-- Complemento do endereço -->
-            <div class="vertical-form-section">
-                <h2>Complemento</h2>
+            <div class="form-vertical-section">
+                <h2 class="form-h2">Complemento</h2>
                 <p class="text-common-color" style="margin-bottom: 1rem;">(opcional)</p>
                 <input 
                     v-model="complement" 
                     type="text" 
                     maxlength="16"
-                    class="info-container text"
-                    :class="{'normal-input-text': complement_is_valid}">
-                <p v-if="!complement_is_valid" class="failed-input-text">O complemento informado é inválido.</p>
+                    class="form-info-container text"
+                    :class="{'form-normal-input-text': complement_is_valid}">
+                <p v-if="!complement_is_valid" class="form-failed-input-text">O complemento informado é inválido.</p>
             </div>
 
         </div>
 
 
         <!-- Confirmação de senha -->
-        <h2>Confirme sua Senha</h2>
+        <h2 class="form-h2">Confirme sua Senha</h2>
         <input 
             v-model="password" 
             placeholder="⋅⋅⋅"
             type="password" 
-            class="info-container text"
-            :class="{'normal-input-text': password_is_valid && !password_is_empty}">
-        <p v-if="!password_is_valid" class="failed-input-text">A senha informada é inválida.</p>
-        <p v-if="password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            class="form-info-container text"
+            :class="{'form-normal-input-text': password_is_valid && !password_is_empty}">
+        <p v-if="!password_is_valid" class="form-failed-input-text">A senha informada é inválida.</p>
+        <p v-if="password_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
 
         <!-- Botões de ação -->
-        <div class="update-buttons-section">
+        <div class="form-update-buttons-section">
 
             <!-- Adição -->
-            <button v-if="adding_address" @click="add_address()" class="standard-button">Salvar endereço</button>
-            <button v-if="adding_address" @click="cancel_address_addition()" class="gray-button">Cancelar</button>
+            <button v-if="adding_address" @click="add_address()" class="form-button standard-button">Salvar endereço</button>
+            <button v-if="adding_address" @click="cancel_address_addition()" class="form-button gray-button">Cancelar</button>
 
             <!-- Atualização -->
-            <button v-if="updating_address" @click="update_address()" class="standard-button">Salvar endereço</button>
-            <button v-if="updating_address" @click="delete_address()" class="red-button">Remover endereço</button>
-            <button v-if="updating_address" @click="cancel_address_update()" class="gray-button">Cancelar</button>
+            <button v-if="updating_address" @click="update_address()" class="form-button standard-button">Salvar endereço</button>
+            <button v-if="updating_address" @click="delete_address()" class="form-button red-button">Remover endereço</button>
+            <button v-if="updating_address" @click="cancel_address_update()" class="form-button gray-button">Cancelar</button>
 
         </div>
 
@@ -650,6 +650,6 @@
 
 
 <!-- .:::: STYLE ::::. -->
-<style scoped>
+<style>
     @import "../css/profile-form.css";
 </style>
