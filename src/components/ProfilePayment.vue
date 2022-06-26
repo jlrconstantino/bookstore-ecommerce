@@ -55,50 +55,66 @@
         <p v-if="!card_title_is_valid" class="failed-input-text">O título informado é inválido (deve conter somente caracteres alfanuméricos).</p>
         <p v-if="card_title_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
 
-        <!-- Número do cartão -->
-        <h2>Número do Cartão</h2>
-        <input 
-            v-model="card_number" 
-            type="text" 
-            placeholder="1111 2222 3333 4444"
-            maxlength="19"
-            class="info-container text"
-            :class="{'normal-input-text': card_number_is_valid && !card_number_is_empty}">
-        <p v-if="!card_number_is_valid" class="failed-input-text">O número informado é inválido.</p>
-        <p v-if="card_number_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+        <div class="double-form-section">
 
-        <!-- Data de validade do cartão -->
-        <h2>Data de Validade</h2>
-        <input 
-            v-model="expiration_date" 
-            type="month" 
-            class="info-container text"
-            :class="{'normal-input-text': expiration_date_is_valid && !expiration_date_is_empty}">
-        <p v-if="!expiration_date_is_valid" class="failed-input-text">A data informada é inválida.</p>
-        <p v-if="expiration_date_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            <!-- Número do cartão -->
+            <div class="vertical-form-section">
+                <h2>Número do Cartão</h2>
+                <input 
+                    v-model="card_number" 
+                    type="text" 
+                    placeholder="1111 2222 3333 4444"
+                    maxlength="19"
+                    class="info-container text"
+                    :class="{'normal-input-text': card_number_is_valid && !card_number_is_empty}">
+                <p v-if="!card_number_is_valid" class="failed-input-text">O número informado é inválido.</p>
+                <p v-if="card_number_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            </div>
 
-        <!-- Proprietário do Cartão -->
-        <h2>Proprietário do Cartão</h2>
-        <input 
-            v-model="cardholder" 
-            placeholder=""
-            type="text" 
-            class="info-container text"
-            :class="{'normal-input-text': cardholder_is_valid && !cardholder_is_empty}">
-        <p v-if="!cardholder_is_valid" class="failed-input-text">O nome informado é inválido.</p>
-        <p v-if="cardholder_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            <!-- Proprietário do Cartão -->
+            <div class="vertical-form-section">
+                <h2>Proprietário do Cartão</h2>
+                <input 
+                    v-model="cardholder" 
+                    placeholder=""
+                    type="text" 
+                    class="info-container text"
+                    :class="{'normal-input-text': cardholder_is_valid && !cardholder_is_empty}">
+                <p v-if="!cardholder_is_valid" class="failed-input-text">O nome informado é inválido.</p>
+                <p v-if="cardholder_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            </div>
+        
+        </div>
 
-        <!-- Código de Segurança -->
-        <h2>Código de Segurança</h2>
-        <input 
-            v-model="security_code" 
-            placeholder=""
-            type="text" 
-            maxlength="3"
-            class="info-container text"
-            :class="{'normal-input-text': security_code_is_valid && !security_code_is_empty}">
-        <p v-if="!security_code_is_valid" class="failed-input-text">O código informado é inválido.</p>
-        <p v-if="security_code_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+        <div class="double-form-section">
+
+            <!-- Data de validade do cartão -->
+            <div class="vertical-form-section">
+                <h2>Data de Validade</h2>
+                <input 
+                    v-model="expiration_date" 
+                    type="month" 
+                    class="info-container text"
+                    :class="{'normal-input-text': expiration_date_is_valid && !expiration_date_is_empty}">
+                <p v-if="!expiration_date_is_valid" class="failed-input-text">A data informada é inválida.</p>
+                <p v-if="expiration_date_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            </div>
+
+            <!-- Código de Segurança -->
+            <div class="vertical-form-section">
+                <h2>Código de Segurança</h2>
+                <input 
+                    v-model="security_code" 
+                    placeholder=""
+                    type="text" 
+                    maxlength="3"
+                    class="info-container text"
+                    :class="{'normal-input-text': security_code_is_valid && !security_code_is_empty}">
+                <p v-if="!security_code_is_valid" class="failed-input-text">O código informado é inválido.</p>
+                <p v-if="security_code_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            </div>
+
+        </div>
 
         <!-- Confirmação de senha -->
         <h2>Confirme sua Senha</h2>

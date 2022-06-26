@@ -55,6 +55,7 @@
         <p v-if="!address_title_is_valid" class="failed-input-text">O título informado é inválido (deve conter somente caracteres alfanuméricos).</p>
         <p v-if="address_title_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
 
+
         <!-- CEP do endereço -->
         <h2>CEP</h2>
         <input 
@@ -66,68 +67,96 @@
         <p v-if="!cep_is_valid" class="failed-input-text">O CEP informado é inválido.</p>
         <p v-if="cep_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
 
-        <!-- Estado do endereço -->
-        <h2>Estado</h2>
-        <select 
-            v-model="address_state" 
-            class="info-container text"
-            :class="{'normal-input-text': address_state_is_valid && !address_state_is_empty}">
-            <option v-for="element in states_list" :key="element" :value="element">{{element}}</option>
-        </select>
-        <p v-if="!address_state_is_valid" class="failed-input-text">O estado informado é inválido.</p>
-        <p v-if="address_state_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
 
-        <!-- Cidade do endereço -->
-        <h2>Cidade</h2>
-        <input 
-            v-model="city" 
-            type="text" 
-            class="info-container text"
-            :class="{'normal-input-text': city_is_valid && !city_is_empty}">
-        <p v-if="!city_is_valid" class="failed-input-text">A cidade informada é inválida.</p>
-        <p v-if="city_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+        <div class="double-form-section">
 
-        <!-- Bairro do endereço -->
-        <h2>Bairro</h2>
-        <input 
-            v-model="district" 
-            type="text" 
-            class="info-container text"
-            :class="{'normal-input-text': district_is_valid && !district_is_empty}">
-        <p v-if="!district_is_valid" class="failed-input-text">O bairro informado é inválido.</p>
-        <p v-if="district_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            <!-- Estado do endereço -->
+            <div class="vertical-form-section">
+                <h2>Estado</h2>
+                <select 
+                    v-model="address_state" 
+                    class="info-container text"
+                    :class="{'normal-input-text': address_state_is_valid && !address_state_is_empty}">
+                    <option v-for="element in states_list" :key="element" :value="element">{{element}}</option>
+                </select>
+                <p v-if="!address_state_is_valid" class="failed-input-text">O estado informado é inválido.</p>
+                <p v-if="address_state_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            </div>
 
-        <!-- Rua do endereço -->
-        <h2>Rua</h2>
-        <input 
-            v-model="street" 
-            type="text" 
-            class="info-container text"
-            :class="{'normal-input-text': street_is_valid && !street_is_empty}">
-        <p v-if="!street_is_valid" class="failed-input-text">A rua informada é inválida.</p>
-        <p v-if="street_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            <!-- Cidade do endereço -->
+            <div class="vertical-form-section">
+                <h2>Cidade</h2>
+                <input 
+                    v-model="city" 
+                    type="text" 
+                    class="info-container text"
+                    :class="{'normal-input-text': city_is_valid && !city_is_empty}">
+                <p v-if="!city_is_valid" class="failed-input-text">A cidade informada é inválida.</p>
+                <p v-if="city_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            </div>
 
-        <!-- Número do endereço -->
-        <h2>Número</h2>
-        <input 
-            v-model="number" 
-            type="text" 
-            maxlength="8"
-            class="info-container text"
-            :class="{'normal-input-text': number_is_valid && !number_is_empty}">
-        <p v-if="!number_is_valid" class="failed-input-text">O número informado é inválido.</p>
-        <p v-if="number_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+        </div>
 
-        <!-- Complemento do endereço -->
-        <h2>Complemento</h2>
-        <p class="text-common-color" style="margin-bottom: 1rem;">(opcional)</p>
-        <input 
-            v-model="complement" 
-            type="text" 
-            maxlength="16"
-            class="info-container text"
-            :class="{'normal-input-text': complement_is_valid}">
-        <p v-if="!complement_is_valid" class="failed-input-text">O complemento informado é inválido.</p>
+
+        <div class="double-form-section">
+
+            <!-- Bairro do endereço -->
+            <div class="vertical-form-section">
+                <h2>Bairro</h2>
+                <input 
+                    v-model="district" 
+                    type="text" 
+                    class="info-container text"
+                    :class="{'normal-input-text': district_is_valid && !district_is_empty}">
+                <p v-if="!district_is_valid" class="failed-input-text">O bairro informado é inválido.</p>
+                <p v-if="district_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            </div>
+
+            <!-- Rua do endereço -->
+            <div class="vertical-form-section">
+                <h2>Rua</h2>
+                <input 
+                    v-model="street" 
+                    type="text" 
+                    class="info-container text"
+                    :class="{'normal-input-text': street_is_valid && !street_is_empty}">
+                <p v-if="!street_is_valid" class="failed-input-text">A rua informada é inválida.</p>
+                <p v-if="street_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            </div>
+
+        </div>
+
+
+        <div class="double-form-section">
+
+            <!-- Número do endereço -->
+            <div class="vertical-form-section">
+                <h2 style="margin-bottom: 3.0rem;">Número</h2>
+                <input 
+                    v-model="number" 
+                    type="text" 
+                    maxlength="8"
+                    class="info-container text"
+                    :class="{'normal-input-text': number_is_valid && !number_is_empty}">
+                <p v-if="!number_is_valid" class="failed-input-text">O número informado é inválido.</p>
+                <p v-if="number_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            </div>
+
+            <!-- Complemento do endereço -->
+            <div class="vertical-form-section">
+                <h2>Complemento</h2>
+                <p class="text-common-color" style="margin-bottom: 1rem;">(opcional)</p>
+                <input 
+                    v-model="complement" 
+                    type="text" 
+                    maxlength="16"
+                    class="info-container text"
+                    :class="{'normal-input-text': complement_is_valid}">
+                <p v-if="!complement_is_valid" class="failed-input-text">O complemento informado é inválido.</p>
+            </div>
+
+        </div>
+
 
         <!-- Confirmação de senha -->
         <h2>Confirme sua Senha</h2>
@@ -139,6 +168,7 @@
             :class="{'normal-input-text': password_is_valid && !password_is_empty}">
         <p v-if="!password_is_valid" class="failed-input-text">A senha informada é inválida.</p>
         <p v-if="password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+
 
         <!-- Botões de ação -->
         <div class="update-buttons-section">
