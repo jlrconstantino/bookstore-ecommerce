@@ -45,11 +45,11 @@
                     </div>
                     <div v-if="show_categories_menu && show_bottom_bar" id="header-categories-hidden-menu">
                         <a 
-                            v-for="category in this.$store.state.menu_categories" 
+                            v-for="category in menu_categories" 
                             :key="category" 
                             @click="search_by_category(category)" 
                             class="hover-interaction-link header-bot-bar-text"
-                        >{{category}}</a>
+                        >{{category.name}}</a>
                     </div>
                 </div>
                 
@@ -57,7 +57,7 @@
                 <a 
                     v-for="category in this.$store.state.featured_categories" 
                     :key="category" 
-                    @click="search_by_category(category)" 
+                    @click="search_by_category({id: 0, name: category})" 
                     class="hover-interaction-link header-bot-bar-text"
                     @mouseover="show_categories_menu = false"
                 >{{category}}</a>
@@ -74,6 +74,9 @@
 
     // Vuex
     import store from '@/store/index.js';
+
+    // Para manipulação da base de dados
+    import { load_local_storage_categories } from '@/utils/local-storage-management';
 
     // Lógica local
     export default {
@@ -94,7 +97,17 @@
 
                 // Para controlar o menu dropdown
                 show_categories_menu: false, 
+
+                // Itens do menu de categorias
+                menu_categories: [], 
             };
+        }, 
+
+        // Para carregas as categorias da base de dados
+        created() {
+            load_local_storage_categories().then(res => {
+                this.menu_categories = res;
+            });
         }, 
 
         // Para escutar eventos de rolagem e de clique
@@ -126,8 +139,8 @@
             }, 
 
             // Busca por categoria
-            search_by_category(str){
-                this.$router.push({name: "category", query: {target: str}});
+            search_by_category(category){
+                this.$router.push({name: "category", query: {target: category.name}, params: {id: category.id}});
                 window.scrollTo(0,0);
             }, 
 

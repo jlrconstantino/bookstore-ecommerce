@@ -15,17 +15,6 @@ const store = createStore({
       "Infantil", 
     ], 
 
-    // Para definir as categorias no menu
-    menu_categories: [
-      "Literatura Internacional", 
-      "Literatura Brasileira", 
-      "Ficção Científica", 
-      "História", 
-      "Biografia", 
-      "Autoajuda", 
-      "Psicologia",
-    ], 
-
     // Usuário ativo
     user: {
       id: null, 

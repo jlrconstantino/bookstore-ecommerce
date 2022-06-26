@@ -15,7 +15,7 @@
     import BookSection from "../components/BookSection.vue";
 
     // Para manipulação da base de dados local
-    import { load_local_storage_books } from "../utils/local-storage-management";
+    import { load_local_storage_books, load_local_storage_has_category } from "../utils/local-storage-management";
 
     // Lógica local
     export default {
@@ -31,28 +31,64 @@
         // Dados locais
         data() {
             return {
+
+                // Livros
                 books: [],
+
+                // Categorias dos livros
+                books_categories: [], 
+                
+                // Controle assíncrono
+                data_is_ready: false, 
             };
         }, 
 
         // Carregamento da base de dados
-        created() {
-            load_local_storage_books().then(res => {
+        created: async function() {
+            await load_local_storage_books().then(res => {
                 this.books = res;
             });
+            await load_local_storage_has_category().then(res => {
+                this.books_categories = res;
+            });
+            this.data_is_ready = true;
         }, 
 
         // Para filtragem em tempo-real
         computed: {
             filtered_books: function() {
-                try{
-                    let pattern = new RegExp(this.$route.query.target.toLowerCase(), "g");
-                    return this.books.filter(book => {
-                        return pattern.test(book.title.toLowerCase());
-                    });
-                }catch(exception){
-                    return [];
+
+                // Verificação de disponibilidade
+                if(this.data_is_ready === true){
+
+                    // Tentativa de filtragem
+                    try {
+                        // Categoria-alvo
+                        let target_category = this.$route.params.id;
+
+                        // Para cada livro, seleciona aqueles com a categoria fornecida
+                        if(target_category != null){
+                            return this.books.filter(book => {
+                                let categories = this.books_categories.filter(book_category => {
+                                    return book_category.book === book.id; 
+                                });
+                                if(categories.length > 0){
+                                    return categories.some(book_category => {
+                                        return book_category.category == target_category;
+                                    });
+                                }
+                                return false;
+                            });
+                        }
+                        return [];
+                    }
+
+                    // Exceções
+                    catch(_){
+                        return [];
+                    }
                 }
+                return [];
             }, 
         }, 
     }

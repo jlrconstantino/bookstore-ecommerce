@@ -20,7 +20,7 @@ export async function delete_item(key) {
 export async function start_local_storage() {
 
     // Livros
-    let books = [
+    const books = [
         {
             id: 1, 
             title: "Getting an Arduino LED to Blink", 
@@ -204,7 +204,7 @@ export async function start_local_storage() {
             email: "customer@email.com", 
             password: "123", 
             birth: "16/09/1995", 
-            tel: "1199998888", 
+            tel: "(11) 99998-2888", 
             role: "customer", 
         }, 
         {
@@ -213,7 +213,7 @@ export async function start_local_storage() {
             email: "admin@email.com", 
             password: "123", 
             birth: "02/11/2007", 
-            tel: "99111112222", 
+            tel: "(99) 11111-2222", 
             role: "admin", 
         }, 
     ];
@@ -221,6 +221,79 @@ export async function start_local_storage() {
     // Salva os usuários
     users.forEach((user, index) => {
         set_item("user#" + index, user);
+    });
+
+    // Categorias
+    const categories = [
+        {id: 0, name: ""}, 
+        {id: 1, name: "Infantil"}, 
+        {id: 2, name: "Literatura Internacional"}, 
+        {id: 3, name: "Literatura Brasileira"}, 
+        {id: 4, name: "Ficção Científica"}, 
+        {id: 5, name: "História"}, 
+        {id: 6, name: "Biografia"}, 
+        {id: 7, name: "Autoajuda"}, 
+        {id: 8, name: "Psicologia"}, 
+        {id: 9, name: "Terror"}, 
+    ];
+
+    // Salva as categorias
+    categories.forEach((category, index) => {
+        set_item("category#" + index, category);
+    });
+
+    // Relacionamento entre os livros e as categorias
+    const has_category = [
+
+        // Livro 1
+        {book: 1, category: 2}, 
+        {book: 1, category: 4}, 
+
+        // Livro 2
+        {book: 2, category: 6}, 
+
+        // Livro 3
+        {book: 3, category: 7}, 
+
+        // Livro 4
+        {book: 4, category: 5}, 
+
+        // Livro 5
+        {book: 5, category: 1}, 
+        {book: 5, category: 3}, 
+
+        // Livro 6
+        {book: 6, category: 7}, 
+        {book: 6, category: 2}, 
+
+        // Livro 7
+        {book: 7, category: 8}, 
+        {book: 7, category: 2}, 
+
+        // Livro 8
+        {book: 8, category: 5}, 
+        {book: 8, category: 3}, 
+
+        // Livro 9
+        {book: 9, category: 5}, 
+        {book: 9, category: 9}, 
+
+        // Livro 10
+        {book: 10, category: 3}, 
+        {book: 10, category: 9}, 
+
+        // Livro 11
+        {book: 11, category: 2}, 
+        {book: 11, category: 4}, 
+        {book: 11, category: 9}, 
+
+        // Livro 12
+        {book: 12, category: 9}, 
+    ];
+
+    // Salva as categorias dos livros
+    has_category.forEach((element, index) => {
+        set_item("has_category#" + index, element);
     });
 }
 
@@ -282,4 +355,34 @@ export async function load_local_storage_delivery_addresses() {
         }
     }
     return addresses;
+}
+
+
+// Para carregamento das categorias
+export async function load_local_storage_categories() {
+    let categories = [];
+    for(let i = 0;; i++) {
+        let response = await get_item("category#" + i);
+        if(response != null){
+            categories.push(response);
+        }else{
+            break;
+        }
+    }
+    return categories;
+}
+
+
+// Para carregamento das categorias pertencentes aos livros
+export async function load_local_storage_has_category() {
+    let has_category = [];
+    for(let i = 0;; i++) {
+        let response = await get_item("has_category#" + i);
+        if(response != null){
+            has_category.push(response);
+        }else{
+            break;
+        }
+    }
+    return has_category;
 }
