@@ -109,6 +109,7 @@
             <p class="text-darker-color">Telefone</p>
             <input 
                 type="tel" 
+                pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
                 v-model="telephone"
                 @keyup.enter="register()"
                 placeholder="(99)99999-9999"

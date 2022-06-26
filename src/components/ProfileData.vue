@@ -48,6 +48,7 @@
         <input 
             v-model="user_data.tel" 
             type="tel" 
+            pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
             class="info-container text" 
             v-if="updating_data"
             :class="{'normal-input-text': telephone_is_valid && !telephone_is_empty}">

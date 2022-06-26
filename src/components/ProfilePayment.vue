@@ -41,7 +41,7 @@
 
     </div>
 
-    <!-- Seção de adição de novo cartão -->
+    <!-- Seção de adição e modificação de cartões -->
     <div v-if="adding_card || updating_card">
 
         <!-- Título do cartão -->
@@ -416,7 +416,6 @@
                 
                 // Validação dos dados e da senha
                 this.validate_card_info_and_password().then(res => {
-                    console.log(res);
                     if(res === true){
 
                         // Cria o novo cartão

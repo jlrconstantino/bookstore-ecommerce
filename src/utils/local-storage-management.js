@@ -268,3 +268,18 @@ export async function load_local_storage_credit_cards() {
     }
     return cards;
 }
+
+
+// Para carregamento dos endereços de entrega
+export async function load_local_storage_delivery_addresses() {
+    let addresses = [];
+    for(let i = 0;; i++) {
+        let response = await get_item("address#" + i);
+        if(response != null){
+            addresses.push(response);
+        }else{
+            break;
+        }
+    }
+    return addresses;
+}
