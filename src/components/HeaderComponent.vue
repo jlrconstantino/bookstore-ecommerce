@@ -57,7 +57,7 @@
                 <a 
                     v-for="category in this.$store.state.featured_categories" 
                     :key="category" 
-                    @click="search_by_category({id: 0, name: category})" 
+                    @click="search_by_category({id: -1, name: category})" 
                     class="hover-interaction-link header-bot-bar-text"
                     @mouseover="show_categories_menu = false"
                 >{{category}}</a>
@@ -140,7 +140,7 @@
 
             // Busca por categoria
             search_by_category(category){
-                this.$router.push({name: "category", query: {target: category.name}, params: {id: category.id}});
+                this.$router.push({name: "category", params: {id: category.id}});
                 window.scrollTo(0,0);
             }, 
 

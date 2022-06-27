@@ -52,8 +52,9 @@ const routes = [
 
   // Página de busca por categoria
   {
-    path: '/category', 
+    path: '/category?id=:id', 
     name: 'category', 
+    params: ['id'], 
     component: CategoryView, 
   }, 
 

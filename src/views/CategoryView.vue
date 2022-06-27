@@ -1,7 +1,7 @@
 <!-- .:::: TEMPLATE ::::. -->
 <template>
     <div id="container">
-        <h2 class="subtitle">{{this.$route.query.target}}</h2>
+        <h2 class="subtitle">{{target_category_name}}</h2>
         <p class="text-common-color">Produtos encontrados: {{filtered_books.length}}</p>
     </div>
     <BookSection :books="filtered_books"></BookSection>
@@ -15,7 +15,7 @@
     import BookSection from "../components/BookSection.vue";
 
     // Para manipulação da base de dados local
-    import { load_local_storage_books, load_local_storage_has_category } from "../utils/local-storage-management";
+    import { load_local_storage_books, load_local_storage_categories, load_local_storage_has_category } from "../utils/local-storage-management";
 
     // Lógica local
     export default {
@@ -32,6 +32,11 @@
         data() {
             return {
 
+                // Elementos de rota
+                invalid_category: "Categoria Inválida", 
+                target_category_name: "Categoria Inválida", 
+                target_category_id: 0, 
+
                 // Livros
                 books: [],
 
@@ -45,13 +50,48 @@
 
         // Carregamento da base de dados
         created: async function() {
+
+            // Carrega os livros
             await load_local_storage_books().then(res => {
                 this.books = res;
             });
+
+            // Carrega as categorias dos livros
             await load_local_storage_has_category().then(res => {
                 this.books_categories = res;
             });
+
+            // Aviso de disponibilidade dos dados
             this.data_is_ready = true;
+        }, 
+
+        // Para selecionar a categoria
+        updated: async function() {
+
+            // Carrega as categorias globais
+            let categories = [];
+            await load_local_storage_categories().then(res => {
+                categories = res;
+            });
+
+            // Obtém o ID da categoria sendo requisitada
+            this.target_category_id = this.$route.params.id;
+            if(this.target_category_id == null){
+                this.target_category_name = this.invalid_category;
+                this.target_category_id = 0;
+            }else{
+
+                // Obtém o nome da categoria sendo requisitada
+                let target_category_id = this.target_category_id;
+                let page_title = categories.find(category => {
+                    return category.id.toString() === target_category_id;
+                });
+                if(page_title != null){
+                    this.target_category_name = page_title.name;
+                }else{
+                    this.target_category_name = this.invalid_category;
+                }
+            }
         }, 
 
         // Para filtragem em tempo-real
@@ -63,24 +103,19 @@
 
                     // Tentativa de filtragem
                     try {
-                        // Categoria-alvo
-                        let target_category = this.$route.params.id;
 
                         // Para cada livro, seleciona aqueles com a categoria fornecida
-                        if(target_category != null){
-                            return this.books.filter(book => {
-                                let categories = this.books_categories.filter(book_category => {
-                                    return book_category.book === book.id; 
-                                });
-                                if(categories.length > 0){
-                                    return categories.some(book_category => {
-                                        return book_category.category == target_category;
-                                    });
-                                }
-                                return false;
+                        return this.books.filter(book => {
+                            let categories = this.books_categories.filter(book_category => {
+                                return book_category.book === book.id; 
                             });
-                        }
-                        return [];
+                            if(categories.length > 0){
+                                return categories.some(book_category => {
+                                    return book_category.category == this.target_category_id;
+                                });
+                            }
+                            return false;
+                        });
                     }
 
                     // Exceções
