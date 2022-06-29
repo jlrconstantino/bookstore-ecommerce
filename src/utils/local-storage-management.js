@@ -1,3 +1,5 @@
+"use strict"
+
 // Funções assíncronas para manipulação de armazenamento local
 function later() {
     return new Promise((resolve) => setTimeout(resolve, 100));

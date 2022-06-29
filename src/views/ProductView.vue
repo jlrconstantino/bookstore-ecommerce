@@ -140,7 +140,7 @@
                     language: "", 
                     pages: 0, 
                     description: "",
-                    img_src: "../assets/sample-books/404.jpg",
+                    img_src: require("@/assets/sample-books/404.jpg"),
                 }, 
                 
                 // Para controle assíncrono
@@ -153,7 +153,7 @@
             this.full_star = require("@/assets/icons/full-star.svg");
             this.half_star = require("@/assets/icons/half-star.svg");
             this.null_star = require("@/assets/icons/null-star.svg");
-            get_item("book#" + this.$route.query.id).then(res => {
+            get_item("book#" + this.$route.params.id).then(res => {
                 this.product = res;
                 this.data_is_ready = true;
             });
@@ -169,6 +169,7 @@
             }, 
             go_to_cart() {
                 this.$router.push({name: 'cart'});
+                this.$store.commit("add_cart_item", this.$route.params.id);
                 window.scrollTo(0,0);
             }, 
         },

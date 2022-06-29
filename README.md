@@ -98,6 +98,10 @@ O Modelo de Entidade Relacionamento pode ser visualizado pelo diagrama a seguir.
 
 ![MER](./github/MER.png)
 
+A seguir, o Modelo Relacional, específico para implementação de base de dados, é apresentado.
+
+![Modelo Relacional](./github/MR.png)
+
 ## 3. Comentários sobre o código
 
 -

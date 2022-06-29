@@ -225,10 +225,11 @@
         height: 100%;/*6vh;*/
         width: auto;
         filter: brightness(0) invert(1);
+        transition: 0.1s all ease-out;
     }
     .header-top-bar-img:hover {
         cursor: pointer;
-        filter: brightness(0) invert(1) drop-shadow(4px 4px 8px #afc8d6);;
+        filter: brightness(0) invert(1) drop-shadow(4px 4px 8px #afc8d6);
     }
 
 

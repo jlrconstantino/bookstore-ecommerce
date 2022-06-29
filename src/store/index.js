@@ -20,7 +20,12 @@ const store = createStore({
       id: null, 
       name: null, 
       role: null, 
-    },
+    }, 
+
+    // Carrinho ativo
+    cart: [
+
+    ], 
 
   },
 
@@ -35,12 +40,18 @@ const store = createStore({
     // Para verificar permissões administrativas
     is_admin(state) {
       return state.user.role === 'admin';
+    }, 
+
+    // Retorna o carrinho de compras
+    get_shopping_cart(state) {
+      return state.cart;
     },
 
   },
 
   // Métodos modificadores
   mutations: {
+
 
     // Modifica o usuário
     set_user(state, user) {
@@ -49,11 +60,57 @@ const store = createStore({
       state.user.role = user.role;
     }, 
 
+
     // Realiza logout
     logout(state) {
       state.user.id = null;
       state.user.name = null;
       state.user.role = null;
+      state.cart = [];
+    }, 
+
+
+    // Adiciona um item ao carrinho
+    add_cart_item(state, product_id) {
+
+      // Verifica existência prévia
+      let index = state.cart.findIndex(item => {
+        return item.product == product_id;
+      });
+
+      // Adição de uma unidade a um item pré-existente
+      if(index !== -1) {
+        state.cart[index].quantity += 1;
+      }
+      
+      // Adição de um novo item
+      else{
+        state.cart.push({
+          product: product_id, 
+          quantity: 1, 
+        });
+      }
+    }, 
+
+
+    // Remove um item do carrinho
+    remove_cart_item(state, product_id) {
+
+      // Verifica existência prévia
+      let index = state.cart.findIndex(item => {
+        return item.product == product_id;
+      });
+
+      // Remoção
+      if(index !== -1) {
+        state.cart.splice(index, 1);
+      }
+    }, 
+
+
+    // Atualiza a quantidade de um item do carrinho de compras
+    update_cart_item_quantity(state, payload) {
+      state.cart[payload.index].quantity = payload.quantity;
     }, 
 
   },

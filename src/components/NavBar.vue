@@ -81,6 +81,8 @@
                             page_name = this.$route.params.title;
                             if(page_name == null){
                                 page_name = "Produto";
+                            }else if(page_name.length > 48){
+                                page_name = page_name.substring(0, 48) + "...";
                             }
                             break;
 
