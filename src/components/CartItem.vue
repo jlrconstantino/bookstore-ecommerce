@@ -165,9 +165,6 @@
     @import "../css/colors.css";
 
     /* Borda */
-    tr {
-        border-bottom: var(--box-border);
-    }
     .cart-td {
         margin-top: 1rem;
         margin-left: 1rem;

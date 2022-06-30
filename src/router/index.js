@@ -16,6 +16,7 @@ import ProductView from '@/views/ProductView.vue';
 import ProfileAddresses from '@/components/ProfileAddresses.vue';
 import ProfileData from '@/components/ProfileData.vue';
 import ProfilePayment from '@/components/ProfilePayment.vue';
+import PurchaseView from '@/views/PurchaseView.vue';
 import SearchView from '@/views/SearchView.vue';
 import UsersManager from '@/components/UsersManager.vue';
 
@@ -34,7 +35,16 @@ const routes = [
     path: '/cart', 
     name: 'cart', 
     component: CartView, 
-  },
+  }, 
+
+  // Finalização de compras
+  {
+    path: '/purchase', 
+    name: 'purchase', 
+    meta: {requires_authentication: true}, 
+    component: PurchaseView, 
+    children: [], 
+  }, 
 
   // Página de produto
   {

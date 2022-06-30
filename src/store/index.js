@@ -47,6 +47,15 @@ const store = createStore({
       return state.cart;
     }, 
 
+    // Retorna a quantia total de elementos no carrinho
+    get_shopping_cart_total_quantity(state) {
+      let output = 0;
+      for(const item of state.cart){
+        output += item.quantity;
+      }
+      return output;
+    }, 
+
     // Retorna o subtotal do carrinho de compras
     get_shopping_cart_subtotal(state) {
       let output = 0.0;

@@ -4,8 +4,8 @@
 
         <!-- Título da página -->
         <h2 id="cart-title" class="subtitle">Meu Carrinho</h2>
-        <p id="cart-info" class="text-common-color">Quantidade de produtos: {{cart_items.length}}</p>
-        <div v-if="cart_items.length > 0">
+        <p id="cart-info" class="text-common-color">Quantidade de Produtos: {{items_quantity}}</p>
+        <div v-if="items_quantity > 0">
 
             <!-- Carrinho -->
             <table class="form-table">
@@ -145,7 +145,7 @@
 
             // Finaliza a compra
             finalize_purchase() {
-                this.$router.push({name: "home"});
+                this.$router.push({name: "purchase"});
                 window.scrollTo(0,0);
             }, 
         }, 
@@ -156,6 +156,11 @@
             // Lista de itens do carrinho
             cart_items() {
                 return store.getters.get_shopping_cart;
+            }, 
+
+            // Total de itens na lista
+            items_quantity() {
+                return store.getters.get_shopping_cart_total_quantity;
             }, 
 
             // Subtotal da lista de itens do carrinho
@@ -185,6 +190,7 @@
 
 <!-- .:::: STYLE ::::. -->
 <style scoped>
+
     @import "../css/colors.css";
     @import "../css/profile-form.css";
 
