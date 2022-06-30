@@ -65,8 +65,7 @@
             </div>
 
             <!-- Frete -->
-            <FreightCalculator v-model="freight">
-            </FreightCalculator>
+            <FreightCalculator v-model="freight" id="freight-calculator"></FreightCalculator>
 
         </div>
 
@@ -229,6 +228,12 @@
 
     :root {
         --product-box-border: 1px groove rgba(190, 190, 190, 0.9);
+    }
+
+    
+    /* Calculadora de frete */
+    #freight-calculator {
+        margin-top: 4%;
     }
 
     /* Divisão de itens */

@@ -128,7 +128,6 @@
 
     /* Contêiner da calculadora de frete */
     .shipping-container {
-        margin-top: 4%;
         background-color: rgb(219, 219, 219);
         display: flex;
         flex-direction: column;
