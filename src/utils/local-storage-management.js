@@ -133,7 +133,7 @@ export async function start_local_storage() {
             language: "Inglês", 
             pages: 690, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            img_src: require("@/assets/sample-books/commit_messages.jpeg"),
+            img_src: require("@/assets/sample-books/regex.jpg"),
         },
         {
             id: 9, 

@@ -147,7 +147,7 @@
         font-size: 1rem;
         height: 2rem;
         border-radius: 5px;
-        width: 60%;
+        width: 55%;
         border: var(--product-box-border);
         box-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.281);
     }
@@ -156,7 +156,7 @@
     .pink-button {
         font-size: 1rem;
         height: 2rem;
-        width: 30%;
+        width: 35%;
     }
 
     /* Textos normal e indicador de falhas */

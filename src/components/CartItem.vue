@@ -49,7 +49,7 @@
         
         <!-- Subtotal do item -->
         <td class="centered-content cart-td" :class="{'bot-mar-td' : last_item === true}">
-            <h3 class="text-common-color">{{subtotal}}</h3>
+            <h3 class="text-common-color">{{subtotal_string}}</h3>
         </td>
 
         <!-- Remover este item -->
@@ -62,7 +62,10 @@
 
 <!-- .:::: SCRIPT ::::. -->
 <script>
+
+    // Importações
     import { select_product } from '@/utils/database-management';
+    import { format_number_to_price } from '@/utils/utils';
 
     // Lógica local
     export default {
@@ -76,6 +79,7 @@
             cart_product: Object, 
             cart_product_index: Number, 
             last_item: Boolean, 
+            subtotal: Number,
         }, 
 
         // Dados locais
@@ -95,9 +99,18 @@
 
         // Carrega o livro da base de dados
         created: async function() {
+
+            // Obtenção do livro
             await select_product(this.cart_product.product).then(res => {
                 this.book = res;
             });
+
+            // Atualização do subtotal
+            const payload = {
+                index: this.cart_product_index, 
+                subtotal: this.cart_product.quantity * this.book.price,
+            };
+            this.$store.commit("update_cart_item_subtotal", payload);
         }, 
 
         // Atributos computados
@@ -109,18 +122,22 @@
                     return this.cart_product.quantity;
                 }, 
                 set(value) {
-                    let payload = {
+                    const payload = {
                         index: this.cart_product_index, 
-                        quantity: value,
+                        quantity: value, 
+                        subtotal: value * this.book.price,
                     };
                     this.$store.commit("update_cart_item_quantity", payload);
+                    this.$store.commit("update_cart_item_subtotal", payload);
                 }, 
             }, 
 
             // Para controle de subtotal
-            subtotal() {
-                let price = this.cart_product.quantity * this.book.price;
-                return "R$ " + price.toFixed(2).toString().replace('.', ',');
+            subtotal_string() {
+                if(this.cart_product.subtotal != null){
+                    return format_number_to_price(this.cart_product.subtotal);
+                }
+                return "R$ 0,00";
             }, 
         }, 
 

@@ -45,7 +45,16 @@ const store = createStore({
     // Retorna o carrinho de compras
     get_shopping_cart(state) {
       return state.cart;
-    },
+    }, 
+
+    // Retorna o subtotal do carrinho de compras
+    get_shopping_cart_subtotal(state) {
+      let output = 0.0;
+      for(const item of state.cart){
+        output += item.subtotal;
+      }
+      return output;
+    }, 
 
   },
 
@@ -88,6 +97,7 @@ const store = createStore({
         state.cart.push({
           product: product_id, 
           quantity: 1, 
+          subtotal: 0, 
         });
       }
     }, 
@@ -112,6 +122,13 @@ const store = createStore({
     update_cart_item_quantity(state, payload) {
       state.cart[payload.index].quantity = payload.quantity;
     }, 
+
+
+    // Atualiza o subtotal de um item do carrinho de compras
+    update_cart_item_subtotal(state, payload) {
+      state.cart[payload.index].subtotal = payload.subtotal;
+    }, 
+
 
   },
 

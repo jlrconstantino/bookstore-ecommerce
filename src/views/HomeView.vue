@@ -36,13 +36,14 @@
                 <div class="lower-left-section">
 
                     <!-- Calculadora de frete -->
-                    <calculator></calculator>
+                    <calculator v-model="freight"></calculator>
 
                 </div>
 
                 <!-- Seção direita -->
                 <div class="lower-right-section">
-
+                    <h2>Subtotal = {{subtotal}}</h2>
+                    <h2>Frete = {{freight}}</h2>
                 </div>
             
             </div>
@@ -75,10 +76,27 @@
             "calculator": FreightCalculator, 
         }, 
 
-        // Lista de itens do carrinho
+        // Dados locais
+        data() {
+            return {
+
+                // Valor de frete
+                freight: 0.00, 
+
+            };
+        }, 
+
+        // Atributos computados
         computed: {
+
+            // Lista de itens do carrinho
             cart_items() {
                 return store.getters.get_shopping_cart;
+            }, 
+
+            // Subtotal da lista de itens do carrinho
+            subtotal() {
+                return store.getters.get_shopping_cart_subtotal;
             }, 
         }, 
     }
@@ -125,7 +143,8 @@
         float: left;
     }
     .lower-right-section {
-        width: 75%;
+        margin-top: 4%;
+        width: 50%;
         float: right;
     }
 </style>
