@@ -18,19 +18,6 @@
                     class="left-container-item"
                 >{{option.title}}</router-link>
 
-                <!-- Itens administrativos -->
-                <template v-if="this.$store.getters.is_admin">
-                    <router-link 
-                        v-for="option in sidebar_admin_options" 
-                        @click="set_title(option.title)"
-                        :key="option" 
-                        :to="option.to" 
-                        class="left-container-item admin-item"
-                    >{{option.title}}</router-link>
-                </template>
-
-                <!-- Logout -->
-                <a id="logout-text" class="left-container-item" @click="logout()">Sair</a>
             </div>
 
             <!-- Seção de visualização -->
@@ -57,19 +44,13 @@
             return {
 
                 // Para controle do título da página
-                page_title: "Dados Pessoais", 
+                page_title: "Método de Pagamento", 
 
                 // Opções do menu lateral
                 sidebar_options: [
-                    {to: {name: 'profile-data'}, title: "Dados Pessoais"}, 
-                    {to: {name: 'profile-payment-methods'}, title: "Métodos de Pagamento"}, 
-                    {to: {name: 'profile-addresses'}, title: "Endereços de Entrega"}, 
-                ], 
-                
-                // Opções administrativas do menu lateral
-                sidebar_admin_options: [
-                    {to: {name: 'manage-users'}, title: "Gerenciar Usuários"}, 
-                    {to: {name: 'manage-products'}, title: "Gerenciar Produtos"}, 
+                    {to: {name: 'purchase-payment-method'}, title: "Método de Pagamento"}, 
+                    {to: {name: 'purchase-delivery-address'}, title: "Endereço de Entrega"}, 
+                    {to: {name: 'purchase-final'}, title: "Revisar e Finalizar Compra"}
                 ], 
             };
         }, 
@@ -79,11 +60,6 @@
             set_title(title) {
                 this.page_title = title;
             },
-            logout(){
-                this.$store.commit("logout");
-                this.$router.push({name: "home"});
-                window.scrollTo(0,0);
-            }, 
         }, 
     }
 
@@ -139,20 +115,5 @@
     }
     .left-container-item:hover {
         color: var(--link-hover-color);
-    }
-    .admin-item {
-        color: var(--review-text-color);
-        background-color: var(--blue-emphasis-color);
-    }
-
-    /* Logout */
-    #logout-text {
-        font-size: 1.2rem;
-        color: var(--red-text-color);
-        text-decoration: underline;
-        background-color: var(--red-emphasis-color);
-    }
-    #logout-text:hover {
-        color: var(--dark-red-text-color);
     }
 </style>

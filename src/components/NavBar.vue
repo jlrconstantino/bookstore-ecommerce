@@ -26,8 +26,18 @@
         // Dados locais
         data() {
             return {
+
+                // Para controle de navegação
                 pages: ["Página Principal"], 
                 routes: [{name: "home"}], 
+
+                // Rotas especiais (não duplicam)
+                exclusive_route_names: [
+                    "purchase", 
+                    "purchase-payment-method", 
+                    "purchase-delivery-address",
+                    "purchase-final"
+                ], 
             };
         }, 
 
@@ -155,6 +165,26 @@
                             page_name = "Gerenciar Produtos";
                             this.pages.length = 1;
                             this.routes.length = 1;
+                            break;
+
+                        // Finalização de compra
+                        case "purchase":
+                            page_name = "Finalizar Compra";
+                            break;
+                        
+                        // Método de pagamento da compra
+                        case "purchase-payment-method":
+                            page_name = "Método de Pagamento";
+                            break;
+
+                        // Endereço de entrega da compra
+                        case "purchase-delivery-address":
+                            page_name = "Endereço de Entrega";
+                            break;
+
+                        // Finalização e revisão da compra
+                        case "purchase-final":
+                            page_name = "Revisão e Finalização"
                             break;
                         
                         // Outros

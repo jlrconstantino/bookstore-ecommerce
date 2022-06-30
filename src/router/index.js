@@ -16,6 +16,9 @@ import ProductView from '@/views/ProductView.vue';
 import ProfileAddresses from '@/components/ProfileAddresses.vue';
 import ProfileData from '@/components/ProfileData.vue';
 import ProfilePayment from '@/components/ProfilePayment.vue';
+import PurchasePayment from '@/components/PurchasePayment.vue';
+import PurchaseAddress from '@/components/PurchaseAddress.vue';
+import PurchaseFinal from '@/components/PurchaseFinal.vue';
 import PurchaseView from '@/views/PurchaseView.vue';
 import SearchView from '@/views/SearchView.vue';
 import UsersManager from '@/components/UsersManager.vue';
@@ -41,9 +44,33 @@ const routes = [
   {
     path: '/purchase', 
     name: 'purchase', 
+    redirect: {name: 'purchase-payment-method'}, 
     meta: {requires_authentication: true}, 
     component: PurchaseView, 
-    children: [], 
+    children: [
+
+      // Página de método de pagamento da compra
+      {
+        name: 'purchase-payment-method', 
+        path: '', 
+        component: PurchasePayment
+      }, 
+
+      // Página de endereço de entrega da compra
+      {
+        name: 'purchase-delivery-address', 
+        path: '', 
+        component: PurchaseAddress
+      }, 
+
+      // Página de método de pagamento da compra
+      {
+        name: 'purchase-final', 
+        path: '', 
+        component: PurchaseFinal
+      }, 
+
+    ], 
   }, 
 
   // Página de produto
