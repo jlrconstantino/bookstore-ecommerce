@@ -38,7 +38,7 @@
 
         // Parâmetros
         props: {
-            value: Number, 
+            freight: Number, 
         }, 
 
         // Dados locais
@@ -82,7 +82,7 @@
             calculate_freight() {
                 if(this.validate_cep() === true) {
                     this.show_result = true;
-                    this.$emit("input", 14.90);
+                    this.$emit("update:freight", 14.90);
                 }else{
                     this.show_result = false;
                 }
@@ -113,7 +113,7 @@
     }
     .result-text {
         font-size: 1.0rem;
-        width: 90%;
+        width: calc(100% - 1rem);
         text-align: center;
         background-color: rgb(200, 200, 200);
         padding: 0.5rem;

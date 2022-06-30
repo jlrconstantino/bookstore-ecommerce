@@ -36,14 +36,48 @@
                 <div class="lower-left-section">
 
                     <!-- Calculadora de frete -->
-                    <calculator v-model="freight"></calculator>
+                    <calculator :freight="freight" @update:freight="freight = $event"></calculator>
 
                 </div>
 
                 <!-- Seção direita -->
                 <div class="lower-right-section">
-                    <h2>Subtotal = {{subtotal}}</h2>
-                    <h2>Frete = {{freight}}</h2>
+                    <table class="cart-result-table">
+
+                        <!-- Subtotal -->
+                        <tr>
+                            <td class="table-label">
+                                <h3 class="text-darker-color">Subtotal:</h3>
+                            </td>
+                            <td class="table-value">
+                                <p class="text-common-color">{{subtotal_view}}</p>
+                            </td>
+                        </tr>
+
+                        <!-- Frete -->
+                        <tr>
+                            <td class="table-label table-divisor">
+                                <h3 class="text-darker-color">Frete:</h3>
+                            </td>
+                            <td class="table-value table-divisor">
+                                <p class="text-common-color">{{freight_view}}</p>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <table class="cart-result-table second-table">
+
+                        <!-- Total -->
+                        <tr>
+                            <td class="table-label">
+                                <h3 class="text-darker-color">Total:</h3>
+                            </td>
+                            <td class="table-value">
+                                <p class="text-common-color">{{total_view}}</p>
+                            </td>
+                        </tr>
+                        
+                    </table>
                 </div>
             
             </div>
@@ -63,6 +97,9 @@
     // Importação de componentes
     import CartItem from '@/components/CartItem.vue';
     import FreightCalculator from '@/components/FreightCalculator.vue';
+
+    // Para formatação em string
+    import { format_number_to_price } from '@/utils/utils';
 
     // Lógica local
     export default {
@@ -98,6 +135,22 @@
             subtotal() {
                 return store.getters.get_shopping_cart_subtotal;
             }, 
+
+            // Total da lista de itens do carrinho
+            total() {
+                return this.subtotal + this.freight;
+            }, 
+
+            // Para representação em string
+            freight_view() {
+                return format_number_to_price(this.freight);
+            }, 
+            subtotal_view() {
+                return format_number_to_price(this.subtotal);
+            },
+            total_view() {
+                return format_number_to_price(this.total);
+            }, 
         }, 
     }
 </script>
@@ -105,6 +158,7 @@
 
 <!-- .:::: STYLE ::::. -->
 <style scoped>
+    @import "../css/colors.css";
     @import "../css/profile-form.css";
 
     /* Organiza a página */
@@ -143,8 +197,35 @@
         float: left;
     }
     .lower-right-section {
-        margin-top: 4%;
         width: 50%;
         float: right;
+    }
+
+
+    /* Tabela de revisão */
+    .cart-result-table {
+        position: relative;
+        width: 100%;
+        border-spacing: 0.5rem 0.5rem;
+    }
+    .cart-result-table tr {
+        position: relative;
+        width: 100%;
+    }
+    .cart-result-table h3 {
+        font-size: 2rem;
+    }
+    .cart-result-table p {
+        text-align: left;
+        font-size: 1.5rem;
+    }
+    .table-label {
+        max-width: 30%;
+    }
+    .table-value {
+        max-width: 70%;
+    }
+    .second-table {
+        border-top: var(--box-border);
     }
 </style>
