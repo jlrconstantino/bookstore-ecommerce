@@ -140,7 +140,7 @@
 
             // Busca por categoria
             search_by_category(category){
-                this.$router.push({name: "category", params: {id: category.id}});
+                this.$router.push({name: "category", query: {id: category.id}});
                 window.scrollTo(0,0);
             }, 
 

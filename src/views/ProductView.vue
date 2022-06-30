@@ -65,11 +65,8 @@
             </div>
 
             <!-- Frete -->
-            <div id="product-shipping-container" class="product-bordered-container">
-                <p class="text-darker-color"> Calcule o frete e o prazo de entrega: </p>
-                <input type="text" placeholder="_____ - ___" id="product-shipping-input">
-                <button id="product-shipping-button"> Consultar </button>
-            </div>
+            <FreightCalculator v-model="freight">
+            </FreightCalculator>
 
         </div>
 
@@ -112,15 +109,26 @@
     // Para importação da base de dados local
     import { get_item } from '@/utils/local-storage-management';
 
+    // Importação de componentes
+    import FreightCalculator from '@/components/FreightCalculator.vue';
+
     // Lógica local
     export default {
 
         // Nome do componente para exportação
         name: 'ProductView', 
 
+        // Atribuição de componentes
+        components: {
+            FreightCalculator, 
+        }, 
+
         // Dados locais
         data() {
             return {
+
+                // Para controlar o frete
+                freight: 0.0, 
 
                 // Caminhos das estrelas
                 full_star: null, 
@@ -153,10 +161,16 @@
             this.full_star = require("@/assets/icons/full-star.svg");
             this.half_star = require("@/assets/icons/half-star.svg");
             this.null_star = require("@/assets/icons/null-star.svg");
-            get_item("book#" + this.$route.params.id).then(res => {
-                this.product = res;
-                this.data_is_ready = true;
-            });
+            try{
+                get_item("book#" + this.$route.query.id).then(res => {
+                    if(res != null){
+                        this.product = res;
+                    }
+                    this.data_is_ready = true;
+                });
+            }catch(_){
+                this.data_is_ready
+            }
         }, 
 
         // Métodos auxiliares
@@ -169,7 +183,7 @@
             }, 
             go_to_cart() {
                 this.$router.push({name: 'cart'});
-                this.$store.commit("add_cart_item", this.$route.params.id);
+                this.$store.commit("add_cart_item", this.$route.query.id);
                 window.scrollTo(0,0);
             }, 
         },
@@ -381,43 +395,6 @@
         width: 40%;
         height: 3.6rem;
         font-size: 1.8rem;
-    }
-
-
-    /* Contêiner da calculadora de frete */
-    #product-shipping-container {
-        margin-top: 4vh;
-        background-color: rgb(210, 210, 210);
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-        gap: 1rem;
-    }
-
-    /* Entrada para inserção do CEP */
-    #product-shipping-input {
-        height: 2rem;
-        border-radius: 5px;
-        border: var(--product-box-border);
-        box-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.281);
-    }
-
-    /* Botão da calculadora de frete */
-    #product-shipping-button {
-        width: 20%;
-        height: 2rem;
-        background-color: rgb(187, 42, 73);
-        color: antiquewhite;
-        text-transform: uppercase;
-        border-radius: 5px;
-        border: none;
-        transition-duration: 0.1s;
-        transition-timing-function: linear;
-    }
-    #product-shipping-button:hover {
-        color: gray;
-        background-color: white;
-        border: 2px solid var(--foreground-color);
     }
 
 

@@ -134,7 +134,7 @@
 
             // Navega à página de produto
             go_to_product_page() {
-                this.$router.push({name: 'product', params: {id: this.book.id, title: this.book.title}});
+                this.$router.push({name: 'product', query: {id: this.book.id}, params: {title: this.book.title}});
                 window.scrollTo(0,0);
             }, 
         },  

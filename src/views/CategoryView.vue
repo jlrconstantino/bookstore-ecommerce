@@ -75,7 +75,7 @@
             });
 
             // Obtém o ID da categoria sendo requisitada
-            this.target_category_id = this.$route.params.id;
+            this.target_category_id = this.$route.query.id;
             if(this.target_category_id == null){
                 this.target_category_name = this.invalid_category;
                 this.target_category_id = 0;

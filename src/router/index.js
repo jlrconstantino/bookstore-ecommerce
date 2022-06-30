@@ -38,10 +38,10 @@ const routes = [
 
   // Página de produto
   {
-    path: '/product?id=:id', 
+    path: '/product', 
     name: 'product', 
     component: ProductView, 
-    params: ['id'], 
+    query: ['id'], 
   }, 
 
   // Página de busca
@@ -53,9 +53,9 @@ const routes = [
 
   // Página de busca por categoria
   {
-    path: '/category?id=:id', 
+    path: '/category', 
     name: 'category', 
-    params: ['id'], 
+    query: ['id'], 
     component: CategoryView, 
   }, 
 

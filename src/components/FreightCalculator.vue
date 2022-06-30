@@ -8,11 +8,11 @@
                 type="text" 
                 placeholder="12345-123"
                 class="shipping-input text"
-                @keyup.enter="calculate_cep()"
+                @keyup.enter="calculate_freight()"
                 :class="{'form-normal-input-text': cep_is_valid && !cep_is_empty}">
             <button 
-                @click="calculate_cep()"
-                class="red-button" 
+                @click="calculate_freight()"
+                class="pink-button" 
             >Consultar</button>
         </div>
         <p v-if="!cep_is_valid" class="form-failed-input-text">O CEP informado é inválido.</p>
@@ -27,7 +27,7 @@
 <!-- .:::: SCRIPT ::::. -->
 <script>
 
-    // Validação de formulário
+    // Validação e formatação de formulário
     import { validate_attribute_by_regex } from '@/utils/form-validation';
 
     // Lógica local
@@ -35,6 +35,11 @@
 
         // Nome da componente
         name: 'FreightCalculator', 
+
+        // Parâmetros
+        props: {
+            value: Number, 
+        }, 
 
         // Dados locais
         data() {
@@ -45,7 +50,6 @@
                 cep_is_valid: true, 
                 cep_is_empty: false, 
                 show_result: false, 
-                result: "R$14,90", 
             };
         }, 
 
@@ -75,14 +79,24 @@
             }, 
 
             // Calcula o CEP
-            calculate_cep() {
+            calculate_freight() {
                 if(this.validate_cep() === true) {
                     this.show_result = true;
+                    this.$emit("input", 14.90);
                 }else{
                     this.show_result = false;
                 }
             }, 
         }, 
+
+        // Valores computados
+        computed: {
+
+            // Resultado para visualização
+            result() {
+                return "R$ 14,90";
+            }, 
+        }
     }
 
 </script>
@@ -95,7 +109,7 @@
 
     /* Texto */
     .main-text {
-        font-size: 1.2rem;
+        font-size: 1.0rem;
     }
     .result-text {
         font-size: 1.0rem;
@@ -131,19 +145,18 @@
     .shipping-input {
         text-align: center;
         font-size: 1rem;
-        height: 2.5rem;
+        height: 2rem;
         border-radius: 5px;
-        width: 50%;
+        width: 60%;
         border: var(--product-box-border);
         box-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.281);
     }
 
     /* Botão de consulta */
-    .red-button {
+    .pink-button {
         font-size: 1rem;
-        height: 2.5rem;
-        min-width: 40%;
-        width: auto;
+        height: 2rem;
+        width: 30%;
     }
 
     /* Textos normal e indicador de falhas */
@@ -152,7 +165,7 @@
     }
     .form-failed-input-text {
         color: var(--red-text-color);
-        margin-bottom: 0.5rem;
+        margin-bottom: 0rem;
     }
     
 </style>

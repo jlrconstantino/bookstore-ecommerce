@@ -18,7 +18,7 @@
         props: ['book'], 
         methods: {
             go_to_product_page(book) {
-                this.$router.push({name: 'product', params: {id: book.id, title: book.title}});
+                this.$router.push({name: 'product', query: {id: book.id}, params: {title: book.title}});
                 window.scrollTo(0,0);
             }, 
             format_price(price) {
