@@ -201,7 +201,6 @@
 
                 // Para controle do resultado
                 let output = true;
-                let pattern = "";
 
                 // Validação de nome
                 if (

@@ -151,7 +151,11 @@
 
     // Para manipulação do banco de dados
     import store from '@/store';
-    import { get_item, set_item, delete_item, load_local_storage_credit_cards } from '@/utils/local-storage-management';
+    import { add_credit_card, delete_credit_card, select_user_credit_cards, update_credit_card } from '@/utils/database-management';
+
+    // Para manipulação de formulários
+    import { validate_attribute_by_callback, validate_attribute_by_regex, validate_password_by_id } from '@/utils/form-validation';
+    import { alphanumeric_parser } from '@/utils/utils';
 
     // Lógica local
     export default {
@@ -178,6 +182,7 @@
                 card_title_is_empty: false, 
 
                 // Controle de número de cartão
+                previous_card_number: "", 
                 card_number: "", 
                 card_number_is_valid: true, 
                 card_number_is_empty: false, 
@@ -206,13 +211,9 @@
 
         // Aquisição dos dados do usuário
         created() {
-            load_local_storage_credit_cards().then(res => {
-                if(res != null){
-                    this.total_database_cards = res.length;
-                    let user_cards = res.filter(card => {return card.user === store.state.user.id});
-                    if(user_cards.length > 0){
-                        this.cards_data = user_cards;
-                    }
+            select_user_credit_cards(store.getters.user_id).then(res => {
+                if(res != null) {
+                    this.cards_data = res;
                 }
             });
         }, 
@@ -238,6 +239,7 @@
                 this.card_title_is_empty = false;
 
                 // Número de cartão
+                this.previous_card_number = "";
                 this.card_number = "";
                 this.card_number_is_valid = true;
                 this.card_number_is_empty = false;
@@ -275,103 +277,85 @@
 
                 // Para controle do resultado
                 let output = true;
-                let pattern = "";
 
                 // Validação de título de cartão
-                if(this.card_title === ""){
-                    this.card_title_is_empty = true;
-                    this.card_title_is_valid = true;
+                if (
+                    validate_attribute_by_regex (
+                        this, 
+                        this.card_title, 
+                        alphanumeric_parser, 
+                        "card_title_is_empty", 
+                        "card_title_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.card_title_is_empty = false;
-                    pattern = new RegExp("^[a-zA-Z0-9 ]+$", "g");
-                    if(pattern.test(this.card_title)){
-                        this.card_title_is_valid = true;
-                    }else{
-                        this.card_title_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação de número do cartão
-                if(this.card_number === ""){
-                    this.card_number_is_empty = true;
-                    this.card_number_is_valid = true;
+                if (
+                    validate_attribute_by_regex (
+                        this, 
+                        this.card_number, 
+                        new RegExp("^([0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4})$", "g"), 
+                        "card_number_is_empty", 
+                        "card_number_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.card_number_is_empty = false;
-                    pattern = new RegExp("^([0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4})$", "g");
-                    if(pattern.test(this.card_number)){
-                        this.card_number_is_valid = true;
-                    }else{
-                        this.card_number_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação de data de validade
-                if(this.expiration_date === ""){
-                    this.expiration_date_is_empty = true;
-                    this.expiration_date_is_valid = true;
+                if (
+                    validate_attribute_by_regex (
+                        this, 
+                        this.expiration_date, 
+                        /* eslint-disable */
+                        new RegExp("^[0-9]{4}-[0-9]{2}$", "g"), 
+                        /* eslint-enable */
+                        "expiration_date_is_empty", 
+                        "expiration_date_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.expiration_date_is_empty = false;
-                    /* eslint-disable */
-                    pattern = new RegExp("^[0-9]{4}-[0-9]{2}$", "g");
-                    /* eslint-enable */
-                    if(pattern.test(this.expiration_date)){
-                        this.expiration_date_is_valid = true;
-                    }else{
-                        this.expiration_date_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação de proprietário
-                if(this.cardholder === ""){
-                    this.cardholder_is_empty = true;
-                    this.cardholder_is_valid = true;
+                if (
+                    validate_attribute_by_regex (
+                        this, 
+                        this.cardholder, 
+                        alphanumeric_parser, 
+                        "cardholder_is_empty", 
+                        "cardholder_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.cardholder_is_empty = false;
-                    pattern = new RegExp("^[a-zA-Z ]+$", "g");
-                    if(pattern.test(this.cardholder)){
-                        this.cardholder_is_valid = true;
-                    }else{
-                        this.cardholder_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação de código de segurança
-                if(this.security_code === ""){
-                    this.security_code_is_empty = true;
-                    this.security_code_is_valid = true;
+                if (
+                    validate_attribute_by_regex (
+                        this, 
+                        this.security_code, 
+                        new RegExp("^[0-9]{3}$", "g"), 
+                        "security_code_is_empty", 
+                        "security_code_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.security_code_is_empty = false;
-                    pattern = new RegExp("^[0-9]{3}$", "g");
-                    if(pattern.test(this.security_code)){
-                        this.security_code_is_valid = true;
-                    }else{
-                        this.security_code_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação de senha
-                if(this.password === ""){
-                    this.password_is_empty = true;
-                    this.password_is_valid = true;
+                if (
+                    validate_attribute_by_callback (
+                        this, 
+                        this.password, 
+                        password => {return password.length >= 3}, 
+                        "password_is_empty", 
+                        "password_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.password_is_empty = false;
-                    if(this.password.length >= 3){
-                        this.password_is_valid = true;
-                    }else{
-                        this.password_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 return output;
@@ -379,34 +363,16 @@
 
             // Valida a senha do usuário
             validate_password: async function() {
-                
-                // Obtém a senha do usuário
-                try{
-                    let user_password = "";
-                    await get_item("user#" + store.state.user.id.toString()).then(res => {
-                        if(res != null){
-                            user_password = res.password;
-                        }else{
-                            alert("Ocorreu um erro ao tentar comunicação com a base de dados. Por favor, tente novamente.");
-                            return false;
-                        }
-                    });
-
-                    // Verifica correspondência das senhas
-                    if(user_password === this.password){
-                        return true;
+                let output = true;
+                await validate_password_by_id(store.getters.user_id, this.password).then(res => {
+                    if(res === true){
+                        this.password_is_valid = true;
+                    }else{
+                        this.password_is_valid = false;
+                        output = false;
                     }
-                    
-                    // Senha inválida
-                    this.password_is_valid = false;
-                }
-
-                // Erro de consulta
-                catch(_){
-                    alert("Ocorreu um erro ao tentar comunicação com a base de dados. Por favor, tente novamente.");
-                }
-
-                return false;
+                });
+                return output;
             }, 
 
             // Valida as informações e a senha do usuário
@@ -436,20 +402,18 @@
 
                         // Cria o novo cartão
                         let credit_card = {
-                            id: this.total_database_cards, 
-                            user: store.state.user.id, 
-                            title: this.card_title, 
+                            user: store.getters.user_id, 
                             number: this.card_number, 
-                            holder: this.cardholder, 
-                            date: this.expiration_date, 
-                            code: this.security_code, 
+                            title: this.card_title, 
+                            security_code: this.security_code, 
+                            cardholder: this.cardholder, 
+                            expiration_date: this.expiration_date, 
                         };
 
                         // Adição do novo cartão
-                        set_item("card#" + credit_card.id.toString(), credit_card);
+                        add_credit_card(credit_card);
 
                         // Atualização dos dados da página
-                        this.total_database_cards += 1;
                         this.cards_data.push(credit_card);
                         this.cancel_card_addition();
 
@@ -468,12 +432,12 @@
                 }
 
                 // Obtenção dos dados do cartão alvo
-                this.target_card_id = card.id;
-                this.card_title = card.title;
+                this.previous_card_number = card.number;
                 this.card_number = card.number;
-                this.cardholder = card.holder;
-                this.expiration_date = card.date;
-                this.security_code = card.code;
+                this.card_title = card.title;
+                this.security_code = card.security_code;
+                this.cardholder = card.cardholder;
+                this.expiration_date = card.expiration_date;
 
                 // Atualização da página
                 this.updating_card = true;
@@ -496,20 +460,24 @@
 
                         // Cria o novo cartão
                         let credit_card = {
-                            id: this.target_card_id, 
                             user: store.state.user.id, 
-                            title: this.card_title, 
                             number: this.card_number, 
-                            holder: this.cardholder, 
-                            date: this.expiration_date, 
-                            code: this.security_code, 
+                            title: this.card_title, 
+                            security_code: this.security_code, 
+                            cardholder: this.cardholder, 
+                            expiration_date: this.expiration_date, 
                         };
 
                         // Atualização do cartão
-                        set_item("card#" + this.target_card_id.toString(), credit_card);
+                        update_credit_card(this.previous_card_number, credit_card);
 
                         // Atualização dos dados da página
-                        let card_index = this.cards_data.findIndex(element => {return element.id === credit_card.id});
+                        let card_index = this.cards_data.findIndex(element => {
+                            return (
+                                element.user === credit_card.user &&
+                                element.number === this.previous_card_number
+                            );
+                        });
                         if(card_index >= 0){
                             this.cards_data[card_index] = credit_card;
                         }
@@ -528,11 +496,19 @@
                 this.validate_password().then(res => {
                     if(res === true){
 
+                        // ID do usuário
+                        const user_id = store.getters.user_id;
+
                         // Remoção do cartão
-                        delete_item("card#" + this.target_card_id.toString());
+                        delete_credit_card(user_id, this.previous_card_number);
 
                         // Atualização dos dados da página
-                        let card_index = this.cards_data.findIndex(element => {return element.id === this.target_card_id});
+                        let card_index = this.cards_data.findIndex(element => {
+                            return (
+                                element.user === user_id &&
+                                element.number === this.previous_card_number
+                            );
+                        });
                         if(card_index >= 0){
                             this.cards_data.splice(card_index, 1);
                         }
