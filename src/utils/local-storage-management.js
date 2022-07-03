@@ -22,12 +22,14 @@ export async function delete_item(key) {
 export async function start_local_storage() {
 
     // Livros
-    const books = [
+    const products = [
         {
             id: 1, 
             title: "Getting an Arduino LED to Blink", 
             price: 49.90, 
+            stock: 4, 
             rating: 4.5, 
+            sales: 20, 
             author: "The Practical Developer",
             publisher: "O RLY?",
             finishing: "Cartonado", 
@@ -35,13 +37,15 @@ export async function start_local_storage() {
             language: "Portugol", 
             pages: 128, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            img_src: require("@/assets/sample-books/arduino_led.jpg"),
+            image_source: require("@/assets/sample-products/arduino_led.jpg"),
         }, 
         {
             id: 2, 
             title: "Changing Stuff and Seeing What Happens", 
             price: 29.90, 
+            stock: 21, 
             rating: 4.8, 
+            sales: 49, 
             author: "The Practical Developer",
             publisher: "O RLY?",
             finishing: "Brochura", 
@@ -49,13 +53,15 @@ export async function start_local_storage() {
             language: "Português", 
             pages: 145, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            img_src: require("@/assets/sample-books/changing_stuff.jpg"),
+            image_source: require("@/assets/sample-products/changing_stuff.jpg"),
         },
         {
             id: 3, 
             title: "Useless GIT Commit Messages", 
             price: 88.49, 
+            stock: 9, 
             rating: 3.8, 
+            sales: 2, 
             author: "The Practical Developer",
             publisher: "O RLY?",
             finishing: "Mecânico", 
@@ -63,13 +69,15 @@ export async function start_local_storage() {
             language: "Português", 
             pages: 242, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            img_src: require("@/assets/sample-books/commit_messages.jpeg"),
+            image_source: require("@/assets/sample-products/commit_messages.jpeg"),
         },
         {
             id: 4, 
             title: "Using Convoluted Coding Practices to Piece Together a Somehow Functional Product", 
             price: 240.29, 
+            stock: 2, 
             rating: 5.0, 
+            sales: 15, 
             author: "Unknown",
             publisher: "O'REILLY",
             finishing: "Cartunado", 
@@ -77,13 +85,15 @@ export async function start_local_storage() {
             language: "Inglês", 
             pages: 199, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            img_src: require("@/assets/sample-books/convoluted_coding.jpg"),
+            image_source: require("@/assets/sample-products/convoluted_coding.jpg"),
         },
         {
             id: 5, 
             title: "Hoping This Works", 
             price: 9.90, 
+            stock: 15, 
             rating: 1.0, 
+            sales: 29, 
             author: "The Practical Developer",
             publisher: "O RLY?",
             finishing: "Agrafado", 
@@ -91,13 +101,15 @@ export async function start_local_storage() {
             language: "Alemão", 
             pages: 58, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            img_src: require("@/assets/sample-books/hoping_this_works.jpg"),
+            image_source: require("@/assets/sample-products/hoping_this_works.jpg"),
         },
         {
             id: 6, 
             title: "Ignoring Deprecation Warnings", 
             price: 32.89, 
+            stock: 1, 
             rating: 0.2, 
+            sales: 92, 
             author: "The Practical Developer",
             publisher: "O RLY?",
             finishing: "Brochado", 
@@ -105,13 +117,15 @@ export async function start_local_storage() {
             language: "Latim", 
             pages: 120, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            img_src: require("@/assets/sample-books/ignoring_deprecation.jpg"),
+            image_source: require("@/assets/sample-products/ignoring_deprecation.jpg"),
         },
         {
             id: 7, 
             title: "Hoping for the Right Interview Questions", 
             price: 67.89, 
+            stock: 19, 
             rating: 2.9, 
+            sales: 9, 
             author: "The Practical Developer",
             publisher: "O RLY?",
             finishing: "Agrafado", 
@@ -119,13 +133,15 @@ export async function start_local_storage() {
             language: "Latim", 
             pages: 79, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            img_src: require("@/assets/sample-books/interview_questions.jpg"),
+            image_source: require("@/assets/sample-products/interview_questions.jpg"),
         },
         {
             id: 8, 
             title: "Googling for the Regex", 
             price: 129.90, 
+            stock: 8, 
             rating: 4.4, 
+            sales: 27, 
             author: "The Practical Developer",
             publisher: "O RLY?",
             finishing: "Cartunado", 
@@ -133,13 +149,15 @@ export async function start_local_storage() {
             language: "Inglês", 
             pages: 690, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            img_src: require("@/assets/sample-books/regex.jpg"),
+            image_source: require("@/assets/sample-products/regex.jpg"),
         },
         {
             id: 9, 
             title: "Resolving Broken Dependencies", 
             price: 419.90, 
+            stock: 12, 
             rating: 2.4, 
+            sales: 12, 
             author: "The Practical Developer",
             publisher: "O RLY?",
             finishing: "Brochado", 
@@ -147,13 +165,15 @@ export async function start_local_storage() {
             language: "Português", 
             pages: 310, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            img_src: require("@/assets/sample-books/resolving_dependencies.webp"),
+            image_source: require("@/assets/sample-products/resolving_dependencies.webp"),
         },
         {
             id: 10, 
             title: "Title Goes Here", 
             price: 14.90, 
+            stock: 10, 
             rating: 3.3, 
+            sales: 19, 
             author: "Kanye West",
             publisher: "O RLY?",
             finishing: "Mecânico", 
@@ -161,13 +181,15 @@ export async function start_local_storage() {
             language: "Inglês", 
             pages: 107, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            img_src: require("@/assets/sample-books/title_goes_here.webp"),
+            image_source: require("@/assets/sample-products/title_goes_here.webp"),
         },
         {
             id: 11, 
             title: "Trying Stuff Until it Works", 
             price: 16.90, 
+            stock: 3, 
             rating: 4.0, 
+            sales: 42, 
             author: "The Practical Developer",
             publisher: "O RLY?",
             finishing: "Brochado", 
@@ -175,13 +197,15 @@ export async function start_local_storage() {
             language: "Latim", 
             pages: 420, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            img_src: require("@/assets/sample-books/trying_stuff.jpg"), 
+            image_source: require("@/assets/sample-products/trying_stuff.jpg"), 
         }, 
         {
             id: 12, 
             title: "What is LIGMA", 
             price: 22.70, 
+            stock: 1, 
             rating: 3.0, 
+            sales: 56, 
             author: "B. J. Gay",
             publisher: "O RLY?",
             finishing: "Agrafado", 
@@ -189,33 +213,33 @@ export async function start_local_storage() {
             language: "Espanhol", 
             pages: 624, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            img_src: require("@/assets/sample-books/what_is_ligma.png"),
+            image_source: require("@/assets/sample-products/what_is_ligma.png"),
         },
     ];
 
     // Salva os livros
-    books.forEach((book, index) => {
-        set_item("book#" + (index + 1), book);
+    products.forEach((product, index) => {
+        set_item("product#" + (index + 1), product);
     });
 
     // Usuários
     const users = [
         {
             id: 0, 
-            name: "Cliente", 
             email: "customer@email.com", 
+            name: "Cliente", 
             password: "123", 
-            birth: "16/09/1995", 
-            tel: "(11) 99998-2888", 
+            phone_number: "(11) 99998-2888", 
+            birth_date: "16/09/1995", 
             role: "customer", 
         }, 
         {
             id: 1, 
-            name: "Administrador", 
             email: "admin@email.com", 
+            name: "Administrador", 
             password: "123", 
-            birth: "02/11/2007", 
-            tel: "(99) 11111-2222", 
+            phone_number: "(99) 11111-2222", 
+            birth_date: "02/11/2007", 
             role: "admin", 
         }, 
     ];
@@ -245,146 +269,71 @@ export async function start_local_storage() {
     });
 
     // Relacionamento entre os livros e as categorias
-    const has_category = [
+    const product_category = [
 
         // Livro 1
-        {book: 1, category: 2}, 
-        {book: 1, category: 4}, 
+        {product: 1, category: 2}, 
+        {product: 1, category: 4}, 
 
         // Livro 2
-        {book: 2, category: 6}, 
+        {product: 2, category: 6}, 
 
         // Livro 3
-        {book: 3, category: 7}, 
+        {product: 3, category: 7}, 
 
         // Livro 4
-        {book: 4, category: 5}, 
+        {product: 4, category: 5}, 
 
         // Livro 5
-        {book: 5, category: 1}, 
-        {book: 5, category: 3}, 
+        {product: 5, category: 1}, 
+        {product: 5, category: 3}, 
 
         // Livro 6
-        {book: 6, category: 7}, 
-        {book: 6, category: 2}, 
+        {product: 6, category: 7}, 
+        {product: 6, category: 2}, 
 
         // Livro 7
-        {book: 7, category: 8}, 
-        {book: 7, category: 2}, 
+        {product: 7, category: 8}, 
+        {product: 7, category: 2}, 
 
         // Livro 8
-        {book: 8, category: 5}, 
-        {book: 8, category: 3}, 
+        {product: 8, category: 5}, 
+        {product: 8, category: 3}, 
 
         // Livro 9
-        {book: 9, category: 5}, 
-        {book: 9, category: 9}, 
+        {product: 9, category: 5}, 
+        {product: 9, category: 9}, 
 
         // Livro 10
-        {book: 10, category: 3}, 
-        {book: 10, category: 9}, 
+        {product: 10, category: 3}, 
+        {product: 10, category: 9}, 
 
         // Livro 11
-        {book: 11, category: 2}, 
-        {book: 11, category: 4}, 
-        {book: 11, category: 9}, 
+        {product: 11, category: 2}, 
+        {product: 11, category: 4}, 
+        {product: 11, category: 9}, 
 
         // Livro 12
-        {book: 12, category: 9}, 
+        {product: 12, category: 9}, 
     ];
 
     // Salva as categorias dos livros
-    has_category.forEach((element, index) => {
-        set_item("has_category#" + index, element);
+    product_category.forEach((element, index) => {
+        set_item("product_category#" + index, element);
     });
 }
 
 
-// Para carregamento da base de dados
-export async function load_local_storage_books() {
-    let books = [];
-    for(let i = 1;; i++) {
-        let response = await get_item("book#" + i);
-        if(response != null){
-            books.push(response);
+// Função-base de carregamento de itens
+export async function load_local_storage_elements(identifier) {
+    let array = [];
+    for(let i = 0;; i++){
+        let response = await get_item(identifier + i);
+        if(response != null) {
+            array.push(response);
         }else{
             break;
         }
     }
-    return books;
-}
-
-
-// Para carregamento dos usuários
-export async function load_local_storage_users() {
-    let users = [];
-    for(let i = 0;; i++) {
-        let response = await get_item("user#" + i);
-        if(response != null){
-            users.push(response);
-        }else{
-            break;
-        }
-    }
-    return users;
-}
-
-
-// Para carregamento dos cartões de crédito
-export async function load_local_storage_credit_cards() {
-    let cards = [];
-    for(let i = 0;; i++) {
-        let response = await get_item("card#" + i);
-        if(response != null){
-            cards.push(response);
-        }else{
-            break;
-        }
-    }
-    return cards;
-}
-
-
-// Para carregamento dos endereços de entrega
-export async function load_local_storage_delivery_addresses() {
-    let addresses = [];
-    for(let i = 0;; i++) {
-        let response = await get_item("address#" + i);
-        if(response != null){
-            addresses.push(response);
-        }else{
-            break;
-        }
-    }
-    return addresses;
-}
-
-
-// Para carregamento das categorias
-export async function load_local_storage_categories() {
-    let categories = [];
-    for(let i = 0;; i++) {
-        let response = await get_item("category#" + i);
-        if(response != null){
-            categories.push(response);
-        }else{
-            break;
-        }
-    }
-    return categories;
-}
-
-
-// Para carregamento das categorias pertencentes aos livros
-export async function load_local_storage_has_category() {
-    let has_category = [];
-    for(let i = 0;; i++) {
-        let response = await get_item("has_category#" + i);
-        if(response != null){
-            has_category.push(response);
-        }else{
-            break;
-        }
-    }
-    return has_category;
+    return array;
 }

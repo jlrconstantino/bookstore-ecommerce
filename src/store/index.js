@@ -32,6 +32,16 @@ const store = createStore({
   // Métodos acessores customizados
   getters: {
 
+    // ID do usuário
+    user_id(state) {
+      return state.user.id;
+    }, 
+
+    // Nome do usuário
+    user_name(state) {
+      return state.user.name;
+    }, 
+
     // Para verificar autenticação
     is_authenticated(state) {
       return state.user.id != null;

@@ -110,15 +110,15 @@
             <input 
                 type="tel" 
                 pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
-                v-model="telephone"
+                v-model="phone_number"
                 @keyup.enter="register()"
                 placeholder="(99)99999-9999"
                 :class="{
-                    'failed-input': !telephone_is_valid || telephone_is_empty, 
-                    'normal-input': telephone_is_valid && !telephone_is_empty
+                    'failed-input': !phone_number_is_valid || phone_number_is_empty, 
+                    'normal-input': phone_number_is_valid && !phone_number_is_empty
                 }">
-            <p v-if="!telephone_is_valid" class="failed-input-text">O telefone informado é inválido.</p>
-            <p v-if="telephone_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            <p v-if="!phone_number_is_valid" class="failed-input-text">O telefone informado é inválido.</p>
+            <p v-if="phone_number_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
             
             <!-- Submit -->
             <button class="standard-button" @click="register()" @keyup.enter="register()">Cadastrar</button>
@@ -131,8 +131,11 @@
 <!-- .:::: SCRIPT ::::. -->
 <script>
 
-    // Para manipulação de base de dados local
-    import { set_item, load_local_storage_users } from "../utils/local-storage-management.js";
+    // Para manipulação de base de dados
+    import { add_user, select_user_by_email, select_all_users } from "@/utils/database-management.js";
+
+    // Para manipulação de formulários
+    import { validate_attribute_by_regex } from "@/utils/form-validation.js";
 
     // Lógica local
     export default {
@@ -179,15 +182,15 @@
                 birth_date_is_empty: false, 
 
                 // Controle de telefone de cadastro
-                telephone: "", 
-                telephone_is_valid: true, 
-                telephone_is_empty: false, 
+                phone_number: "", 
+                phone_number_is_valid: true, 
+                phone_number_is_empty: false, 
             };
         }, 
 
         // Leitura dos usuários da base de dados
         created() {
-            load_local_storage_users().then(res => {
+            select_all_users().then(res => {
                 this.users = res;
             });
         }, 
@@ -197,7 +200,7 @@
 
             // Esquecimento da senha
             forgot_password() {
-                alert("Infelizmente, não há algo que possa ser feito sobre no momento.");
+                alert("Infelizmente, não há algo que possa ser feito acerca disso no momento.");
             }, 
 
             // Validação de login
@@ -244,33 +247,41 @@
                     }
                 }
 
-                // Validação de senha (somente verificação de nulidade)
-                if(this.login_password === ""){
-                    this.login_password_is_empty = true;
+                // Validação de senha
+                if (
+                    validate_attribute_by_callback (
+                        this, 
+                        this.login_password, 
+                        password => {return password.length >= 3}, 
+                        "login_password_is_empty", 
+                        "login_password_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.login_password_is_empty = false;
                 }
 
                 return output;
             }, 
 
             // Realização de login
-            login() {
+            login: async function() {
 
                 // Validação inicial
                 if(this.validate_login() === true){
 
                     // Busca pelo usuário
-                    let filtered_users = this.users.filter(user => {return user.email === this.login_email});
-                    if(filtered_users.length > 0){
+                    let target_user = null;
+                    await select_user_by_email(this.login_email).then(res => {
+                        target_user = res;
+                    });
+                    if(target_user != null){
 
                         // Validação de senha
-                        if(filtered_users[0].password === this.login_password){
+                        if(target_user.password === this.login_password){
                             this.login_password_is_valid = true;
 
                             // Login
-                            this.$store.commit("set_user", filtered_users[0]);
+                            this.$store.commit("set_user", target_user);
                             this.$router.go(-1);
                         }
                         
@@ -289,91 +300,70 @@
 
                 // Para controle do resultado
                 let output = true;
-                let pattern = "";
 
                 // Validação de nome
-                if(this.name === ""){
-                    this.name_is_empty = true;
-                    this.name_is_valid = true;
+                if (
+                    validate_attribute_by_regex(
+                        this, 
+                        this.name, 
+                        new RegExp("^[a-zA-Z ]+$", "g"), 
+                        "name_is_empty", 
+                        "name_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.name_is_empty = false;
-                    pattern = new RegExp("^[a-zA-Z ]+$", "g");
-                    if(pattern.test(this.name)){
-                        this.name_is_valid = true;
-                    }else{
-                        this.name_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação de e-mail
-                if(this.reg_email === ""){
-                    this.reg_email_is_empty = true;
-                    this.reg_email_is_valid = true;
+                if (
+                    validate_attribute_by_regex(
+                        this, 
+                        this.reg_email, 
+                        new RegExp("^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+", "g"), 
+                        "reg_email_is_empty", 
+                        "reg_email_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.reg_email_is_empty = false;
-                    /* eslint-disable */
-                    pattern = new RegExp("^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+", "g");
-                    /* eslint-enable */
-                    if(pattern.test(this.reg_email)){
-                        this.reg_email_is_valid = true;
-                    }else{
-                        this.reg_email_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação de senha
-                if(this.reg_password === ""){
-                    this.reg_password_is_empty = true;
-                    this.reg_password_is_valid = true;
+                if (
+                    validate_attribute_by_callback (
+                        this, 
+                        this.reg_password, 
+                        password => {return password.length >= 3}, 
+                        "reg_password_is_empty", 
+                        "reg_password_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.reg_password_is_empty = false;
-                    if(this.reg_password.length >= 3){
-                        this.reg_password_is_valid = true;
-                    }else{
-                        this.reg_password_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação de data de nascimento
-                if(this.birth_date === ""){
-                    this.birth_date_is_empty = true;
-                    this.birth_date_is_valid = true;
+                if (
+                    validate_attribute_by_regex(
+                        this, 
+                        this.birth_date, 
+                        new RegExp("^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "g"), 
+                        "birth_date_is_empty", 
+                        "birth_date_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.birth_date_is_empty = false;
-                    /* eslint-disable */
-                    pattern = new RegExp("^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "g");
-                    /* eslint-enable */
-                    if(pattern.test(this.birth_date)){
-                        this.birth_date_is_valid = true;
-                    }else{
-                        this.birth_date_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação de telefone
-                if(this.telephone === ""){
-                    this.telephone_is_empty = true;
-                    this.telephone_is_valid = true;
+                if (
+                    validate_attribute_by_regex(
+                        this, 
+                        this.phone_number, 
+                        new RegExp("[0-9]+", "g"), 
+                        "phone_number_is_empty", 
+                        "phone_number_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.telephone_is_empty = false;
-                    /* eslint-disable */
-                    pattern = new RegExp("[0-9]+", "g");
-                    /* eslint-enable */
-                    if(pattern.test(this.telephone)){
-                        this.telephone_is_valid = true;
-                    }else{
-                        this.telephone_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 return output;
@@ -388,16 +378,16 @@
                     // Criação da nova conta
                     let new_user = {
                         id: this.users.length, 
-                        name: this.name, 
                         email: this.reg_email, 
+                        name: this.name, 
                         password: this.reg_password, 
-                        birth: this.birth_date, 
-                        tel: this.telephone, 
+                        phone_number: this.phone_number, 
+                        birth_date: this.birth_date, 
                         role: "customer", 
                     };
 
                     // Adição da nova conta
-                    set_item("user#" + this.users.length, new_user);
+                    add_user(new_user);
 
                     // Atualização dos usuários
                     this.users.push(new_user);

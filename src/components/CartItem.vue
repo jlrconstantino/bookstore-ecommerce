@@ -9,7 +9,7 @@
 
             <!-- Imagem do item -->
             <div class="cart-item-image-container">
-                <img :src="book.img_src" alt="product's image" class="cart-item-image">
+                <img :src="book.image_source" alt="product's image" class="cart-item-image">
             </div>
 
             <!-- Descrição do item -->
@@ -42,7 +42,7 @@
             <input 
                 type="number" 
                 min="1" 
-                max="100"
+                :max="book.stock"
                 class="text-common-color"
                 v-model="quantity">
         </td>
@@ -64,7 +64,7 @@
 <script>
 
     // Importações
-    import { select_product } from '@/utils/database-management';
+    import { select_product_by_id } from '@/utils/database-management';
     import { format_number_to_price } from '@/utils/utils';
 
     // Lógica local
@@ -88,11 +88,18 @@
                 book: {
                     id: 0,
                     title: "", 
+                    price: 0, 
+                    stock: 0, 
+                    rating: 0, 
+                    sales: 0, 
                     author: "", 
                     publisher: "", 
+                    finishing: "", 
                     year: "", 
-                    price: 0, 
-                    img_src: require("@/assets/sample-books/404.jpg"),
+                    language: "", 
+                    pages: 0, 
+                    description: "", 
+                    image_source: require("@/assets/sample-books/404.jpg"),
                 }, 
             }; 
         }, 
@@ -101,7 +108,7 @@
         created: async function() {
 
             // Obtenção do livro
-            await select_product(this.cart_product.product).then(res => {
+            await select_product_by_id(this.cart_product.product).then(res => {
                 this.book = res;
             });
 

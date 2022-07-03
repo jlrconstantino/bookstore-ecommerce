@@ -15,7 +15,7 @@
             class="form-info-container text" 
             v-if="updating_data"
             :class="{'form-normal-input-text': name_is_valid && !name_is_empty}">
-        <p v-if="!name_is_valid" class="form-failed-input-text">O nome informado é inválido (deve conter somente letras).</p>
+        <p v-if="!name_is_valid" class="form-failed-input-text">O nome informado é inválido (deve conter somente caracteres alfanuméricos).</p>
         <p v-if="name_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
         <!-- E-Mail -->
@@ -34,7 +34,7 @@
         <h2 class="form-h2">Data de Nascimento</h2>
         <p class="form-info-container form-normal-input-text" v-if="!updating_data">{{user_data.birth}}</p>
         <input 
-            v-model="user_data.birth" 
+            v-model="user_data.birth_date" 
             type="date" 
             class="form-info-container text" 
             v-if="updating_data"
@@ -46,14 +46,14 @@
         <h2 class="form-h2">Telefone</h2>
         <p class="form-info-container form-normal-input-text" v-if="!updating_data">{{user_data.tel}}</p>
         <input 
-            v-model="user_data.tel" 
+            v-model="user_data.phone_number" 
             type="tel" 
             pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
             class="form-info-container text" 
             v-if="updating_data"
-            :class="{'form-normal-input-text': telephone_is_valid && !telephone_is_empty}">
-        <p v-if="!telephone_is_valid" class="form-failed-input-text">O telefone informado é inválido.</p>
-        <p v-if="telephone_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
+            :class="{'form-normal-input-text': phone_number_is_valid && !phone_number_is_empty}">
+        <p v-if="!phone_number_is_valid" class="form-failed-input-text">O telefone informado é inválido.</p>
+        <p v-if="phone_number_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
         <!-- Confirmar senha -->
         <h2 class="form-h2">Confirme sua Senha</h2>
@@ -116,7 +116,11 @@
 
     // Acesso ao Vuex e à base de dados
     import store from '@/store/index.js';
-    import { get_item, set_item } from '@/utils/local-storage-management';
+    import { select_user_by_id, update_user } from '@/utils/database-management';
+
+    // Para validação de formulário
+    import { validate_attribute_by_callback, validate_attribute_by_regex } from '@/utils/form-validation';
+    import { alphanumeric_parser, birth_date_parser, email_parser } from '@/utils/utils';
 
     // Lógica local
     export default {
@@ -131,11 +135,11 @@
                 // Dados do usuário
                 user_data: {
                     id: 0, 
-                    name: "", 
                     email: "", 
+                    name: "", 
                     password: "", 
-                    birth: "", 
-                    tel: "", 
+                    phone_number: "", 
+                    birth_date: "", 
                     role: "customer", 
                 }, 
 
@@ -156,8 +160,8 @@
                 birth_date_is_empty: false, 
 
                 // Controle de telefone de alteração
-                telephone_is_valid: true, 
-                telephone_is_empty: false, 
+                phone_number_is_valid: true, 
+                phone_number_is_empty: false, 
 
                 // Controle de senha (dados pessoais)
                 input_password: "", 
@@ -176,9 +180,9 @@
 
         // Aquisição dos dados do usuário
         created() {
-            get_item("user#" + store.state.user.id.toString()).then(res => {
+            select_user_by_id(store.getters.user_id).then(res => {
                 this.user_data = res;
-            })
+            });
         }, 
 
         // Métodos auxiliares
@@ -200,88 +204,68 @@
                 let pattern = "";
 
                 // Validação de nome
-                if(this.user_data.name === ""){
-                    this.name_is_empty = true;
-                    this.name_is_valid = true;
+                if (
+                    validate_attribute_by_regex (
+                        this, 
+                        this.user_data.name, 
+                        alphanumeric_parser, 
+                        "name_is_empty", 
+                        "name_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.name_is_empty = false;
-                    pattern = new RegExp("^[a-zA-Z ]+$", "g");
-                    if(pattern.test(this.user_data.name)){
-                        this.name_is_valid = true;
-                    }else{
-                        this.name_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação de e-mail
-                if(this.user_data.email === ""){
-                    this.email_is_empty = true;
-                    this.email_is_valid = true;
+                if (
+                    validate_attribute_by_regex (
+                        this, 
+                        this.user_data.email, 
+                        email_parser, 
+                        "email_is_empty", 
+                        "email_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.email_is_empty = false;
-                    /* eslint-disable */
-                    pattern = new RegExp("^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+", "g");
-                    /* eslint-enable */
-                    if(pattern.test(this.user_data.email)){
-                        this.email_is_valid = true;
-                    }else{
-                        this.email_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação de senha
-                if(this.input_password === ""){
-                    this.password_is_empty = true;
-                    this.password_is_valid = true;
+                if (
+                    validate_attribute_by_callback (
+                        this, 
+                        this.input_password, 
+                        password => {return password.length >= 3}, 
+                        "password_is_empty", 
+                        "password_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.password_is_empty = false;
-                    if(this.input_password.length >= 3){
-                        this.password_is_valid = true;
-                    }else{
-                        this.password_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação de data de nascimento
-                if(this.user_data.birth === ""){
-                    this.birth_date_is_empty = true;
-                    this.birth_date_is_valid = true;
+                if (
+                    validate_attribute_by_regex (
+                        this, 
+                        this.user_data.birth, 
+                        birth_date_parser, 
+                        "birth_date_is_empty", 
+                        "birth_date_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.birth_date_is_empty = false;
-                    /* eslint-disable */
-                    pattern = new RegExp("^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "g");
-                    /* eslint-enable */
-                    if(pattern.test(this.user_data.birth)){
-                        this.birth_date_is_valid = true;
-                    }else{
-                        this.birth_date_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação de telefone
-                if(this.user_data.tel === ""){
-                    this.telephone_is_empty = true;
-                    this.telephone_is_valid = true;
+                if (
+                    validate_attribute_by_regex (
+                        this, 
+                        this.user_data.phone_number, 
+                        new RegExp("[0-9]+", "g"), 
+                        "phone_number_is_empty", 
+                        "phone_number_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.telephone_is_empty = false;
-                    /* eslint-disable */
-                    pattern = new RegExp("[0-9]+", "g");
-                    /* eslint-enable */
-                    if(pattern.test(this.user_data.tel)){
-                        this.telephone_is_valid = true;
-                    }else{
-                        this.telephone_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 return output;
@@ -307,7 +291,7 @@
                         this.input_password = "";
                         
                         // Modificação do usuário
-                        set_item("user#" + this.user_data.id.toString(), this.user_data);
+                        update_user(this.user_data);
                         this.$store.commit("set_user", this.user_data);
 
                         // Informa ao usuário
@@ -323,9 +307,9 @@
 
             // Cancela as atualizações dos dados pessoais
             cancel_data_updates(scroll) {
-                get_item("user#" + store.state.user.id.toString()).then(res => {
+                select_user_by_id(store.getters.user_id).then(res => {
                     this.user_data = res;
-                })
+                });
                 this.updating_data = false;
                 if(scroll === true){
                     window.scrollTo(0,60);
@@ -347,33 +331,29 @@
                 let output = true;
 
                 // Validação da senha antiga
-                if(this.old_password === ""){
-                    this.old_password_is_empty = true;
-                    this.old_password_is_valid = true;
+                if (
+                    validate_attribute_by_callback (
+                        this, 
+                        this.old_password, 
+                        password => {return password.length >= 3}, 
+                        "old_password_is_empty", 
+                        "old_password_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.old_password_is_empty = false;
-                    if(this.old_password.length >= 3){
-                        this.old_password_is_valid = true;
-                    }else{
-                        this.old_password_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 // Validação da nova senha
-                if(this.new_password === ""){
-                    this.new_password_is_empty = true;
-                    this.new_password_is_valid = true;
+                if (
+                    validate_attribute_by_callback (
+                        this, 
+                        this.new_password, 
+                        password => {return password.length >= 3}, 
+                        "new_password_is_empty", 
+                        "new_password_is_valid"
+                    ) === false
+                ){
                     output = false;
-                }else{
-                    this.new_password_is_empty = false;
-                    if(this.new_password.length >= 3){
-                        this.new_password_is_valid = true;
-                    }else{
-                        this.new_password_is_valid = false;
-                        output = false;
-                    }
                 }
 
                 return output;
@@ -399,7 +379,7 @@
                         this.new_password = "";
 
                         // Modificação do usuário
-                        set_item("user#" + this.user_data.id.toString(), this.user_data);
+                        update_user(this.user_data);
 
                         // Informa ao usuário
                         alert("Nova senha cadastrada com sucesso.");

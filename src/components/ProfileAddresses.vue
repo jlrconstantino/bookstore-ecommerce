@@ -194,10 +194,21 @@
 
     // Para manipulação do banco de dados
     import store from '@/store';
-    import { set_item, delete_item, load_local_storage_delivery_addresses } from '@/utils/local-storage-management';
+    import { 
+        add_delivery_address, 
+        delete_delivery_address, 
+        select_user_delivery_addresses, 
+        update_delivery_address
+    } from '@/utils/database-management';
 
     // Para validação de formulário
-    import { validate_attribute_by_regex, validate_attribute_by_callback, validate_password } from "@/utils/form-validation.js";
+    import { 
+        validate_attribute_by_regex, 
+        validate_attribute_by_callback, 
+        validate_optional_attribute_by_regex,
+        validate_password_by_id  
+    } from "@/utils/form-validation.js";
+    import { alphanumeric_parser } from '@/utils/utils';
 
     // Lógica local
     export default {
@@ -220,10 +231,8 @@
                     "São Paulo","Sergipe","Tocantins",
                 ], 
 
-                // Cartões de Crédito
-                total_database_addresses: 0, 
+                // Endereços de entrega
                 addresses_data: [], 
-                target_address_id: "", 
 
                 // Para controle de adição e modificação de endereços
                 adding_address: false, 
@@ -277,15 +286,11 @@
 
         // Aquisição dos dados do usuário
         created() {
-            load_local_storage_delivery_addresses().then(res => {
-                if(res != null){
-                    this.total_database_addresses = res.length;
-                    let user_addresses = res.filter(address => {return address.user === store.state.user.id});
-                    if(user_addresses.length > 0){
-                        this.addresses_data = user_addresses;
-                    }
+            select_user_delivery_addresses(store.getters.user_id).then(res => {
+                if(res != null) {
+                    this.addresses_data = res;
                 }
-            });
+            })
         }, 
 
         // Métodos auxiliares
@@ -306,6 +311,7 @@
 
                 // CEP
                 this.cep = "";
+                this.previous_cep = "";
                 this.cep_is_valid = true;
                 this.cep_is_empty = false;
 
@@ -365,9 +371,6 @@
 
                 // Para controle do resultado
                 let output = true;
-                /* eslint-disable */
-                const alphanumeric_parser = new RegExp("^[a-zA-ZÀ-ú0-9\- ]+$", "u");
-                /* eslint-enable */
 
                 // Validação de título
                 if (
@@ -460,16 +463,16 @@
                     output = false;
                 }
 
-                // Validação de complemento
-                if(this.complement !== ""){
-                    if(alphanumeric_parser.test(this.complement)){
-                        this.complement_is_valid = true;
-                    }else{
-                        this.complement_is_valid = false;
-                        output = false;
-                    }
-                }else{
-                    this.complement_is_valid = true;
+                // Validação de complemento (opcional)
+                if (
+                    validate_optional_attribute_by_regex (
+                        this, 
+                        this.complement, 
+                        alphanumeric_parser, 
+                        "complement_is_valid"
+                    ) === false
+                ){
+                    output = false;
                 }
 
                 // Validação de senha
@@ -498,7 +501,7 @@
                 // Validação das informações e da senha
                 if(this.validate_address_info() === true) {
                     try{
-                        await validate_password(this.password, "user#" + store.state.user.id.toString()).then(res => {
+                        await validate_password_by_id(store.getters.user_id, this.password).then(res => {
                             if(res === true){
                                 this.password_is_valid = true;
                             }else{
@@ -527,10 +530,9 @@
 
                         // Cria o novo endereço de entrega
                         let delivery_address = {
-                            id: this.total_database_addresses, 
-                            user: store.state.user.id, 
+                            user: store.getters.user_id, 
+                            zip: this.cep, 
                             title: this.address_title, 
-                            cep: this.cep, 
                             state: this.address_state, 
                             city: this.city, 
                             district: this.district, 
@@ -540,10 +542,9 @@
                         };
 
                         // Adição do novo endereço
-                        set_item("address#" + delivery_address.id.toString(), delivery_address);
+                        add_delivery_address(delivery_address);
 
                         // Atualização dos dados da página
-                        this.total_database_addresses += 1;
                         this.addresses_data.push(delivery_address);
                         this.cancel_address_addition();
 
@@ -562,9 +563,9 @@
                 }
 
                 // Obtenção dos dados do endereço alvo
-                this.target_address_id = address.id;
+                this.previous_cep = address.zip;
+                this.cep = address.zip;
                 this.address_title = address.title;
-                this.cep = address.cep;
                 this.address_state = address.state;
                 this.city = address.city;
                 this.district = address.district;
@@ -593,10 +594,9 @@
 
                         // Cria o novo endereço de entrega
                         let delivery_address = {
-                            id: this.target_address_id, 
-                            user: store.state.user.id, 
+                            user: store.getters.user_id, 
+                            zip: this.cep, 
                             title: this.address_title, 
-                            cep: this.cep, 
                             state: this.address_state, 
                             city: this.city, 
                             district: this.district, 
@@ -606,10 +606,15 @@
                         };
 
                         // Atualização do endereço
-                        set_item("address#" + this.target_address_id.toString(), delivery_address);
+                        update_delivery_address(this.previous_cep, delivery_address);
 
                         // Atualização dos dados da página
-                        let address_index = this.addresses_data.findIndex(element => {return element.id === delivery_address.id});
+                        let address_index = this.addresses_data.findIndex(element => {
+                            return (
+                                element.user === delivery_address.user &&
+                                element.zip === this.previous_cep
+                            );
+                        });
                         if(address_index >= 0){
                             this.addresses_data[address_index] = delivery_address;
                         }
@@ -624,15 +629,23 @@
             // Remove um endereço de crédito pré-existente
             delete_address: async function() {
 
+                // ID do usuário
+                const user_id = store.getters.user_id;
+
                 // Validação senha
-                validate_password(this.password, "user#" + store.state.user.id.toString()).then(res => {
+                validate_password_by_id(user_id, this.password).then(res => {
                     if(res === true){
 
                         // Remoção do endereço
-                        delete_item("address#" + this.target_address_id.toString());
+                        delete_delivery_address(user_id, this.previous_cep);
 
                         // Atualização dos dados da página
-                        let address_index = this.addresses_data.findIndex(element => {return element.id === this.target_address_id});
+                        let address_index = this.addresses_data.findIndex(element => {
+                            return (
+                                element.user === delivery_address.user &&
+                                element.zip === this.previous_cep
+                            );
+                        });
                         if(address_index >= 0){
                             this.addresses_data.splice(address_index, 1);
                         }

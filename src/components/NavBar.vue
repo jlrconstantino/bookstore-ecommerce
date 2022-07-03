@@ -66,13 +66,31 @@
                 // Verificação indexada de rotas pré-existentes
                 let matches = 0;
                 try {
-                    for(let i = 0; i < this.routes.length && matches === 0; ++i){
-                        if(this.routes[i].name === to.name && to.name != 'category'){
-                            matches += 1;
 
-                            // Truncamento da lista de rotas
-                            this.pages.length = i + 1;
-                            this.routes.length = i + 1;
+                    // Página de finalização de compra
+                    if((to.name.length >= 8 && to.name.substring(0,8) === 'purchase')) {
+
+                        // Verifica se a última rota é de compra
+                        const last_route_name = this.routes[this.routes.length - 1].name;
+                        if(!(last_route_name.length >= 8 && last_route_name.substring(0, 8) === 'purchase')){
+
+                            // Em caso contrário, adiciona uma nova rota de finalização de compra
+                            this.pages.push("Finalizar Compra");
+                            this.routes.push(to);
+                        }
+                        matches = 1;
+                    }
+
+                    // Demais casos
+                    else {
+                        for(let i = 0; i < this.routes.length && matches === 0; ++i){
+                            if(this.routes[i].name === to.name && to.name != 'category'){
+                                matches += 1;
+
+                                // Truncamento da lista de rotas
+                                this.pages.length = i + 1;
+                                this.routes.length = i + 1;
+                            }
                         }
                     }
                 }catch(_){
@@ -170,21 +188,6 @@
                         // Finalização de compra
                         case "purchase":
                             page_name = "Finalizar Compra";
-                            break;
-                        
-                        // Método de pagamento da compra
-                        case "purchase-payment-method":
-                            page_name = "Método de Pagamento";
-                            break;
-
-                        // Endereço de entrega da compra
-                        case "purchase-delivery-address":
-                            page_name = "Endereço de Entrega";
-                            break;
-
-                        // Finalização e revisão da compra
-                        case "purchase-final":
-                            page_name = "Revisão e Finalização"
                             break;
                         
                         // Outros
