@@ -106,7 +106,7 @@
 <script>
 
     // Para importação da base de dados local
-    import { get_item } from '@/utils/local-storage-management';
+    import { select_product_by_id } from '@/utils/database-management';
 
     // Importação de componentes
     import FreightCalculator from '@/components/FreightCalculator.vue';
@@ -139,7 +139,9 @@
                     id: 0, 
                     title: "", 
                     price: 0.0, 
+                    stock: 0, 
                     rating: 0.0, 
+                    sales: 0, 
                     author: "",
                     publisher: "",
                     finishing: "", 
@@ -161,7 +163,7 @@
             this.half_star = require("@/assets/icons/half-star.svg");
             this.null_star = require("@/assets/icons/null-star.svg");
             try{
-                get_item("book#" + this.$route.query.id).then(res => {
+                select_product_by_id(this.$route.query.id).then(res => {
                     if(res != null){
                         this.product = res;
                     }

@@ -24,7 +24,7 @@ export async function start_local_storage() {
     // Livros
     const products = [
         {
-            id: 1, 
+            id: 0, 
             title: "Getting an Arduino LED to Blink", 
             price: 49.90, 
             stock: 4, 
@@ -37,10 +37,10 @@ export async function start_local_storage() {
             language: "Portugol", 
             pages: 128, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            image_source: require("@/assets/sample-products/arduino_led.jpg"),
+            image_source: require("@/assets/sample-books/arduino_led.jpg"),
         }, 
         {
-            id: 2, 
+            id: 1, 
             title: "Changing Stuff and Seeing What Happens", 
             price: 29.90, 
             stock: 21, 
@@ -53,10 +53,10 @@ export async function start_local_storage() {
             language: "Português", 
             pages: 145, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            image_source: require("@/assets/sample-products/changing_stuff.jpg"),
+            image_source: require("@/assets/sample-books/changing_stuff.jpg"),
         },
         {
-            id: 3, 
+            id: 2, 
             title: "Useless GIT Commit Messages", 
             price: 88.49, 
             stock: 9, 
@@ -69,10 +69,10 @@ export async function start_local_storage() {
             language: "Português", 
             pages: 242, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            image_source: require("@/assets/sample-products/commit_messages.jpeg"),
+            image_source: require("@/assets/sample-books/commit_messages.jpeg"),
         },
         {
-            id: 4, 
+            id: 3, 
             title: "Using Convoluted Coding Practices to Piece Together a Somehow Functional Product", 
             price: 240.29, 
             stock: 2, 
@@ -85,10 +85,10 @@ export async function start_local_storage() {
             language: "Inglês", 
             pages: 199, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            image_source: require("@/assets/sample-products/convoluted_coding.jpg"),
+            image_source: require("@/assets/sample-books/convoluted_coding.jpg"),
         },
         {
-            id: 5, 
+            id: 4, 
             title: "Hoping This Works", 
             price: 9.90, 
             stock: 15, 
@@ -101,10 +101,10 @@ export async function start_local_storage() {
             language: "Alemão", 
             pages: 58, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            image_source: require("@/assets/sample-products/hoping_this_works.jpg"),
+            image_source: require("@/assets/sample-books/hoping_this_works.jpg"),
         },
         {
-            id: 6, 
+            id: 5, 
             title: "Ignoring Deprecation Warnings", 
             price: 32.89, 
             stock: 1, 
@@ -117,10 +117,10 @@ export async function start_local_storage() {
             language: "Latim", 
             pages: 120, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            image_source: require("@/assets/sample-products/ignoring_deprecation.jpg"),
+            image_source: require("@/assets/sample-books/ignoring_deprecation.jpg"),
         },
         {
-            id: 7, 
+            id: 6, 
             title: "Hoping for the Right Interview Questions", 
             price: 67.89, 
             stock: 19, 
@@ -133,10 +133,10 @@ export async function start_local_storage() {
             language: "Latim", 
             pages: 79, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            image_source: require("@/assets/sample-products/interview_questions.jpg"),
+            image_source: require("@/assets/sample-books/interview_questions.jpg"),
         },
         {
-            id: 8, 
+            id: 7, 
             title: "Googling for the Regex", 
             price: 129.90, 
             stock: 8, 
@@ -149,10 +149,10 @@ export async function start_local_storage() {
             language: "Inglês", 
             pages: 690, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            image_source: require("@/assets/sample-products/regex.jpg"),
+            image_source: require("@/assets/sample-books/regex.jpg"),
         },
         {
-            id: 9, 
+            id: 8, 
             title: "Resolving Broken Dependencies", 
             price: 419.90, 
             stock: 12, 
@@ -165,10 +165,10 @@ export async function start_local_storage() {
             language: "Português", 
             pages: 310, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            image_source: require("@/assets/sample-products/resolving_dependencies.webp"),
+            image_source: require("@/assets/sample-books/resolving_dependencies.webp"),
         },
         {
-            id: 10, 
+            id: 9, 
             title: "Title Goes Here", 
             price: 14.90, 
             stock: 10, 
@@ -181,10 +181,10 @@ export async function start_local_storage() {
             language: "Inglês", 
             pages: 107, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            image_source: require("@/assets/sample-products/title_goes_here.webp"),
+            image_source: require("@/assets/sample-books/title_goes_here.webp"),
         },
         {
-            id: 11, 
+            id: 10, 
             title: "Trying Stuff Until it Works", 
             price: 16.90, 
             stock: 3, 
@@ -197,10 +197,10 @@ export async function start_local_storage() {
             language: "Latim", 
             pages: 420, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            image_source: require("@/assets/sample-products/trying_stuff.jpg"), 
+            image_source: require("@/assets/sample-books/trying_stuff.jpg"), 
         }, 
         {
-            id: 12, 
+            id: 11, 
             title: "What is LIGMA", 
             price: 22.70, 
             stock: 1, 
@@ -213,13 +213,13 @@ export async function start_local_storage() {
             language: "Espanhol", 
             pages: 624, 
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-            image_source: require("@/assets/sample-products/what_is_ligma.png"),
+            image_source: require("@/assets/sample-books/what_is_ligma.png"),
         },
     ];
 
     // Salva os livros
     products.forEach((product, index) => {
-        set_item("product#" + (index + 1), product);
+        set_item("product#" + index, product);
     });
 
     // Usuários
@@ -230,7 +230,7 @@ export async function start_local_storage() {
             name: "Cliente", 
             password: "123", 
             phone_number: "(11) 99998-2888", 
-            birth_date: "16/09/1995", 
+            birth_date: "1995-09-14", 
             role: "customer", 
         }, 
         {
@@ -239,7 +239,7 @@ export async function start_local_storage() {
             name: "Administrador", 
             password: "123", 
             phone_number: "(99) 11111-2222", 
-            birth_date: "02/11/2007", 
+            birth_date: "2007-12-09", 
             role: "admin", 
         }, 
     ];

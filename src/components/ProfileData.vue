@@ -32,7 +32,7 @@
         
         <!-- Data de Nascimento -->
         <h2 class="form-h2">Data de Nascimento</h2>
-        <p class="form-info-container form-normal-input-text" v-if="!updating_data">{{user_data.birth}}</p>
+        <p class="form-info-container form-normal-input-text" v-if="!updating_data">{{user_data.birth_date}}</p>
         <input 
             v-model="user_data.birth_date" 
             type="date" 
@@ -44,7 +44,7 @@
 
         <!-- Telefone -->
         <h2 class="form-h2">Telefone</h2>
-        <p class="form-info-container form-normal-input-text" v-if="!updating_data">{{user_data.tel}}</p>
+        <p class="form-info-container form-normal-input-text" v-if="!updating_data">{{user_data.phone_number}}</p>
         <input 
             v-model="user_data.phone_number" 
             type="tel" 

@@ -74,19 +74,19 @@ export async function update_user(user) {
 export async function add_user(user) {
 
     // Validação da estrutura do usuário
-    if(user.hasOwnProperty("id") === false){
+    if(Object.prototype.hasOwnProperty.call(user, "id") === false){
         throw TypeError("user must have an 'id' property");
-    }else if(user.hasOwnProperty("email") === false){
+    }else if(Object.prototype.hasOwnProperty.call(user, "email") === false){
         throw TypeError("user must have an 'email' property");
-    }else if(user.hasOwnProperty("name") === false){
+    }else if(Object.prototype.hasOwnProperty.call(user, "name") === false){
         throw TypeError("user must have a 'name' property");
-    }else if(user.hasOwnProperty("password") === false){
+    }else if(Object.prototype.hasOwnProperty.call(user, "password") === false){
         throw TypeError("user must have a 'password' property");
-    }else if(user.hasOwnProperty("phone_number") === false){
+    }else if(Object.prototype.hasOwnProperty.call(user, "phone_number") === false){
         throw TypeError("user must have a 'phone_number' property");
-    }else if(user.hasOwnProperty("birth_date") === false){
+    }else if(Object.prototype.hasOwnProperty.call(user, "birth_date") === false){
         throw TypeError("user must have a 'birth_date' property");
-    }else if(user.hasOwnProperty("role") === false){
+    }else if(Object.prototype.hasOwnProperty.call(user, "role") === false){
         throw TypeError("user must have a 'role' property");
     }
 
@@ -186,17 +186,17 @@ export async function update_credit_card(previous_number, credit_card) {
 export async function add_credit_card(credit_card) {
 
     // Validação da estrutura do cartão de crédito
-    if(credit_card.hasOwnProperty("user") === false){
+    if(Object.prototype.hasOwnProperty.call(credit_card, "user") === false){
         throw TypeError("credit_card must have an 'user' property");
-    }else if(credit_card.hasOwnProperty("number") === false){
+    }else if(Object.prototype.hasOwnProperty.call(credit_card, "number") === false){
         throw TypeError("credit_card must have a 'number' property");
-    }else if(credit_card.hasOwnProperty("title") === false){
+    }else if(Object.prototype.hasOwnProperty.call(credit_card, "title") === false){
         throw TypeError("credit_card must have a 'title' property");
-    }else if(credit_card.hasOwnProperty("security_code") === false){
+    }else if(Object.prototype.hasOwnProperty.call(credit_card, "security_code") === false){
         throw TypeError("credit_card must have a 'security_code' property");
-    }else if(credit_card.hasOwnProperty("cardholder") === false){
+    }else if(Object.prototype.hasOwnProperty.call(credit_card, "cardholder") === false){
         throw TypeError("credit_card must have a 'cardholder' property");
-    }else if(credit_card.hasOwnProperty("expiration_date") === false){
+    }else if(Object.prototype.hasOwnProperty.call(credit_card, "expiration_date") === false){
         throw TypeError("credit_card must have a 'expiration_date' property");
     }
 
@@ -299,23 +299,23 @@ export async function update_delivery_address(previous_zip, delivery_address) {
 export async function add_delivery_address(delivery_address) {
 
     // Validação da estrutura do endereço de entrega
-    if(delivery_address.hasOwnProperty("user") === false){
+    if(Object.prototype.hasOwnProperty.call(delivery_address, "user") === false){
         throw TypeError("delivery_address must have an 'user' property");
-    }else if(delivery_address.hasOwnProperty("zip") === false){
+    }else if(Object.prototype.hasOwnProperty.call(delivery_address, "zip") === false){
         throw TypeError("delivery_address must have a 'zip' property");
-    }else if(delivery_address.hasOwnProperty("title") === false){
+    }else if(Object.prototype.hasOwnProperty.call(delivery_address, "title") === false){
         throw TypeError("delivery_address must have a 'title' property");
-    }else if(delivery_address.hasOwnProperty("state") === false){
+    }else if(Object.prototype.hasOwnProperty.call(delivery_address, "state") === false){
         throw TypeError("delivery_address must have a 'state' property");
-    }else if(delivery_address.hasOwnProperty("city") === false){
+    }else if(Object.prototype.hasOwnProperty.call(delivery_address, "city") === false){
         throw TypeError("delivery_address must have a 'city' property");
-    }else if(delivery_address.hasOwnProperty("district") === false){
+    }else if(Object.prototype.hasOwnProperty.call(delivery_address, "district") === false){
         throw TypeError("delivery_address must have a 'district' property");
-    }else if(delivery_address.hasOwnProperty("street") === false){
+    }else if(Object.prototype.hasOwnProperty.call(delivery_address, "street") === false){
         throw TypeError("delivery_address must have a 'street' property");
-    }else if(delivery_address.hasOwnProperty("number") === false){
+    }else if(Object.prototype.hasOwnProperty.call(delivery_address, "number") === false){
         throw TypeError("delivery_address must have a 'number' property");
-    }else if(delivery_address.hasOwnProperty("complement") === false){
+    }else if(Object.prototype.hasOwnProperty.call(delivery_address, "complement") === false){
         throw TypeError("delivery_address must have a 'complement' property");
     }
 
@@ -411,11 +411,11 @@ export async function select_user_product_rating(user_id, product_id) {
 export async function add_rating(rating) {
 
     // Validação da estrutura da avaliação
-    if(rating.hasOwnProperty("user") === false){
+    if(Object.prototype.hasOwnProperty.call(rating, "user") === false){
         throw TypeError("rating must have an 'user' property");
-    }else if(rating.hasOwnProperty("product") === false){
+    }else if(Object.prototype.hasOwnProperty.call(rating, "product") === false){
         throw TypeError("rating must have a 'product' property");
-    }else if(rating.hasOwnProperty("rating") === false){
+    }else if(Object.prototype.hasOwnProperty.call(rating, "rating") === false){
         throw TypeError("rating must have a 'rating' property");
     }
 
@@ -500,15 +500,15 @@ export async function select_shopping_cart(user_id, invoice) {
 export async function add_shopping_cart(shopping_cart) {
 
     // Validação da estrutura do carrinho de compras
-    if(shopping_cart.hasOwnProperty("user") === false){
+    if(Object.prototype.hasOwnProperty.call(shopping_cart, "user") === false){
         throw TypeError("shopping_cart must have an 'user' property");
-    }else if(shopping_cart.hasOwnProperty("invoice") === false){
+    }else if(Object.prototype.hasOwnProperty.call(shopping_cart, "invoice") === false){
         throw TypeError("shopping_cart must have a 'invoice' property");
-    }else if(shopping_cart.hasOwnProperty("datetime") === false){
+    }else if(Object.prototype.hasOwnProperty.call(shopping_cart, "datetime") === false){
         throw TypeError("shopping_cart must have a 'datetime' property");
-    }else if(shopping_cart.hasOwnProperty("subtotal") === false){
+    }else if(Object.prototype.hasOwnProperty.call(shopping_cart, "subtotal") === false){
         throw TypeError("shopping_cart must have a 'subtotal' property");
-    }else if(shopping_cart.hasOwnProperty("freight") === false){
+    }else if(Object.prototype.hasOwnProperty.call(shopping_cart, "freight") === false){
         throw TypeError("shopping_cart must have a 'freight' property");
     }
 
@@ -593,13 +593,13 @@ export async function select_cart_product(user_id, cart_invoice, product_id) {
 export async function add_cart_product(cart_product) {
 
     // Validação da estrutura da avaliação
-    if(cart_product.hasOwnProperty("user") === false){
+    if(Object.prototype.hasOwnProperty.call(cart_product, "user") === false){
         throw TypeError("cart_product must have an 'user' property");
-    }else if(cart_product.hasOwnProperty("cart") === false){
+    }else if(Object.prototype.hasOwnProperty.call(cart_product, "cart") === false){
         throw TypeError("cart_product must have a 'cart' property");
-    }else if(cart_product.hasOwnProperty("product") === false){
+    }else if(Object.prototype.hasOwnProperty.call(cart_product, "product") === false){
         throw TypeError("cart_product must have a 'product' property");
-    }else if(cart_product.hasOwnProperty("quantity") === false){
+    }else if(Object.prototype.hasOwnProperty.call(cart_product, "quantity") === false){
         throw TypeError("cart_product must have a 'quantity' property");
     }
 
@@ -685,33 +685,33 @@ export async function select_product_by_title(title) {
 export async function add_product(product) {
 
     // Validação da estrutura do produto
-    if(product.hasOwnProperty("id") === false){
+    if(Object.prototype.hasOwnProperty.call(product, "id") === false){
         throw TypeError("product must have an 'id' property");
-    }else if(product.hasOwnProperty("title") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product, "title") === false){
         throw TypeError("product must have a 'title' property");
-    }else if(product.hasOwnProperty("price") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product, "price") === false){
         throw TypeError("product must have a 'price' property");
-    }else if(product.hasOwnProperty("stock") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product, "stock") === false){
         throw TypeError("product must have a 'stock' property");
-    }else if(product.hasOwnProperty("rating") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product, "rating") === false){
         throw TypeError("product must have a 'rating' property");
-    }else if(product.hasOwnProperty("sales") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product, "sales") === false){
         throw TypeError("product must have a 'sales' property");
-    }else if(product.hasOwnProperty("author") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product, "author") === false){
         throw TypeError("product must have a 'author' property");
-    }else if(product.hasOwnProperty("publisher") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product, "publisher") === false){
         throw TypeError("product must have a 'publisher' property");
-    }else if(product.hasOwnProperty("finishing") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product, "finishing") === false){
         throw TypeError("product must have a 'finishing' property");
-    }else if(product.hasOwnProperty("year") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product, "year") === false){
         throw TypeError("product must have a 'year' property");
-    }else if(product.hasOwnProperty("language") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product, "language") === false){
         throw TypeError("product must have a 'language' property");
-    }else if(product.hasOwnProperty("pages") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product, "pages") === false){
         throw TypeError("product must have a 'pages' property");
-    }else if(product.hasOwnProperty("description") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product, "description") === false){
         throw TypeError("product must have a 'description' property");
-    }else if(product.hasOwnProperty("image_source") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product, "image_source") === false){
         throw TypeError("product must have a 'image_source' property");
     }
 
@@ -793,9 +793,9 @@ export async function select_category_by_name(name) {
 export async function add_category(category) {
 
     // Validação da estrutura da categoria
-    if(category.hasOwnProperty("id") === false){
+    if(Object.prototype.hasOwnProperty.call(category, "id") === false){
         throw TypeError("category must have an 'id' property");
-    }else if(category.hasOwnProperty("name") === false){
+    }else if(Object.prototype.hasOwnProperty.call(category, "name") === false){
         throw TypeError("category must have a 'name' property");
     }
 
@@ -866,9 +866,9 @@ export async function select_product_categories(product_id) {
 export async function add_product_category(product_category) {
 
     // Validação da estrutura da categoria
-    if(product_category.hasOwnProperty("id") === false){
+    if(Object.prototype.hasOwnProperty.call(product_category, "id") === false){
         throw TypeError("product_category must have an 'id' property");
-    }else if(product_category.hasOwnProperty("name") === false){
+    }else if(Object.prototype.hasOwnProperty.call(product_category, "name") === false){
         throw TypeError("product_category must have a 'name' property");
     }
 

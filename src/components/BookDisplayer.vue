@@ -13,6 +13,7 @@
 
 <!-- .:::: SCRIPT ::::. -->
 <script>
+    //import { load_book_cover } from "@/utils/utils.js";
     export default {
         name: 'BookDisplayer',
         props: ['book'], 
@@ -23,7 +24,7 @@
             }, 
             format_price(price) {
                 return "R$ " + price.toFixed(2).toString().replace('.', ',');
-            }
+            }, 
         }
     }
 </script>

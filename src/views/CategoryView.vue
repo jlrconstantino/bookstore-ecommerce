@@ -15,7 +15,7 @@
     import BookSection from "../components/BookSection.vue";
 
     // Para manipulação da base de dados local
-    import { load_local_storage_books, load_local_storage_categories, load_local_storage_has_category } from "../utils/local-storage-management";
+    import { select_all_categories, select_all_products, select_all_product_categories } from "@/utils/database-management";
 
     // Lógica local
     export default {
@@ -52,12 +52,12 @@
         created: async function() {
 
             // Carrega os livros
-            await load_local_storage_books().then(res => {
+            await select_all_products().then(res => {
                 this.books = res;
             });
 
             // Carrega as categorias dos livros
-            await load_local_storage_has_category().then(res => {
+            await select_all_product_categories().then(res => {
                 this.books_categories = res;
             });
 
@@ -70,7 +70,7 @@
 
             // Carrega as categorias globais
             let categories = [];
-            await load_local_storage_categories().then(res => {
+            await select_all_categories().then(res => {
                 categories = res;
             });
 
@@ -107,7 +107,7 @@
                         // Para cada livro, seleciona aqueles com a categoria fornecida
                         return this.books.filter(book => {
                             let categories = this.books_categories.filter(book_category => {
-                                return book_category.book === book.id; 
+                                return book_category.product === book.id; 
                             });
                             if(categories.length > 0){
                                 return categories.some(book_category => {

@@ -16,7 +16,7 @@
     import BookSection from "../components/BookSection.vue";
 
     // Para manipulação da base de dados local
-    import { load_local_storage_books } from "../utils/local-storage-management";
+    import { select_all_products } from "@/utils/database-management";
 
     // Lógica local
     export default {
@@ -38,7 +38,7 @@
 
         // Carregamento da base de dados
         created() {
-            load_local_storage_books().then(res => {
+            select_all_products().then(res => {
                 this.books = res;
             });
         }, 

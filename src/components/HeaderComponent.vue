@@ -76,7 +76,7 @@
     import store from '@/store/index.js';
 
     // Para manipulação da base de dados
-    import { load_local_storage_categories } from '@/utils/local-storage-management';
+    import { select_all_categories } from '@/utils/database-management';
 
     // Lógica local
     export default {
@@ -105,7 +105,7 @@
 
         // Para carregas as categorias da base de dados
         created() {
-            load_local_storage_categories().then(res => {
+            select_all_categories().then(res => {
                 this.menu_categories = res;
             });
         }, 

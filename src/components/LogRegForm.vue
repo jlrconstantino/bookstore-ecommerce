@@ -135,7 +135,8 @@
     import { add_user, select_user_by_email, select_all_users } from "@/utils/database-management.js";
 
     // Para manipulação de formulários
-    import { validate_attribute_by_regex } from "@/utils/form-validation.js";
+    import { validate_attribute_by_regex, validate_attribute_by_callback } from "@/utils/form-validation.js";
+    import { alphanumeric_parser } from "@/utils/utils";
 
     // Lógica local
     export default {
@@ -208,7 +209,9 @@
 
                 // Para controle do resultado
                 let output = true;
-                let pattern = "";
+                /* eslint-disable */
+                const email_parser = new RegExp("^([a-zA-Z0-9_]+@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+)$", "g");
+                /* eslint-enable */
 
                 // Validação de e-mail
                 // Verificação de string vazia
@@ -222,13 +225,8 @@
                 else{
                     this.login_email_is_empty = false;
 
-                    // Padrão REGEX; não remover os comentários
-                    /* eslint-disable */
-                    pattern = new RegExp("^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+", "g");
-                    /* eslint-enable */
-
                     // Teste de formatação
-                    if(pattern.test(this.login_email)){
+                    if(email_parser.test(this.login_email)){
                         this.login_email_is_valid = true;
 
                         // Verificação de usuário pré-existente
@@ -300,13 +298,16 @@
 
                 // Para controle do resultado
                 let output = true;
+                /* eslint-disable */
+                const email_parser = new RegExp("^([a-zA-Z0-9_]+@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+)$", "g");
+                /* eslint-enable */
 
                 // Validação de nome
                 if (
                     validate_attribute_by_regex(
                         this, 
                         this.name, 
-                        new RegExp("^[a-zA-Z ]+$", "g"), 
+                        alphanumeric_parser, 
                         "name_is_empty", 
                         "name_is_valid"
                     ) === false
@@ -319,7 +320,7 @@
                     validate_attribute_by_regex(
                         this, 
                         this.reg_email, 
-                        new RegExp("^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+", "g"), 
+                        email_parser, 
                         "reg_email_is_empty", 
                         "reg_email_is_valid"
                     ) === false

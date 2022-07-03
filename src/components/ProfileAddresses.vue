@@ -642,7 +642,7 @@
                         // Atualização dos dados da página
                         let address_index = this.addresses_data.findIndex(element => {
                             return (
-                                element.user === delivery_address.user &&
+                                element.user === user_id &&
                                 element.zip === this.previous_cep
                             );
                         });
