@@ -174,8 +174,8 @@ const router = createRouter({
   routes
 });
 
-// Para verificação de autenticação do usuário
-router.beforeEach((to, _, next) => {
+// Para verificações especiais de rota
+router.beforeEach((to, from, next) => {
 
   // Verifica necessidade de autenticação
   if (to.matched.some(record => record.meta.requires_authentication)) {
@@ -212,6 +212,13 @@ router.beforeEach((to, _, next) => {
   // Página não necessita autenticação
   else {
     next();
+  }
+
+  // Verifica saída da página de finalização de compra
+  if(from.name.length >= 8 && from.name.substring(0,8) === 'purchase'){
+    if(to.name.length < 8 || to.name.substring(0,8) !== 'purchase'){
+      store.commit("end_purchase");
+    }
   }
 })
 

@@ -27,6 +27,12 @@ const store = createStore({
 
     ], 
 
+    // Método de compra ativo
+    payment_method: null, 
+
+    // Endereço de entrega ativo
+    delivery_address: null, 
+
   },
 
   // Métodos acessores customizados
@@ -75,6 +81,15 @@ const store = createStore({
       return output;
     }, 
 
+    // Retorna o método de pagamento ativo
+    payment_method(state) {
+      return state.payment_method;
+    }, 
+
+    // Retorna o endereço de entrega ativo
+    delivery_address(state) {
+      return state.delivery_address;
+    }, 
   },
 
   // Métodos modificadores
@@ -95,6 +110,8 @@ const store = createStore({
       state.user.name = null;
       state.user.role = null;
       state.cart = [];
+      state.payment_method = null;
+      state.delivery_address = null;
     }, 
 
 
@@ -149,6 +166,23 @@ const store = createStore({
     }, 
 
 
+    // Desativa os atributos de finalização de compra
+    end_purchase(state) {
+      state.payment_method = null;
+      state.delivery_address = null;
+    }, 
+
+
+    // Seleciona um método de pagamento
+    set_payment_method(state, payment_method) {
+      state.payment_method = payment_method;
+    }, 
+
+
+    // Seleciona um endereço de entrega
+    set_delivery_address(state, delivery_address) {
+      state.delivery_address = delivery_address;
+    }, 
   },
 
   actions: {

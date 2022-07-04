@@ -95,6 +95,9 @@
 .form-table-item-row-1 {
     background-color: var(--table-row-1-background-color);
 }
+.form-table-item-row-emphasis {
+    background-color: var(--blue-emphasis-color);
+}
 .form-table-title-item {
     width: 50%;
 }

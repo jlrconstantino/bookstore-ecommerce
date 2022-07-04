@@ -2,7 +2,7 @@
 <template>
 
     <!-- Seção de cartões -->
-    <div v-if="!adding_card && !updating_card">
+    <div v-if="!adding_card">
 
         <!-- Informações de rodapé -->
         <h2 class="form-h2">Cartões de Crédito</h2>
@@ -15,14 +15,17 @@
             <tr class="form-table-header-row">
                 <th class="form-table-title-item">Título do Cartão</th>
                 <th class="form-table-center-item">Número do Cartão</th>
-                <th class="form-table-last-item">Modificar Cartão</th>
+                <th class="form-table-last-item">Selecionar Cartão</th>
             </tr>
 
             <!-- Itens da tabela -->
             <tr 
                 v-for="(card, index) in cards_data" 
                 :key="card" 
-                :class="index % 2 === 0 ? 'form-table-item-row-0' : 'form-table-item-row-1'">
+                :class="
+                    index % 2 === 0 ? 'form-table-item-row-0' : 'form-table-item-row-1',
+                    {'form-table-item-row-emphasis' : active_card === index}
+                ">
                 <td>
                     <label>{{card.title}}</label>
                 </td>
@@ -30,19 +33,22 @@
                     <label>{{card.number.substring(0,5) + "..."}}</label>
                 </td>
                 <td>
-                    <a @click="start_card_update(card)">Modificar</a>
+                    <a @click="select_credit_card(card, index)">Selecionar</a>
                 </td>
             </tr>
 
         </table>
 
-        <!-- Botão de adição de cartão -->
-        <button @click="start_card_addition()" class="form-button standard-button">Adicionar cartão</button>
+        <!-- Botões de gerenciamento de cartões de crédito -->
+        <div class="form-update-buttons-section">
+            <button @click="start_card_addition()" class="form-button standard-button">Adicionar cartão</button>
+            <button @click="go_to_profile_payment()" class="form-button orange-button">Gerenciar cartões</button>
+        </div>
 
     </div>
 
     <!-- Seção de adição e modificação de cartões -->
-    <div v-if="adding_card || updating_card">
+    <div v-if="adding_card">
 
         <!-- Título do cartão -->
         <h2 class="form-h2">Título do Cartão</h2>
@@ -131,13 +137,8 @@
         <div class="form-update-buttons-section">
 
             <!-- Adição -->
-            <button v-if="adding_card" @click="add_card()" class="form-button standard-button">Salvar Cartão</button>
-            <button v-if="adding_card" @click="cancel_card_addition()" class="form-button gray-button">Cancelar</button>
-
-            <!-- Atualização -->
-            <button v-if="updating_card" @click="update_card()" class="form-button standard-button">Salvar Cartão</button>
-            <button v-if="updating_card" @click="delete_card()" class="form-button red-button">Remover Cartão</button>
-            <button v-if="updating_card" @click="cancel_card_update()" class="form-button gray-button">Cancelar</button>
+            <button @click="add_card()" class="form-button standard-button">Salvar Cartão</button>
+            <button @click="cancel_card_addition()" class="form-button gray-button">Cancelar</button>
 
         </div>
 
@@ -151,7 +152,7 @@
 
     // Para manipulação do banco de dados
     import store from '@/store';
-    import { add_credit_card, delete_credit_card, select_user_credit_cards, update_credit_card } from '@/utils/database-management';
+    import { add_credit_card, select_user_credit_cards } from '@/utils/database-management';
 
     // Para manipulação de formulários
     import { validate_attribute_by_callback, validate_attribute_by_regex, validate_password_by_id } from '@/utils/form-validation';
@@ -170,11 +171,11 @@
                 // Cartões de Crédito
                 total_database_cards: 0, 
                 cards_data: [], 
+                active_card: -1, 
                 target_card_id: "", 
 
-                // Para controle de adição e modificação de cartões de crédito
+                // Para controle de adição
                 adding_card: false, 
-                updating_card: false, 
 
                 // Controle de título
                 card_title: "", 
@@ -220,12 +221,21 @@
 
         // Métodos auxiliares
         methods: {
+
+            // Navega para a página de gerenciamento de cartões de crédito
+            go_to_profile_payment(){
+                this.$router.push({name: 'profile-payment-methods'});
+                window.scrollTo(0,0);
+            }, 
+
+            // Seleciona um cartão pré-existente
+            select_credit_card(card, index){
+                this.active_card = index;
+                store.commit("set_payment_method", card);
+            }, 
             
             // Inicializa a adição de um novo cartão de crédito
             start_card_addition() {
-                if(this.updating_card === true){
-                    this.cancel_card_update();
-                }
                 this.adding_card = true;
                 window.scrollTo(0,60);
             }, 
@@ -419,103 +429,6 @@
 
                         // Avisa o usuário
                         alert("Novo cartão de crédito cadastrado com sucesso.");
-                    }
-                });
-            }, 
-
-            // Inicializa a modificação de um cartão pré-existente
-            start_card_update(card) {
-
-                // Verifica se está adicionando um cartão
-                if(this.adding_card === true){
-                    this.cancel_card_addition();
-                }
-
-                // Obtenção dos dados do cartão alvo
-                this.previous_card_number = card.number;
-                this.card_number = card.number;
-                this.card_title = card.title;
-                this.security_code = card.security_code;
-                this.cardholder = card.cardholder;
-                this.expiration_date = card.expiration_date;
-
-                // Atualização da página
-                this.updating_card = true;
-                window.scrollTo(0,60);
-            }, 
-
-            // Cancela a modificação de um cartão pré-existente
-            cancel_card_update() {
-                this.updating_card = false;
-                window.scrollTo(0,60);
-                this.reset_card_form();
-            }, 
-
-            // Atualiza um cartão pré-existente
-            update_card: async function() {
-
-                // Validação dos dados e da senha
-                this.validate_card_info_and_password().then(res => {
-                    if(res === true){
-
-                        // Cria o novo cartão
-                        let credit_card = {
-                            user: store.state.user.id, 
-                            number: this.card_number, 
-                            title: this.card_title, 
-                            security_code: this.security_code, 
-                            cardholder: this.cardholder, 
-                            expiration_date: this.expiration_date, 
-                        };
-
-                        // Atualização do cartão
-                        update_credit_card(this.previous_card_number, credit_card);
-
-                        // Atualização dos dados da página
-                        let card_index = this.cards_data.findIndex(element => {
-                            return (
-                                element.user === credit_card.user &&
-                                element.number === this.previous_card_number
-                            );
-                        });
-                        if(card_index >= 0){
-                            this.cards_data[card_index] = credit_card;
-                        }
-                        this.cancel_card_update();
-
-                        // Avisa o usuário
-                        alert("Cartão de crédito atualizado com sucesso.");
-                    }
-                });
-            }, 
-
-            // Remove um cartão de crédito pré-existente
-            delete_card: async function() {
-
-                // Validação senha
-                this.validate_password().then(res => {
-                    if(res === true){
-
-                        // ID do usuário
-                        const user_id = store.getters.user_id;
-
-                        // Remoção do cartão
-                        delete_credit_card(user_id, this.previous_card_number);
-
-                        // Atualização dos dados da página
-                        let card_index = this.cards_data.findIndex(element => {
-                            return (
-                                element.user === user_id &&
-                                element.number === this.previous_card_number
-                            );
-                        });
-                        if(card_index >= 0){
-                            this.cards_data.splice(card_index, 1);
-                        }
-                        this.cancel_card_update();
-
-                        // Avisa o usuário
-                        alert("Cartão de crédito removido com sucesso.");
                     }
                 });
             }, 
