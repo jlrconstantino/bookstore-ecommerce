@@ -97,7 +97,7 @@
     import store from '@/store';
 
     // Base de dados
-    import { add_cart_product, add_shopping_cart, select_product_by_id } from '@/utils/database-management';
+    import { add_cart_product, add_shopping_cart, select_product_by_id, update_product } from '@/utils/database-management';
 
     // Para formatação de preços e geração de números pseudoaleatórios
     import { format_number_to_price, get_random_integer } from '@/utils/utils';
@@ -138,7 +138,7 @@
             }, 
 
             // Finaliza a compra
-            end_purchase() {
+            end_purchase: async function() {
                 if(this.is_ready === true){
 
                     // A serem utilizados
@@ -158,6 +158,8 @@
 
                     // Itens do carrinho para o banco de dados
                     for(const item of this.shopping_cart){
+
+                        // Produto de carrinho
                         const cart_product = {
                             user: user_id, 
                             cart: invoice, 
@@ -166,6 +168,15 @@
                             subtotal: item.subtotal, 
                         };
                         add_cart_product(cart_product);
+                        
+                        // Seleciona o produto para atualizar quantia em estoque
+                        await select_product_by_id(cart_product.product).then(res => {
+                            if(res != null){
+                                let product = res;
+                                product.stock -= 1;
+                                update_product(product);
+                            }
+                        });
                     }
 
                     // Avisa ao usuário e finaliza a compra

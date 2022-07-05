@@ -726,6 +726,21 @@ export async function add_product(product) {
 }
 
 
+// Atualiza o produto especificado
+export async function update_product(product) {
+    if(products == null){
+        await select_all_products();
+    }
+    let index = products.findIndex(p => {
+        return p.id == product.id;
+    });
+    if(index >= 0) {
+        products[index] = product;
+        set_item("product#" + index.toString(), product);
+    }
+}
+
+
 // Deleta o produto especificado a partir do ID
 export async function delete_product_by_id(id) {
     if(products != null){

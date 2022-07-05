@@ -36,10 +36,12 @@
                 }">
             <p v-if="!login_password_is_valid" class="failed-input-text">A senha informada é inválida.</p>
             <p v-if="login_password_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
-            <a class="text-common-color hover-interaction-link-darker" @click="forgot_password()">Esqueceu sua senha?</a>
+            <a 
+                class="text-common-color hover-interaction-link-darker" 
+                @click="forgot_password()">Esqueceu sua senha?</a>
 
             <!-- Submit -->
-            <button class="standard-button" @click="login()" @keyup.enter="login()">Entrar</button>
+            <button class="standard-button" @click.once="login()" @keyup.enter="login()">Entrar</button>
 
         </div>
 
@@ -121,7 +123,7 @@
             <p v-if="phone_number_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
             
             <!-- Submit -->
-            <button class="standard-button" @click="register()" @keyup.enter="register()">Cadastrar</button>
+            <button class="standard-button" @click.once="register()" @keyup.enter="register()">Cadastrar</button>
 
         </div>
     </div>
