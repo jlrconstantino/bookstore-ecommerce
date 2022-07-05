@@ -22,10 +22,11 @@
             <tr 
                 v-for="(card, index) in cards_data" 
                 :key="card" 
-                :class="
-                    index % 2 === 0 ? 'form-table-item-row-0' : 'form-table-item-row-1',
-                    {'form-table-item-row-emphasis' : active_card === index}
-                ">
+                :class="{
+                    'form-table-item-row-0' : index % 2 === 0, 
+                    'form-table-item-row-1' : index % 2 !== 0, 
+                    'form-table-item-row-emphasis' : active_card === index
+                }">
                 <td>
                     <label>{{card.title}}</label>
                 </td>
@@ -33,7 +34,7 @@
                     <label>{{card.number.substring(0,5) + "..."}}</label>
                 </td>
                 <td>
-                    <a @click="select_credit_card(card, index)">Selecionar</a>
+                    <a @click="select_credit_card(card, index)">{{active_card === index ? 'Selecionado' : 'Selecionar'}}</a>
                 </td>
             </tr>
 
@@ -132,12 +133,19 @@
             :class="{'form-normal-input-text': password_is_valid && !password_is_empty}">
         <p v-if="!password_is_valid" class="form-failed-input-text">A senha informada é inválida.</p>
         <p v-if="password_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
+        <div class="form-info-container text" style="margin-bottom:2rem;">
+            <input class="save-card-input"
+                v-model="save_card"
+                value="false"
+                type="checkbox">
+            <span class="text">Salvar este cartão em sua conta.</span>
+        </div>
 
         <!-- Botões de ação -->
         <div class="form-update-buttons-section">
 
             <!-- Adição -->
-            <button @click="add_card()" class="form-button standard-button">Salvar Cartão</button>
+            <button @click="add_card()" class="form-button standard-button">Selecionar Cartão</button>
             <button @click="cancel_card_addition()" class="form-button gray-button">Cancelar</button>
 
         </div>
@@ -171,11 +179,11 @@
                 // Cartões de Crédito
                 total_database_cards: 0, 
                 cards_data: [], 
-                active_card: -1, 
                 target_card_id: "", 
 
                 // Para controle de adição
                 adding_card: false, 
+                save_card: false, 
 
                 // Controle de título
                 card_title: "", 
@@ -217,6 +225,18 @@
                     this.cards_data = res;
                 }
             });
+        }, 
+
+        // Atributos computados
+        computed: {
+            active_card: {
+                get() {
+                    return store.getters.payment_method_index;
+                }, 
+                set(value) {
+                    store.commit("set_payment_method_index", value);
+                },
+            }, 
         }, 
 
         // Métodos auxiliares
@@ -411,7 +431,7 @@
                     if(res === true){
 
                         // Cria o novo cartão
-                        let credit_card = {
+                        const credit_card = {
                             user: store.getters.user_id, 
                             number: this.card_number, 
                             title: this.card_title, 
@@ -419,16 +439,26 @@
                             cardholder: this.cardholder, 
                             expiration_date: this.expiration_date, 
                         };
+                        store.commit("set_payment_method", credit_card);
 
-                        // Adição do novo cartão
-                        add_credit_card(credit_card);
+                        // Caso queira salvar em base de dados
+                        if(this.save_card === true) {
 
-                        // Atualização dos dados da página
-                        this.cards_data.push(credit_card);
+                            // Adição do novo cartão
+                            add_credit_card(credit_card);
+
+                            // Atualização dos dados da página
+                            this.active_card = this.cards_data.length;
+                            this.cards_data.push(credit_card);
+
+                            // Avisa ao usuário
+                            alert("Novo cartão de crédito cadastrado com sucesso.");
+                        }else{
+                            alert("Cartão de crédito selecionado com sucesso.");
+                        }
+
+                        // Finalização
                         this.cancel_card_addition();
-
-                        // Avisa o usuário
-                        alert("Novo cartão de crédito cadastrado com sucesso.");
                     }
                 });
             }, 
@@ -439,6 +469,12 @@
 
 
 <!-- .:::: STYLE ::::. -->
-<style>
+<style scoped>
     @import "../css/profile-form.css";
+    @import "../css/colors.css";
+    .save-card-input {
+        border: var(--box-border);
+        box-shadow: 0.05rem 0.05rem 0.2rem rgba(0, 0, 0, 0.281);
+        margin-right: 1rem;
+    }
 </style>

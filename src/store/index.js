@@ -27,11 +27,16 @@ const store = createStore({
 
     ], 
 
+    // Frete ativo
+    freight: 0.0, 
+
     // Método de compra ativo
     payment_method: null, 
+    payment_method_index: -1, 
 
     // Endereço de entrega ativo
     delivery_address: null, 
+    delivery_address_index: -1, 
 
   },
 
@@ -56,6 +61,11 @@ const store = createStore({
     // Para verificar permissões administrativas
     is_admin(state) {
       return state.user.role === 'admin';
+    }, 
+
+    // Frete
+    freight(state) {
+      return state.freight;
     }, 
 
     // Retorna o carrinho de compras
@@ -90,6 +100,16 @@ const store = createStore({
     delivery_address(state) {
       return state.delivery_address;
     }, 
+
+    // Retorna o índice do método de pagamento ativo
+    payment_method_index(state) {
+      return state.payment_method_index;
+    }, 
+
+    // Retorna o índice do endereço de entrega ativo
+    delivery_address_index(state) {
+      return state.delivery_address_index;
+    }, 
   },
 
   // Métodos modificadores
@@ -112,6 +132,12 @@ const store = createStore({
       state.cart = [];
       state.payment_method = null;
       state.delivery_address = null;
+    }, 
+
+
+    // Atualiza o frete
+    set_freight(state, value) {
+      state.freight = value;
     }, 
 
 
@@ -170,6 +196,8 @@ const store = createStore({
     end_purchase(state) {
       state.payment_method = null;
       state.delivery_address = null;
+      state.payment_method_index = -1;
+      state.delivery_address_index = -1;
     }, 
 
 
@@ -182,6 +210,18 @@ const store = createStore({
     // Seleciona um endereço de entrega
     set_delivery_address(state, delivery_address) {
       state.delivery_address = delivery_address;
+    }, 
+
+
+    // Seleciona um índice para método de pagamento
+    set_payment_method_index(state, payment_method_index) {
+      state.payment_method_index = payment_method_index;
+    }, 
+
+
+    // Seleciona um índice apra endereço de entrega
+    set_delivery_address_index(state, delivery_address_index) {
+      state.delivery_address_index = delivery_address_index;
     }, 
   },
 

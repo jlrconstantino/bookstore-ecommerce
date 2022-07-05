@@ -124,16 +124,6 @@
             "calculator": FreightCalculator, 
         }, 
 
-        // Dados locais
-        data() {
-            return {
-
-                // Valor de frete
-                freight: 0.00, 
-
-            };
-        }, 
-
         // Métodos auxiliares
         methods: {
 
@@ -152,6 +142,16 @@
 
         // Atributos computados
         computed: {
+
+            // Frete
+            freight: {
+                get() {
+                    return store.getters.freight;
+                }, 
+                set(value) {
+                    store.commit("set_freight", value);
+                }, 
+            }, 
 
             // Lista de itens do carrinho
             cart_items() {
