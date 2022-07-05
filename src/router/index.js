@@ -217,7 +217,7 @@ router.beforeEach((to, from, next) => {
   // Verifica saída da página de finalização de compra
   if(from.name.length >= 8 && from.name.substring(0,8) === 'purchase'){
     if(to.name.length < 8 || to.name.substring(0,8) !== 'purchase'){
-      store.commit("end_purchase");
+      store.commit("end_purchase_finalization");
     }
   }
 })

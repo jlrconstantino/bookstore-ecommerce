@@ -59,7 +59,7 @@
                 :key="item" 
                 :class="index % 2 === 0 ? 'form-table-item-row-0' : 'form-table-item-row-1'">
                 <td>
-                    <label>{{select_product_title(item.product)}}</label>
+                    <label>{{cart_product_titles[index]}}</label>
                 </td>
                 <td>
                     <label>{{item.quantity}}</label>
@@ -97,7 +97,7 @@
     import store from '@/store';
 
     // Base de dados
-    import { add_shopping_cart, select_product_by_id } from '@/utils/database-management';
+    import { add_cart_product, add_shopping_cart, select_product_by_id } from '@/utils/database-management';
 
     // Para formatação de preços e geração de números pseudoaleatórios
     import { format_number_to_price, get_random_integer } from '@/utils/utils';
@@ -108,22 +108,29 @@
         // Nome do componente
         name: "PurchaseFinal", 
 
-        // Dados
+        // Dados locais
+        data() {
+            return {
+                cart_product_titles: [], 
+            };
+        }, 
+
+        // Obtém os títulos dos produtos
+        created: async function() {
+            this.cart_product_titles = [];
+            for(const item of this.shopping_cart) {
+                select_product_by_id(item.product).then(res => {
+                    if(res != null){
+                        this.cart_product_titles.push(res.title);
+                    }else{
+                        this.cart_product_titles.push("???");
+                    }
+                });
+            }
+        }, 
 
         // Métodos auxiliares
         methods: {
-
-            // Seleciona um produto
-            select_product_title: async function(id) {
-                let product = null;
-                await select_product_by_id(id).then(res => {
-                    product = res;
-                });
-                if(product != null) {
-                    return product.title;
-                }
-                return "???";
-            }, 
 
             // Formata um preço para string
             format_price(price) {
@@ -134,13 +141,14 @@
             end_purchase() {
                 if(this.is_ready === true){
 
-                    // Valores especiais
-                    let invoice = get_random_integer(1000000);
-                    let datetime = new Date();
+                    // A serem utilizados
+                    const user_id = store.getters.user_id;
+                    const invoice = get_random_integer(1000000);
+                    const datetime = new Date();
 
                     // Carrinho de compras para o banco de dados
                     const shopping_cart = {
-                        user: store.getters.user_id, 
+                        user: user_id, 
                         invoice: invoice, 
                         datetime: datetime, 
                         subtotal: store.getters.get_shopping_cart_subtotal, 
@@ -148,7 +156,23 @@
                     };
                     add_shopping_cart(shopping_cart);
 
+                    // Itens do carrinho para o banco de dados
+                    for(const item of this.shopping_cart){
+                        const cart_product = {
+                            user: user_id, 
+                            cart: invoice, 
+                            product: item.product, 
+                            quantity: item.quantity, 
+                            subtotal: item.subtotal, 
+                        };
+                        add_cart_product(cart_product);
+                    }
 
+                    // Avisa ao usuário e finaliza a compra
+                    alert("Compra finalizada com sucesso.");
+                    store.commit("clear_cart");
+                    this.$router.push({name: "home"});
+                    window.scrollTo(0,0);
                 }
             }, 
         }, 
@@ -184,6 +208,22 @@
                 );
             }, 
         }, 
+
+        // Computa os títulos a cada modificação no carrinho
+        watch: {
+            shopping_cart: async function(array) {
+                this.cart_product_titles = [];
+                for(const item of array) {
+                    select_product_by_id(item.product).then(res => {
+                        if(res != null){
+                            this.cart_product_titles.push(res.title);
+                        }else{
+                            this.cart_product_titles.push("???");
+                        }
+                    });
+                }
+            }, 
+        }
     }
 
 </script>

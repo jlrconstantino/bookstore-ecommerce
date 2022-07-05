@@ -601,6 +601,8 @@ export async function add_cart_product(cart_product) {
         throw TypeError("cart_product must have a 'product' property");
     }else if(Object.prototype.hasOwnProperty.call(cart_product, "quantity") === false){
         throw TypeError("cart_product must have a 'quantity' property");
+    }else if(Object.prototype.hasOwnProperty.call(cart_product, "subtotal") === false){
+        throw TypeError("cart_product must have a 'subtotal' property");
     }
 
     // Adição da avaliação à base de dados

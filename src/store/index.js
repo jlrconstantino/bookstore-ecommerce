@@ -180,6 +180,12 @@ const store = createStore({
     }, 
 
 
+    // Limpa o carrinho
+    clear_cart(state) {
+      state.cart.length = 0;
+    }, 
+
+
     // Atualiza a quantidade de um item do carrinho de compras
     update_cart_item_quantity(state, payload) {
       state.cart[payload.index].quantity = payload.quantity;
@@ -193,7 +199,7 @@ const store = createStore({
 
 
     // Desativa os atributos de finalização de compra
-    end_purchase(state) {
+    end_purchase_finalization(state) {
       state.payment_method = null;
       state.delivery_address = null;
       state.payment_method_index = -1;
