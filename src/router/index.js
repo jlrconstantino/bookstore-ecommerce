@@ -193,7 +193,7 @@ router.beforeEach((to, from, next) => {
 
         // Não é um administrador
         else{
-          next({name: 'login'})
+          next({name: 'home'})
         }
       }
 

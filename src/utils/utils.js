@@ -12,8 +12,14 @@ export function get_random_integer(max) {
 
 /* eslint-disable */
 
+// Parser de Regex numérico
+export const numeric_parser = new RegExp("^[0-9]+$", "g");
+
 // Parser de Regex alfanumérico
 export const alphanumeric_parser = new RegExp("^[a-zA-ZÀ-ú0-9\- ]+$", "u");
+
+// Parser de texto
+export const text_parser = new RegExp("^[a-zA-ZÀ-ú0-9\-\_/,. ]+$", "u");
 
 // Parser de Regex para e-mails
 export const email_parser = new RegExp("^([a-zA-Z0-9_]+@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+)$", "g");

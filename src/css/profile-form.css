@@ -23,6 +23,9 @@
     padding: 1rem;
     background-color: var(--navigation-bar-background-color);
     color: var(--text-common-color);
+    white-space: no-wrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 /* Botão */

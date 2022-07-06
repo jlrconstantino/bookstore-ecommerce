@@ -271,7 +271,7 @@
                 if(this.validate_permissions_update() === true){
 
                     // Valida a senha
-                    await validate_password_by_id(this.selected_user.id, this.password).then(res => {
+                    await validate_password_by_id(this.$store.getters.user_id, this.password).then(res => {
                         if(res === true) {
                             this.password_is_valid = true;
 

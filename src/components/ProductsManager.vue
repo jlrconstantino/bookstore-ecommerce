@@ -2,19 +2,31 @@
 <template>
 
     <!-- Seção inicial -->
-    <div v-if="selected_product_id == null">
+    <div v-if="selected_product_id == null && !adding_product">
 
-        <!-- Apresentação -->
-        <h2 class="form-h2">Gerenciar Produtos</h2>
-        <p class="text-common-color">Quantia de produtos encontrados: {{filtered_products_data.length}}.</p>
-        <br>
+        <!-- Wrapper vertical -->
+        <div class="form-vertical-section">
 
-        <!-- Caixa de pesquisa -->
-        <input 
-            v-model="search_string" 
-            type="text" 
-            placeholder="Pesquisar por nome ou por ID" 
-            id="searcher">
+            <!-- Apresentação -->
+            <h2 class="form-h2">Gerenciar Produtos</h2>
+            <p class="text-common-color">Quantia de produtos encontrados: {{filtered_products_data.length}}.</p>
+            <br>
+
+            <!-- Caixa de pesquisa -->
+            <input 
+                v-model="search_string" 
+                type="text" 
+                placeholder="Pesquisar por nome ou por ID" 
+                id="searcher">
+            
+            <!-- Adicionar produto -->
+            <button 
+                @click="start_product_insertion()" 
+                class="gray-button form-button add-product-button">
+                Adicionar Produto
+            </button>
+
+        </div>
 
         <!-- Produtos cadastrados -->
         <table class="form-table" v-if="filtered_products_data.length > 0">
@@ -50,7 +62,7 @@
     <div v-if="selected_product_id != null">
         
         <!-- Seção de dados -->
-        <div v-if="!updating_data">
+        <div v-if="!updating_data && !updating_security">
 
             <!-- Apresentação -->
             <h2 class="form-h2">Dados do Produto</h2>
@@ -128,18 +140,50 @@
             <h3 class="form-h3">Fonte da Imagem</h3>
             <p class="form-info-container text">{{selected_product.image_source}}</p>
 
-            <!-- Botão para atualização -->
-            <button 
-                @click="start_data_update()" 
-                class="standard-button margin-top-div margin-bottom-div">Atualizar Dados</button>
+            <!-- Botões de ação -->
+            <div class="form-update-buttons-section margin-top-div">
+                <button @click="start_data_update()" class="standard-button">Atualizar Dados</button>
+                <button @click="start_product_removal()" class="red-button">Remover Produto</button>
+            </div>
+
+        </div>
+
+        <!-- Seção de remoção -->
+        <div v-if="updating_security">
+
+            <!-- Subtítulo -->
+            <h2 class="form-h2">Confirmando Remoção do Produto</h2>
+            <br>
+
+            <!-- Confirmação de senha -->
+            <h3 class="form-h3">Confirme sua Senha</h3>
+            <input 
+                v-model="password" 
+                placeholder="⋅⋅⋅"
+                type="password" 
+                class="form-info-container text"
+                :class="{'form-normal-input-text': password_is_valid && !password_is_empty}">
+            <p v-if="!password_is_valid" class="form-failed-input-text">A senha informada é inválida.</p>
+            <p v-if="password_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
+
+            <!-- Botões para remoção -->
+            <div class="form-update-buttons-section">
+                <button @click="remove_product()" class="red-button">Confirmar Remoção</button>
+                <button @click="cancel_product_removal()" class="gray-button">Cancelar</button>
+            </div>
 
         </div>
 
         <!-- Atualização dos dados -->
         <div v-if="updating_data">
-
+            <product-manager></product-manager>
         </div>
 
+    </div>
+
+    <!-- Novo produto -->
+    <div v-if="adding_product">
+        <product-manager @submit="adding_product = false"></product-manager>
     </div>
 
 </template>
@@ -149,10 +193,13 @@
 <script>
 
     // Para manipulação da base de dados
-    import { delete_product, select_all_products, update_product } from '@/utils/database-management';
+    import { delete_product, select_all_products } from '@/utils/database-management';
 
     // Para manipulação de formulários
     import { validate_attribute_by_callback, validate_password_by_id } from '@/utils/form-validation';
+
+    // Importação de componentes
+    import ProductDataManager from './ProductDataManager.vue';
 
     // REGEX numérico
     const numeric_parser = new RegExp("^[0-9]+$", "g");
@@ -161,7 +208,12 @@
     export default {
 
         // Nome do componente
-        name: "ProductsManager",
+        name: "ProductsManager", 
+
+        // Atribuição de componentes
+        components: {
+            'product-manager': ProductDataManager, 
+        }, 
         
         // Dados locais
         data() {
@@ -190,14 +242,12 @@
                 search_string: "", 
                 updating_data: false, 
                 updating_security: false, 
+                adding_product: false, 
 
-                // Para controle de senha
+                // Para controle de formulário
                 password: "", 
-                password_is_valid: true, 
                 password_is_empty: false, 
-
-                // Para controle de função
-                role: "customer", 
+                password_is_valid: true, 
             };
         }, 
 
@@ -216,7 +266,7 @@
             // Visualização / atualização do produto
             start_product_update(product_id) {
                 this.$router.push({name: 'manage-products', query: {id: product_id}});
-                window.scrollTo(0,0);
+                window.scrollTo(0,60);
             }, 
 
             // Reseta o formulário
@@ -226,73 +276,20 @@
                 this.password_is_valid = true;
             }, 
 
+            // Adição de produto
+            start_product_insertion() {
+                this.updating_security = false;
+                this.updating_data = false;
+                this.adding_product = true;
+                window.scrollTo(0,60);
+            }, 
+
             // Atualizações de permissão
             start_data_update() {
                 this.reset_form();
                 this.updating_security = false;
                 this.updating_data = true;
-            }, 
-
-            // Valida as permissões
-            validate_data_update() {
-
-                // Para controle de resultado
-                let output = true;
-
-                // Validação de função
-                if (this.role != "customer" && this.role != "admin"){
-                    output = false;
-                }
-
-                // Validação de senha
-                if (
-                    validate_attribute_by_callback (
-                        this, 
-                        this.password, 
-                        password => {return password.length >= 3}, 
-                        "password_is_empty", 
-                        "password_is_valid"
-                    ) === false
-                ){
-                    output = false;
-                }
-
-                return output;
-            }, 
-
-            // Atualiza as permissões
-            update_data: async function() {
-
-                // Valida os dados
-                if(this.validate_data_update() === true){
-
-                    // Valida a senha
-                    await validate_password_by_id(this.selected_product.id, this.password).then(res => {
-                        if(res === true) {
-                            this.password_is_valid = true;
-
-                            // Atualiza a base de dados se houve modificações
-                            if(this.role != this.selected_product.role){
-                                this.selected_product.role = this.role;
-                                update_product(this.selected_product);
-                            }
-
-                            // Avisa ao produto e finaliza
-                            alert("Alterações de permissão efetuadas com sucesso.");
-                            this.updating_data = false;
-
-                        }
-                        else{
-                            this.password_is_valid = false;
-                        }
-                    });
-                }
-            }, 
-
-            // Cancela as atualizações de permissão
-            cancel_data_update() {
-                this.reset_form();
-                this.updating_data = false;
+                this.adding_product = false;
             }, 
 
             // Inicializa a remoção
@@ -300,6 +297,8 @@
                 this.reset_form();
                 this.updating_security = true;
                 this.updating_data = false;
+                this.adding_product = false;
+                window.scrollTo(0,60);
             }, 
 
             // Valida a remoção
@@ -331,7 +330,7 @@
                 if(this.validate_product_removal() === true){
 
                     // Valida a senha
-                    await validate_password_by_id(this.selected_product.id, this.password).then(res => {
+                    await validate_password_by_id(this.$store.getters.user_id, this.password).then(res => {
                         if(res === true) {
                             this.password_is_valid = true;
 
@@ -408,6 +407,14 @@
                 });
             }, 
         }, 
+
+        // Observa mudanças de rota
+        watch:{
+            $route (){
+                this.updating_data = false;
+                this.updating_security = false;
+            }
+        }, 
     }
 
 </script>
@@ -419,8 +426,7 @@
 
     /* Caixa de pesquisa */
     #searcher {
-        width: auto;
-        min-width: calc(35% - 2rem);
+        width: 55%;
         height: 1rem;
         font-size: 1rem;
         border-radius: 8px;
@@ -455,6 +461,13 @@
     /* Texto descritivo */
     .description {
         text-align: justify;
+    }
+
+    /* Botão de adicionar produto */
+    .add-product-button {
+        margin-top: 0.5rem;
+        margin-bottom: 2rem;
+        width: 50%;
     }
 
 </style>

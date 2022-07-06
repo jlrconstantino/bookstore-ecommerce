@@ -686,9 +686,15 @@ export async function select_product_by_title(title) {
 // Adiciona o produto especificado
 export async function add_product(product) {
 
+    // Para referência
+    if(products == null) {
+        await select_all_products();
+    }
+
     // Validação da estrutura do produto
     if(Object.prototype.hasOwnProperty.call(product, "id") === false){
-        throw TypeError("product must have an 'id' property");
+        product["id"] = products.length;
+        //throw TypeError("product must have an 'id' property");
     }else if(Object.prototype.hasOwnProperty.call(product, "title") === false){
         throw TypeError("product must have a 'title' property");
     }else if(Object.prototype.hasOwnProperty.call(product, "price") === false){
@@ -718,9 +724,6 @@ export async function add_product(product) {
     }
 
     // Adição do produto à base de dados
-    if(products == null) {
-        await select_all_products();
-    }
     set_item("product#" + products.length.toString(), product);
     products.push(product);
 }
