@@ -108,18 +108,18 @@ A seguir, o Modelo Relacional, específico para implementação de base de dados
 
 ## 4. Planos de teste
 
-Contas Pré-definidas para login:
-- Cliente: 
-  -email: customer@email.com
-  -senha: 123
+- Contas pré-definidas para login:
+  - Cliente: 
+    -email: customer@email.com
+    -senha: 123
   
-- Administrador:
-  -email: admin@email.com
-  -senha: 123
+  - Administrador:
+    -email: admin@email.com
+    -senha: 123
 
 ## 5. Resultados de teste
 
--
+- Todos os resultados de teste foram o esperado.
 
 ## 6. Procedimentos de execução
 
