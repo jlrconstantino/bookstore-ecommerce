@@ -45,6 +45,13 @@
                 :max="book.stock"
                 class="text-common-color"
                 v-model="quantity">
+            <p 
+                class="text form-failed-input-text quantity-text"
+                v-if="!quantity_is_valid">
+                A quantidade fornecida é inválida. 
+                Por favor, forneça um valor entre 1 e 
+                {{book.stock}} (inclusive).
+            </p>
         </td>
         
         <!-- Subtotal do item -->
@@ -85,6 +92,11 @@
         // Dados locais
         data() {
             return {
+
+                // Validação
+                quantity_is_valid: true, 
+
+                // Livro
                 book: {
                     id: 0,
                     title: "", 
@@ -129,13 +141,30 @@
                     return this.cart_product.quantity;
                 }, 
                 set(value) {
-                    const payload = {
-                        index: this.cart_product_index, 
-                        quantity: value, 
-                        subtotal: value * this.book.price,
-                    };
-                    this.$store.commit("update_cart_item_quantity", payload);
-                    this.$store.commit("update_cart_item_subtotal", payload);
+
+                    // Validação
+                    if(value >= 0 && value <= this.book.stock){
+                        this.quantity_is_valid = true;
+                        if(value == 0){
+                            value = 1;
+                        }
+
+                        // Estrutura de atualização
+                        const payload = {
+                            index: this.cart_product_index, 
+                            quantity: value, 
+                            subtotal: value * this.book.price,
+                        };
+
+                        // Atualização Vuex
+                        this.$store.commit("update_cart_item_quantity", payload);
+                        this.$store.commit("update_cart_item_subtotal", payload);
+                    }
+
+                    // Quantidade inválida
+                    else{
+                        this.quantity_is_valid = false;
+                    }
                 }, 
             }, 
 
@@ -170,6 +199,7 @@
 <style scoped>
 
     @import "../css/colors.css";
+    @import "../css/profile-form.css";
 
     /* Borda */
     .cart-td {
@@ -263,5 +293,11 @@
     .thrash-icon:hover {
         cursor: pointer;
         filter: brightness(0) drop-shadow(4px 4px 8px #acacac);
+    }
+
+    /* Informação de quantidade */
+    .quantity-text { 
+        text-align: justify;
+        margin-top: 1rem;
     }
 </style>

@@ -79,7 +79,7 @@
 
     <!-- Finalização de compra -->
     <button
-        :class="is_ready === true ? 'standard-button' : 'red-button'"
+        :class="is_ready === true ? 'standard-button' : 'gray-button'"
         @click="end_purchase()">
         Finalizar Compra
     </button>

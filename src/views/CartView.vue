@@ -5,7 +5,7 @@
         <!-- Título da página -->
         <h2 id="cart-title" class="subtitle">Meu Carrinho</h2>
         <p id="cart-info" class="text-common-color">Quantidade de Produtos: {{items_quantity}}</p>
-        <div v-if="items_quantity > 0">
+        <div v-if="cart_items.length > 0">
 
             <!-- Carrinho -->
             <table class="form-table">
@@ -37,6 +37,11 @@
 
                     <!-- Calculadora de frete -->
                     <calculator :freight="freight" @update:freight="freight = $event"></calculator>
+                    <p 
+                        class="text form-failed-input-text freight-failure"
+                        v-if="freight <= 0.0">
+                        Para continuar, forneça uma localidade para cálculo de frete.
+                    </p>
 
                 </div>
 
@@ -86,7 +91,18 @@
                     <!-- Seção de finalização de compra -->
                     <div class="bordered-div buttons-div">
                         <button class="standard-button" @click="go_home()">Retornar às Compras</button>
-                        <button class="orange-button" @click="finalize_purchase()">Finalizar Esta Compra</button>
+                        <button 
+                            class="orange-button" 
+                            @click="finalize_purchase()"
+                            v-if="may_continue">
+                            Finalizar Esta Compra
+                        </button>
+                        <button 
+                            class="gray-button" 
+                            @click="alert_may_not_continue()"
+                            v-if="!may_continue">
+                            Finalizar Esta Compra
+                        </button>
                     </div>
 
                 </div>
@@ -127,6 +143,11 @@
         // Métodos auxiliares
         methods: {
 
+            // Avisa que não pode continuar
+            alert_may_not_continue(){
+                alert("Por favor, resolva os problemas de validação antes de continuar.");
+            }, 
+
             // Retorna à página inicial
             go_home() {
                 this.$router.push({name: "home"});
@@ -142,6 +163,13 @@
 
         // Atributos computados
         computed: {
+
+            // Validação
+            may_continue() {
+                return (
+                    this.freight > 0.0
+                );
+            }, 
 
             // Frete
             freight: {
@@ -218,6 +246,13 @@
     }
     .form-table-t3 {
         width: 10%;
+    }
+
+
+    /* Aviso de frete */
+    .freight-failure {
+        margin-top:1rem;
+        text-align: justify;
     }
 
 
