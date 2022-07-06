@@ -7,19 +7,11 @@
         <!-- Imagens do produto -->
         <div id="product-overview-left-container">
             
-            <!-- Mostrador esquerdo (visão das imagens disponíveis) -->
-            <div id="product-overview-little-images-container">
-                <div> <img :src="product.image_source" alt="product's image"> </div>
-                <div> <img :src="product.image_source" alt="product's image"> </div>
-            </div>
-
             <!-- Imagem de exibição -->
             <div id="product-overview-image-container">
-                <img src="../assets/icons/arrow-left.svg" alt="previous image" class="product-arrow-image" id="product-previous-image-button">
                 <div id="product-current-display-image-container">
                     <img :src="product.image_source" alt="product's image" id="product-current-display-image">
                 </div>
-                <img src="../assets/icons/arrow-right.svg" alt="next image" class="product-arrow-image" id="product-next-image-button">
             </div>
 
         </div>
@@ -99,14 +91,43 @@
             </tr>
         </table>
     </div>
+
+    <!-- Avaliação -->
+    <div id="product-rate-container" class="product-container-div product-bordered-container" v-if="!this.$store.getters.is_admin">
+        <div class="form-vertical-section">
+            <h3 class="product-subtitle">Avaliação</h3>
+            <template v-if="!has_rating">
+                <input 
+                    v-model="rating" 
+                    type="number" 
+                    step="0.1"
+                    class="form-info-container text"
+                    :class="{'form-normal-input-text': rating_is_valid && !rating_is_empty}">
+                <p v-if="!rating_is_valid" class="form-failed-input-text">A avaliação informada é inválida: deve estar entre 0.0 e 5.0 (inclusive).</p>
+                <p v-if="rating_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
+                <button @click="rate_product()" class="form-button standard-button">Submeter</button>
+            </template>
+            <p v-if="has_rating">Sua avaliação: <span class="">{{format_rating()}}</span>.</p>
+        </div>
+    </div>
+
+    <!-- Administração -->
+    <div id="product-admin-container" class="product-container-div product-bordered-container" v-if="this.$store.getters.is_admin">
+        <h3 class="product-subtitle">Administração</h3>
+        <button @click="manage_product()" class="form-button standard-button">Gerenciar este Produto</button>
+    </div>
+
 </template>
 
 
 <!-- .:::: SCRIPT ::::. -->
 <script>
 
-    // Para importação da base de dados local
-    import { select_product_by_id } from '@/utils/database-management';
+    // Para importação da base de dados
+    import { add_rating, select_product_by_id, select_user_product_rating, update_product_rating } from '@/utils/database-management';
+
+    // Para manipulação de formulário
+    import { validate_attribute_by_callback } from '@/utils/form-validation';
 
     // Importação de componentes
     import FreightCalculator from '@/components/FreightCalculator.vue';
@@ -132,7 +153,13 @@
                 // Caminhos das estrelas
                 full_star: null, 
                 half_star: null, 
-                null_star: null,
+                null_star: null, 
+
+                // Para computar avaliação
+                rating: 5.0, 
+                has_rating: false, 
+                rating_is_empty: false, 
+                rating_is_valid: true, 
 
                 // Produto
                 product: {
@@ -158,14 +185,26 @@
         }, 
 
         // Obtenção dos caminhos das estrelas e do produto
-        created() {
+        created: async function() {
+
+            // Estrelas
             this.full_star = require("@/assets/icons/full-star.svg");
             this.half_star = require("@/assets/icons/half-star.svg");
             this.null_star = require("@/assets/icons/null-star.svg");
+
+            // Produto
             try{
-                select_product_by_id(this.$route.query.id).then(res => {
+                await select_product_by_id(this.$route.query.id).then(res => {
                     if(res != null){
                         this.product = res;
+
+                        // Avaliação
+                        select_user_product_rating(this.$store.getters.user_id, this.$route.query.id).then(res => {
+                            if(res != null) {
+                                this.rating = res.rating;
+                                this.has_rating = true;
+                            }
+                        });
                     }
                     this.data_is_ready = true;
                 });
@@ -176,16 +215,62 @@
 
         // Métodos auxiliares
         methods: {
+
+            // Formatação de strings
             format_price(price) {
                 return "R$ " + price.toFixed(2).toString().replace('.', ',');
             }, 
             format_price_installment(price, installments) {
                 return "Ou em até " + installments.toString() + "x de R$ " + (price/installments).toFixed(2).toString().replace('.', ',') + "."
             }, 
+            format_rating() {
+                return parseFloat(this.rating).toFixed(1).replace('.', ',')
+            }, 
+
+            // Navegação
             go_to_cart() {
                 this.$router.push({name: 'cart'});
                 this.$store.commit("add_cart_item", this.$route.query.id);
-                window.scrollTo(0,0);
+                window.scrollTo(0,60);
+            }, 
+            manage_product() {
+                this.$router.push({name: 'manage-products', query: {id: this.product.id}});
+                window.scrollTo(0,60);
+            }, 
+
+            // Avaliação
+            validate_rating() {
+                
+                // Para controle de resultado
+                let output = true;
+
+                // Validação de número do cartão
+                if (
+                    validate_attribute_by_callback (
+                        this, 
+                        this.rating, 
+                        rating => {return (rating >= 0.0 && rating <= 5.0 );}, 
+                        "rating_is_empty", 
+                        "rating_is_valid"
+                    ) === false
+                ){
+                    output = false;
+                }
+
+                return output;
+            }, 
+            rate_product() {
+                if(this.validate_rating() === true) {
+                    const rating = {
+                        user: this.$store.getters.user_id, 
+                        product: this.product.id, 
+                        rating: this.rating, 
+                    };
+                    add_rating(rating);
+                    alert("Avaliação enviada com sucesso.");
+                    this.has_rating = true;
+                    update_product_rating(this.product.id);
+                }
             }, 
         },
 
@@ -439,6 +524,25 @@
     /* Item da tabela de especificações */
     #product-specs-container td {
         padding-top: 1rem;
+    }
+
+    /* Administração */
+    #product-admin-container, #product-rate-container {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    #product-admin-container h3, #product-rate-container h3 {
+        margin-bottom: 1rem;
+    }
+    #product-rate-container input {
+        width: 40%;
+    }
+    #product-rate-container p {
+        font-size: 1.2rem;
+        color: var(--text-color);
+    }
+    #product-rate-container span {
+        color: var(--review-text-color);
     }
 
 </style>

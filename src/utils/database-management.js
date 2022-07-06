@@ -744,6 +744,38 @@ export async function update_product(product) {
 }
 
 
+// Atualiza a avaliação do produto
+export async function update_product_rating(product_id) {
+    
+    // Seleção das avaliações
+    let ratings = [];
+    await select_product_ratings(product_id).then(res => {
+        if(res != null){
+            ratings = res;
+        }
+    });
+
+    // Cálculo da avaliação média
+    let total_rating = 0.0;
+    for(const rating of ratings){
+        total_rating += rating.rating;
+    }
+    total_rating = total_rating / ratings.length;
+
+    // Aquisição do produto
+    if(products == null){
+        await select_all_products();
+    }
+    const product = products.find(p => {return p.id == product_id});
+    if(product != null){
+
+        // Atualização do produto
+        product.rating = total_rating;
+        set_item("product#" + product.id.toString(), product);
+    }
+}
+
+
 // Deleta o produto especificado a partir do ID
 export async function delete_product_by_id(id) {
     if(products != null){
