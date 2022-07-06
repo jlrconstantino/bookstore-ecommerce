@@ -160,6 +160,7 @@
                 has_rating: false, 
                 rating_is_empty: false, 
                 rating_is_valid: true, 
+                refresh: false, 
 
                 // Produto
                 product: {
@@ -238,7 +239,7 @@
                 window.scrollTo(0,60);
             }, 
 
-            // Avaliação
+            // Validação da avaliação fornecida
             validate_rating() {
                 
                 // Para controle de resultado
@@ -259,17 +260,34 @@
 
                 return output;
             }, 
-            rate_product() {
+
+            // Envio da avaliação fornecida
+            rate_product: async function() {
+
+                // Validação
                 if(this.validate_rating() === true) {
+
+                    // Adição ao banco de dados 
                     const rating = {
                         user: this.$store.getters.user_id, 
                         product: this.product.id, 
                         rating: this.rating, 
                     };
                     add_rating(rating);
+
+                    // Atualização da página
                     alert("Avaliação enviada com sucesso.");
                     this.has_rating = true;
-                    update_product_rating(this.product.id);
+
+                    // Atualização da base de dados
+                    let new_rating = 0.0;
+                    await update_product_rating(this.product.id).then(res => {
+                        if(res != null && res >= 0.0) {
+                            new_rating = res;
+                        }
+                    });
+                    this.product.rating = new_rating;
+                    this.refresh = !this.refresh;
                 }
             }, 
         },
@@ -277,6 +295,7 @@
         // Cômputo da avaliação do produto
         computed: {
             rating_stars: function(){
+                this.refresh;
                 let stars = [0, 0, 0, 0, 0];
                 let rating = 5.0;
                 if(this.product != null){

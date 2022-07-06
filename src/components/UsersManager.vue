@@ -148,7 +148,18 @@
 
             <!-- Botões de Ação -->
             <div class="form-update-buttons-section">
-                <button @click="remove_user()" class="red-button">Confirmar Remoção</button>
+                <button 
+                    @click="remove_user()" 
+                    class="red-button" 
+                    v-if="!is_self">
+                    Confirmar Remoção
+                </button>
+                <button 
+                    @click="alert('Impossível remover a si.')" 
+                    class="gray-button" 
+                    v-if="is_self">
+                    Confirmar Remoção
+                </button>
                 <button @click="cancel_user_removal()" class="gray-button">Cancelar</button>
             </div>
 
@@ -364,6 +375,11 @@
 
         // Atributos computados
         computed: {
+
+            // Verifica se é o próprio usuário
+            is_self() {
+                return this.$store.getters.user_id == this.selected_user.id;
+            }, 
 
             // ID selecionado por rota
             selected_user_id() {

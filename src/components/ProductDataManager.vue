@@ -167,7 +167,7 @@
 
     <!-- Botões de Ação -->
     <div class="form-update-buttons-section">
-        <button class="form-button standard-button" @click.once="submit()">{{action_button_label}}</button>
+        <button class="form-button standard-button" @click.prevent.stop="submit()">{{action_button_label}}</button>
         <button class="form-button gray-button" @click="cancel()">Cancelar</button>
     </div>
 

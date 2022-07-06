@@ -744,23 +744,25 @@ export async function update_product(product) {
 }
 
 
-// Atualiza a avaliação do produto
+// Atualiza a avaliação do produto e retorna o novo valor
 export async function update_product_rating(product_id) {
+
+    // Novo valor
+    let total_rating = 0.0;
     
     // Seleção das avaliações
-    let ratings = [];
+    let product_ratings = [];
     await select_product_ratings(product_id).then(res => {
         if(res != null){
-            ratings = res;
+            product_ratings = res;
         }
     });
 
     // Cálculo da avaliação média
-    let total_rating = 0.0;
-    for(const rating of ratings){
+    for(const rating of product_ratings){
         total_rating += rating.rating;
     }
-    total_rating = total_rating / ratings.length;
+    total_rating = total_rating / product_ratings.length;
 
     // Aquisição do produto
     if(products == null){
@@ -773,6 +775,8 @@ export async function update_product_rating(product_id) {
         product.rating = total_rating;
         set_item("product#" + product.id.toString(), product);
     }
+
+    return total_rating;
 }
 
 

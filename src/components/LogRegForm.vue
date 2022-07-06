@@ -41,7 +41,7 @@
                 @click="forgot_password()">Esqueceu sua senha?</a>
 
             <!-- Submit -->
-            <button class="standard-button" @click.once="login()" @keyup.enter="login()">Entrar</button>
+            <button class="standard-button" @click.prevent.stop="login()" @keyup.enter="login()">Entrar</button>
 
         </div>
 
