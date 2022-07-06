@@ -127,7 +127,18 @@
         <div v-if="!updating_security" class="margin-top-div">
             <h2 class="form-h2">Segurança</h2>
             <br>
-            <button @click="start_user_removal()" class="red-button">Remover Usuário</button>
+            <button 
+                @click="start_user_removal()" 
+                class="red-button"
+                v-if="!is_self">
+                Remover Usuário
+            </button>
+            <button 
+                @click="alert('Impossível remover a si.');" 
+                class="gray-button"
+                v-if="is_self">
+                Remover Usuário
+            </button>
         </div>
         <div v-if="updating_security" class="margin-top-div">
 
@@ -150,14 +161,7 @@
             <div class="form-update-buttons-section">
                 <button 
                     @click="remove_user()" 
-                    class="red-button" 
-                    v-if="!is_self">
-                    Confirmar Remoção
-                </button>
-                <button 
-                    @click="alert('Impossível remover a si.')" 
-                    class="gray-button" 
-                    v-if="is_self">
+                    class="red-button">
                     Confirmar Remoção
                 </button>
                 <button @click="cancel_user_removal()" class="gray-button">Cancelar</button>
@@ -369,7 +373,7 @@
             // Cancela a remoção
             cancel_user_removal() {
                 this.reset_form();
-                this.updating_security = true;
+                this.updating_security = false;
             }, 
         }, 
 
