@@ -6,7 +6,7 @@ import user_controller from "../controllers/user.controller.js";
 const user_router = express.Router();
 
 // Rotas
-user_router.push("/", user_controller.post);
+user_router.post("/", user_controller.post);
 user_router.put("/:id", user_controller.put_by_id);
 user_router.put("/:email", user_controller.put_by_email);
 user_router.delete("/:id", user_controller.delete_by_id);

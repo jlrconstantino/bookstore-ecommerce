@@ -26,7 +26,7 @@ const shopping_cart_schema = new mongoose.Schema({
 });
 
 // Chave primária original
-shopping_cart_schema.createIndex({user: 1, invoice: 1}, {unique: true});
+shopping_cart_schema.index({user: 1, invoice: 1}, {unique: true});
 
 // Exportação do esquema
-export default mongoose.model("shopping_cart", shopping_cart_schema);
+export default shopping_cart_schema;

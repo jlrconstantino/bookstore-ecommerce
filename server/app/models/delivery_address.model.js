@@ -43,7 +43,7 @@ const delivery_address_schema = new mongoose.Schema({
 });
 
 // Chave primária original
-delivery_address_schema.createIndex({user: 1, zip: 1}, {unique: true});
+delivery_address_schema.index({user: 1, zip: 1}, {unique: true});
 
 // Exportação do esquema
-export default mongoose.model("delivery_address", delivery_address_schema);
+export default delivery_address_schema;

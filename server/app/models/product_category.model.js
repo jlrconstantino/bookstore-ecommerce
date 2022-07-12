@@ -14,7 +14,7 @@ const product_category_schema = new mongoose.Schema({
 });
 
 // Chave primária original
-product_category_schema.createIndex({product: 1, category: 1}, {unique: true});
+product_category_schema.index({product: 1, category: 1}, {unique: true});
 
 // Exportação do esquema
-export default mongoose.model("product_category", product_category_schema);
+export default product_category_schema;

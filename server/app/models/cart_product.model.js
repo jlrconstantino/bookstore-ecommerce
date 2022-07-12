@@ -26,7 +26,7 @@ const cart_product_schema = new mongoose.Schema({
 });
 
 // Chave primária original
-cart_product_schema.createIndex({user: 1, cart: 1, product: 1}, {unique: true});
+cart_product_schema.index({user: 1, cart: 1, product: 1}, {unique: true});
 
 // Exportação do esquema
-export default mongoose.model("cart_product", cart_product_schema);
+export default cart_product_schema;

@@ -6,7 +6,7 @@ import ratings_controller from "../controllers/ratings.controller.js";
 const ratings_router = express.Router();
 
 // Rotas
-ratings_router.push("/", ratings_controller.post);
+ratings_router.post("/", ratings_controller.post);
 ratings_router.put("/:user&:product", ratings_controller.put);
 ratings_router.delete("/:user&:product", ratings_controller.delete);
 ratings_router.delete("/:user", ratings_controller.delete_all_from_user);

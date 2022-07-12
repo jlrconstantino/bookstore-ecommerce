@@ -37,4 +37,4 @@ const user_schema = new mongoose.Schema({
 });
 
 // Exportação do esquema
-export default mongoose.model("user", user_schema);
+export default user_schema;

@@ -18,7 +18,7 @@ const ratings_schema = new mongoose.Schema({
 });
 
 // Chave primária original
-ratings_schema.createIndex({user: 1, product: 1}, {unique: true});
+ratings_schema.index({user: 1, product: 1}, {unique: true});
 
 // Exportação do esquema
-export default mongoose.model("ratings", ratings_schema);
+export default ratings_schema;

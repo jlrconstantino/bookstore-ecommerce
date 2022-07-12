@@ -6,7 +6,7 @@ import shopping_cart_controller from "../controllers/shopping_cart.controller.js
 const shopping_cart_router = express.Router();
 
 // Rotas
-shopping_cart_router.push("/", shopping_cart_controller.post);
+shopping_cart_router.post("/", shopping_cart_controller.post);
 shopping_cart_router.put("/:user&:invoice", shopping_cart_controller.put);
 shopping_cart_router.delete("/:user&:invoice", shopping_cart_controller.delete);
 shopping_cart_router.delete("/:user", shopping_cart_controller.delete_all_from_user);

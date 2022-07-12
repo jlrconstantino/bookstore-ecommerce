@@ -68,4 +68,4 @@ const product_schema = new mongoose.Schema({
 });
 
 // Exportação do esquema
-export default mongoose.model("product", product_schema);
+export default product_schema;

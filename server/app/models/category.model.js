@@ -16,4 +16,4 @@ const category_schema = new mongoose.Schema({
 });
 
 // Exportação do esquema
-export default mongoose.model("category", category_schema);
+export default category_schema;

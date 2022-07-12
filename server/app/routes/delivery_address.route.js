@@ -6,7 +6,7 @@ import delivery_address_controller from "../controllers/delivery_address.control
 const delivery_address_router = express.Router();
 
 // Rotas
-delivery_address_router.push("/", delivery_address_controller.post);
+delivery_address_router.post("/", delivery_address_controller.post);
 delivery_address_router.put("/:user&:number", delivery_address_controller.put);
 delivery_address_router.delete("/:user&:number", delivery_address_controller.delete);
 delivery_address_router.delete("/:user", delivery_address_controller.delete_all_from_user);

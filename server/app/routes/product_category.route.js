@@ -6,7 +6,7 @@ import product_category_controller from "../controllers/product_category.control
 const product_category_router = express.Router();
 
 // Rotas
-product_category_router.push("/", product_category_controller.post);
+product_category_router.post("/", product_category_controller.post);
 product_category_router.put("/:product&:category", product_category_controller.put);
 product_category_router.delete("/:product&:category", product_category_controller.delete);
 product_category_router.delete("/:product", product_category_controller.delete_all_from_product);

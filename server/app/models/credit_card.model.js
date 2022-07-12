@@ -32,7 +32,7 @@ const credit_card_schema = new mongoose.Schema({
 });
 
 // Chave primária original
-credit_card_schema.createIndex({user: 1, number: 1}, {unique: true});
+credit_card_schema.index({user: 1, number: 1}, {unique: true});
 
 // Exportação do esquema
-export default mongoose.model("credit_card", credit_card_schema);
+export default credit_card_schema;

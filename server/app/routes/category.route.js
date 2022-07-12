@@ -6,7 +6,7 @@ import category_controller from "../controllers/category.controller.js";
 const category_router = express.Router();
 
 // Rotas
-category_router.push("/", category_controller.post);
+category_router.post("/", category_controller.post);
 category_router.put("/:id", category_controller.put);
 category_router.delete("/:id", category_controller.delete_by_id);
 category_router.delete("/:name", category_controller.delete_by_name);
