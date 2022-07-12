@@ -115,7 +115,7 @@ product_category_controller.get = async (req, res) => {
 
 
 // Get all
-product_category_controller.get_all = (_, res) => {
+product_category_controller.get_all = async (_, res) => {
     try{
         const data = await product_category.find({active: true});
         res.status(200).send(data);

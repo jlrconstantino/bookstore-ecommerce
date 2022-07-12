@@ -119,7 +119,7 @@ credit_card_controller.get = async (req, res) => {
 
 
 // Get all
-credit_card_controller.get_all = (_, res) => {
+credit_card_controller.get_all = async (_, res) => {
     try{
         const data = await credit_card.find({active: true});
         res.status(200).send(data);

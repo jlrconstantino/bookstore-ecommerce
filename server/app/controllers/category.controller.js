@@ -130,7 +130,7 @@ category_controller.get_by_name = async (req, res) => {
 
 
 // Get all
-category_controller.get_all = (_, res) => {
+category_controller.get_all = async (_, res) => {
     try{
         const data = await category.find({active: true});
         res.status(200).send(data);

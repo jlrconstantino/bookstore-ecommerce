@@ -118,7 +118,7 @@ shopping_cart_controller.get = async (req, res) => {
 
 
 // Get all
-shopping_cart_controller.get_all = (_, res) => {
+shopping_cart_controller.get_all = async (_, res) => {
     try{
         const data = await shopping_cart.find({active: true});
         res.status(200).send(data);

@@ -136,7 +136,7 @@ ratings_controller.get = async (req, res) => {
 
 
 // Get all
-ratings_controller.get_all = (_, res) => {
+ratings_controller.get_all = async (_, res) => {
     try{
         const data = await ratings.find({active: true});
         res.status(200).send(data);

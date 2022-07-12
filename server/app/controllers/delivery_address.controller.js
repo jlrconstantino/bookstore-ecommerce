@@ -122,7 +122,7 @@ delivery_address_controller.get = async (req, res) => {
 
 
 // Get all
-delivery_address_controller.get_all = (_, res) => {
+delivery_address_controller.get_all = async (_, res) => {
     try{
         const data = await delivery_address.find({active: true});
         res.status(200).send(data);

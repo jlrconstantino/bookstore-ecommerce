@@ -166,7 +166,7 @@ user_controller.get_by_email = async (req, res) => {
 
 
 // Get all
-user_controller.get_all = (_, res) => {
+user_controller.get_all = async (_, res) => {
     try{
         const data = await user.find({active: true});
         res.status(200).send(data);

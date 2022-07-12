@@ -142,7 +142,7 @@ product_controller.get_by_title = async (req, res) => {
 
 
 // Get all
-product_controller.get_all = (_, res) => {
+product_controller.get_all = async (_, res) => {
     try{
         const data = await product.find({active: true});
         res.status(200).send(data);

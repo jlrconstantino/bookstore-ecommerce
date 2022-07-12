@@ -122,7 +122,7 @@ cart_product_controller.get = async (req, res) => {
 
 
 // Get all
-cart_product_controller.get_all = (_, res) => {
+cart_product_controller.get_all = async (_, res) => {
     try{
         const data = await cart_product.find({active: true});
         res.status(200).send(data);
