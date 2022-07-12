@@ -50,7 +50,7 @@ cart_product_controller.put = async (req, res) => {
         });
     }catch(e){
         res.status(400).send({
-            message: "Failed to update a new cart_product.", 
+            message: "Failed to update cart_product.", 
             data: e
         });
     }
@@ -89,11 +89,11 @@ cart_product_controller.delete_all_from_shopping_cart = async (req, res) => {
             cart: req.params.cart, 
         });
         res.status(200).send({
-            message: "Removed cart_product successfully."
+            message: "Removed cart_products successfully."
         });
     }catch(e){
         res.status(400).send({
-            message: "Failed to remove cart_product.", 
+            message: "Failed to remove cart_products.", 
             data: e
         });
     }
@@ -128,7 +128,7 @@ cart_product_controller.get_all = (_, res) => {
         res.status(200).send(data);
     }catch(e){
         res.status(400).send({
-            message: "Failed to get cart_product(s).", 
+            message: "Failed to get cart_products.", 
             data: e
         });
     }
@@ -147,7 +147,7 @@ cart_product_controller.get_all_from_shopping_cart = async (req, res) => {
         res.status(200).send(data);
     }catch(e){
         res.status(400).send({
-            message: "Failed to get cart_product(s).", 
+            message: "Failed to get cart_products.", 
             data: e
         });
     }

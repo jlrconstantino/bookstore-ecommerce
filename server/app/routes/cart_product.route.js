@@ -1,6 +1,6 @@
 // Dependências
 import express from "express";
-import cart_product_controller from "../controllers/cart_product.controller";
+import cart_product_controller from "../controllers/cart_product.controller.js";
 
 // Roteador
 const cart_product_router = express.Router();
