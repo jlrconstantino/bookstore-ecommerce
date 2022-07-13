@@ -30,6 +30,9 @@ app.use(cors(cors_options));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Aplicação da parte do cliente
+app.use(express.static("./public/vue-app/dist"));
+
 // Roteamento
 app.use("/cart_products", cart_product_router);
 app.use("/categories", category_router);
