@@ -123,25 +123,44 @@ A seguir, o Modelo Relacional, específico para implementação de base de dados
 
 ## 6. Procedimentos de execução
 
-## Project setup
+- Obtenha uma cópia do repositório:
+
+```
+git clone https://github.com/jlrconstantino/bookstore-ecommerce
+```
+
+- Abra o diretório local:
+
+```
+cd ./bookstore-ecommerce/
+```
+
+- Instale as dependências do servidor:
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+- Instale as dependências do cliente:
+
 ```
-npm run serve
+npm run install-client
 ```
 
-### Compiles and minifies for production
+- Obtenha a distribuição de produção do cliente:
+
 ```
-npm run build
+npm run build-client
 ```
 
-### Lints and fixes files
+- Execute o servidor:
+
 ```
-npm run lint
+npm run server
 ```
+
+- Em um navegador, acesse [](http://localhost:3000/)
+
 
 ## 7. Problemas identificados
 

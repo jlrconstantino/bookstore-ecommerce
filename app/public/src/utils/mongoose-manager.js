@@ -4,7 +4,7 @@
 import axios from 'axios';
 
 // URL inicial do servidor
-const server_url = "http://localhost:3000/";
+const server_url = "http://localhost:3000";
 
 
 ///////// .:::: USER ::::. //////////
@@ -12,7 +12,8 @@ const server_url = "http://localhost:3000/";
 // Obtém um usuário via ID
 export async function get_user_by_id(id){
     const res = await axios.get({
-        url: server_url + "users/", 
+        url: "/users/", 
+        baseURL: server_url, 
         params: {
             id: id.toString()
         }, 
@@ -24,7 +25,8 @@ export async function get_user_by_id(id){
 // Obtém um usuário via e-mail
 export async function get_user_by_email(email){
     const res = await axios.get({
-        url: server_url + "users/", 
+        url: "/users/", 
+        baseURL: server_url, 
         params: {
             email: email.toString()
         }, 
