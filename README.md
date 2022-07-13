@@ -159,7 +159,7 @@ npm run build-client
 npm run server
 ```
 
-- Em um navegador, acesse [](http://localhost:3000/)
+- Em um navegador, acesse [este link](http://localhost:3000/).
 
 
 ## 7. Problemas identificados
