@@ -1,11 +1,7 @@
 "use strict"
 
-// Para manipulação de armazenamento local
-import { 
-    set_item, 
-    delete_item, 
-    load_local_storage_elements
-} from "./local-storage-management.js";
+// Para manipulação de armazenamento MongoDB
+import mongoose_manager from "./mongoose-manager.js";
 
 // Para cacheamento de dados
 let users = null;
@@ -25,7 +21,7 @@ let product_categories = null;
 // Retorna todos os usuários
 export async function select_all_users() {
     if(users == null) {
-        await load_local_storage_elements("user#").then(res => {
+        await mongoose_manager.get_all_users().then(res => {
             users = res;
         });
     }
@@ -65,7 +61,7 @@ export async function update_user(user) {
     });
     if(index >= 0) {
         users[index] = user;
-        set_item("user#" + index.toString(), user);
+        await mongoose_manager.put_user_by_id(user, user.id);
     }
 }
 
@@ -94,37 +90,50 @@ export async function add_user(user) {
     if(users == null) {
         await select_all_users();
     }
-    set_item("user#" + users.length.toString(), user);
+    mongoose_manager.post_user(user);
     users.push(user);
 }
 
 
 // Deleta o usuário especificado a partir do ID
 export async function delete_user_by_id(id) {
+
+    // Para sinalização de remoção
+    let flag = false;
+
+    // Remoção local
     if(users != null){
         if(id < users.length && id >= 0){
+
+            // Sinalização
+            flag = true;
+
+            // Efeito em cascata no cache local
             users.splice(id, 1);
-            delete_item("user#" + id.toString());
+            credit_cards = null;
+            delivery_addresses = null;
+            shopping_carts = null;
+            ratings = null;
         }
     }
-    else{
-        delete_item("user#" + id.toString());
+
+    // Remoção na base de dados
+    if(flag === true) {
+
+        // Efeito em cascata na base de dados
+        mongoose_manager.delete_user_by_id(id);
+        mongoose_manager.delete_all_credit_cards_from_user(id);
+        mongoose_manager.delete_all_delivery_addresses_from_user(id);
+        mongoose_manager.delete_all_shopping_carts_from_user(id);
+        mongoose_manager.delete_all_ratings_from_user(id);
+
     }
 }
 
 
 // Deleta o usuário especificado
 export async function delete_user(user) {
-    if(users == null) {
-        await select_all_users();
-    }
-    let index = users.findIndex(u => {
-        return u.id == user.id;
-    });
-    if(index >= 0){
-        users.splice(index, 1);
-        delete_item("user#" + index.toString());
-    }
+    await delete_user_by_id(user.id);
 }
 
 
@@ -134,7 +143,7 @@ export async function delete_user(user) {
 // Retorna todos os cartões de crédito
 export async function select_all_credit_cards() {
     if(credit_cards == null) {
-        await load_local_storage_elements("credit_card#").then(res => {
+        await mongoose_manager.get_all_credit_cards().then(res => {
             credit_cards = res;
         });
     }
@@ -176,8 +185,8 @@ export async function update_credit_card(previous_number, credit_card) {
         );
     });
     if(index >= 0) {
+        mongoose_manager.put_credit_card(credit_card, credit_cards[index].user, credit_cards[index].number);
         credit_cards[index] = credit_card;
-        set_item("credit_card#" + index.toString(), credit_card);
     }
 }
 
@@ -204,21 +213,19 @@ export async function add_credit_card(credit_card) {
     if(credit_cards == null) {
         await select_all_credit_cards();
     }
-    set_item("credit_card#" + credit_cards.length.toString(), credit_card);
+    mongoose_manager.post_credit_card(credit_card);
     credit_cards.push(credit_card);
 }
 
 
 // Deleta o cartão de crédito especificado a partir do ID
 export async function delete_credit_card_by_id(id) {
-    if(credit_cards != null){
-        if(id < credit_cards.length && id >= 0){
-            credit_cards.splice(id, 1);
-            delete_item("credit_card#" + id.toString());
-        }
+    if(credit_cards == null){
+        await select_all_credit_cards();
     }
-    else{
-        delete_item("credit_card#" + id.toString());
+    if(id < credit_cards.length && id >= 0){
+        mongoose_manager.delete_credit_card(credit_cards[id].user, credit_cards[id].number);
+        credit_cards.splice(id, 1);
     }
 }
 
@@ -226,17 +233,18 @@ export async function delete_credit_card_by_id(id) {
 // Deleta o cartão de crédito especificado
 export async function delete_credit_card(user_id, credit_card_number) {
     if(credit_cards == null){
-        await select_all_credit_cards();
-    }
-    let index = credit_cards.findIndex(cc => {
-        return (
-            cc.user == user_id && 
-            cc.number == credit_card_number
-        );
-    });
-    if(index >= 0) {
-        credit_cards.splice(index, 1);
-        delete_item("credit_card#" + index.toString());
+        mongoose_manager.delete_credit_card(user_id, credit_card_number);
+    }else{
+        let index = credit_cards.findIndex(cc => {
+            return (
+                cc.user == user_id && 
+                cc.number == credit_card_number
+            );
+        });
+        if(index >= 0) {
+            credit_cards.splice(index, 1);
+            mongoose_manager.delete_credit_card(user_id, credit_card_number);
+        }
     }
 }
 
@@ -247,7 +255,7 @@ export async function delete_credit_card(user_id, credit_card_number) {
 // Retorna todos os endereços de entrega
 export async function select_all_delivery_addresses() {
     if(delivery_addresses == null) {
-        await load_local_storage_elements("delivery_address#").then(res => {
+        await mongoose_manager.get_all_delivery_addresses.then(res => {
             delivery_addresses = res;
         });
     }
