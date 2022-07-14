@@ -121,11 +121,11 @@ export async function delete_user(user) {
     }
     
     // Efeito em cascata na base de dados
-    mongoose_manager.delete_user_by_id(id);
-    mongoose_manager.delete_all_credit_cards_from_user(id);
-    mongoose_manager.delete_all_delivery_addresses_from_user(id);
-    mongoose_manager.delete_all_shopping_carts_from_user(id);
-    mongoose_manager.delete_all_ratings_from_user(id);
+    mongoose_manager.delete_user_by_id(user.id);
+    mongoose_manager.delete_all_credit_cards_from_user(user.id);
+    mongoose_manager.delete_all_delivery_addresses_from_user(user.id);
+    mongoose_manager.delete_all_shopping_carts_from_user(user.id);
+    mongoose_manager.delete_all_ratings_from_user(user.id);
 }
 
 
