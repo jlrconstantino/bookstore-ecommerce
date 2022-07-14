@@ -210,7 +210,7 @@ const products = [
 // Salva os livros
 products.forEach(product => {
     let item = new product_model(product);
-    await item.save();
+    item.save();
 });
 
 // Usuários
@@ -238,7 +238,7 @@ const users = [
 // Salva os usuários
 users.forEach(user => {
     let item = new user_model(user);
-    await item.save();
+    item.save();
 });
 
 // Categorias
@@ -258,7 +258,7 @@ const categories = [
 // Salva as categorias
 categories.forEach(category => {
     let item = new category_model(category);
-    await item.save();
+    item.save();
 });
 
 // Relacionamento entre os livros e as categorias
@@ -313,5 +313,5 @@ const product_categories = [
 // Salva as categorias dos livros
 product_categories.forEach(element => {
     let item = new product_category_model(element);
-    await item.save();
+    item.save();
 });
