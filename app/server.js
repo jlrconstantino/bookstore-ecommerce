@@ -31,7 +31,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Aplicação da parte do cliente
-app.use(express.static("./public/vue-app/dist"));
+const path = './app/public/dist/';
+app.use(express.static(path));
+app.get('/', function (_, res) {
+  res.sendFile("index.html", {root: path});
+});
 
 // Roteamento
 app.use("/cart_products", cart_product_router);
