@@ -4,7 +4,8 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import db from "./models/index.js";
+import mongoose from "mongoose";
+import { db_url } from "../config/db.config.js";
 
 // Rotas a serem adicionadas
 import cart_product_router from "./routes/cart_product.route.js";
@@ -32,10 +33,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Aplicação da parte do cliente
 const path = './app/public/dist/';
-app.use(express.static(path));
-app.get('/', function (_, res) {
-  res.sendFile("index.html", {root: path});
-});
+app.use('/', express.static(path));
 
 // Roteamento
 app.use("/cart_products", cart_product_router);
@@ -49,8 +47,8 @@ app.use("/shopping_carts", shopping_cart_router);
 app.use("/users", user_router);
 
 // Conexão à base de dados
-db.mongoose
-  .connect(db.url, {
+mongoose
+  .connect(db_url, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })

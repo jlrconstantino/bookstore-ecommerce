@@ -2,7 +2,7 @@
 <template>
     <div class="book-displayer-container">
         <div class="book-displayer-img-container">
-            <img :src="book.image_source" class="book-displayer-img">
+            <img :src="`${public_path}/sample-books/${book.image_source}`" class="book-displayer-img">
         </div>
         <h3 class="text-center book-displayer-title">{{book.title}}</h3>
         <h4 class="text-center book-displayer-price">{{format_price(book.price)}}</h4>
@@ -13,10 +13,14 @@
 
 <!-- .:::: SCRIPT ::::. -->
 <script>
-    //import { load_book_cover } from "@/utils/utils.js";
     export default {
         name: 'BookDisplayer',
         props: ['book'], 
+        data () {
+            return {
+                public_path: process.env.BASE_URL
+            }
+        }, 
         methods: {
             go_to_product_page(book) {
                 this.$router.push({name: 'product', query: {id: book.id}, params: {title: book.title}});

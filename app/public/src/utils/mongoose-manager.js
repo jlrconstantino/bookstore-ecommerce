@@ -14,20 +14,20 @@ const mongoose_manager = {};
 
 // POST
 mongoose_manager.post_user = async function(user){
-    const res = await axios.post({
+    let response = await axios.post({
         url: "/users/", 
         baseURL: server_url, 
         data: {
             body: user
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // PUT (by id)
 mongoose_manager.put_user_by_id = async function(user, id){
-    const res = await axios.put({
+    let response = await axios.put({
         url: "/users/", 
         baseURL: server_url, 
         params: {
@@ -37,13 +37,13 @@ mongoose_manager.put_user_by_id = async function(user, id){
             body: user
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // PUT (by email)
 mongoose_manager.put_user_by_email = async function(user, email){
-    const res = await axios.put({
+    let response = await axios.put({
         url: "/users/", 
         baseURL: server_url, 
         params: {
@@ -53,69 +53,69 @@ mongoose_manager.put_user_by_email = async function(user, email){
             body: user
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE (by id)
 mongoose_manager.delete_user_by_id = async function(id){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/users/", 
         baseURL: server_url, 
         params: {
             id: id.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE (by email)
 mongoose_manager.delete_user_by_email = async function(email){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/users/", 
         baseURL: server_url, 
         params: {
             email: email.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET (by id)
 mongoose_manager.get_user_by_id = async function(id){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/users/", 
         baseURL: server_url, 
         params: {
             id: id.toString()
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET (by email)
 mongoose_manager.get_user_by_email = async function(email){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/users/", 
         baseURL: server_url, 
         params: {
             email: email.toString()
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL
 mongoose_manager.get_all_users = async function(){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/users/", 
         baseURL: server_url, 
     });
-    return res;
+    return response;
 }
 
 
@@ -124,20 +124,20 @@ mongoose_manager.get_all_users = async function(){
 
 // POST
 mongoose_manager.post_credit_card = async function(credit_card){
-    const res = await axios.post({
+    let response = await axios.post({
         url: "/credit_cards/", 
         baseURL: server_url, 
         data: {
             body: credit_card
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // PUT
 mongoose_manager.put_credit_card = async function(credit_card, user, number){
-    const res = await axios.put({
+    let response = await axios.put({
         url: "/credit_cards/", 
         baseURL: server_url, 
         params: {
@@ -148,13 +148,13 @@ mongoose_manager.put_credit_card = async function(credit_card, user, number){
             body: credit_card
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE
 mongoose_manager.delete_credit_card = async function(user, number){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/credit_cards/", 
         baseURL: server_url, 
         params: {
@@ -162,26 +162,26 @@ mongoose_manager.delete_credit_card = async function(user, number){
             number: number.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE ALL FROM USER
 mongoose_manager.delete_all_credit_cards_from_user = async function(user){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/credit_cards/", 
         baseURL: server_url, 
         params: {
             user: user.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET
 mongoose_manager.get_credit_card = async function(user, number){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/credit_cards/", 
         baseURL: server_url, 
         params: {
@@ -189,30 +189,30 @@ mongoose_manager.get_credit_card = async function(user, number){
             number: number.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL
 mongoose_manager.get_all_credit_cards = async function(){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/credit_cards/", 
         baseURL: server_url, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL FROM USER
 mongoose_manager.get_all_credit_cards_from_user = async function(user){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/credit_cards/", 
         baseURL: server_url, 
         params: {
             user: user.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
@@ -221,20 +221,20 @@ mongoose_manager.get_all_credit_cards_from_user = async function(user){
 
 // POST
 mongoose_manager.post_delivery_address = async function(delivery_address){
-    const res = await axios.post({
+    let response = await axios.post({
         url: "/delivery_addresses/", 
         baseURL: server_url, 
         data: {
             body: delivery_address
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // PUT
 mongoose_manager.put_delivery_address = async function(delivery_address, user, zip){
-    const res = await axios.put({
+    let response = await axios.put({
         url: "/delivery_addresses/", 
         baseURL: server_url, 
         params: {
@@ -245,13 +245,13 @@ mongoose_manager.put_delivery_address = async function(delivery_address, user, z
             body: delivery_address
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE
 mongoose_manager.delete_delivery_address = async function(user, zip){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/delivery_addresses/", 
         baseURL: server_url, 
         params: {
@@ -259,26 +259,26 @@ mongoose_manager.delete_delivery_address = async function(user, zip){
             zip: zip.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE ALL FROM USER
 mongoose_manager.delete_all_delivery_addresses_from_user = async function(user){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/delivery_addresses/", 
         baseURL: server_url, 
         params: {
             user: user.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET
 mongoose_manager.get_delivery_address = async function(user, zip){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/delivery_addresses/", 
         baseURL: server_url, 
         params: {
@@ -286,30 +286,30 @@ mongoose_manager.get_delivery_address = async function(user, zip){
             zip: zip.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL
 mongoose_manager.get_all_delivery_addresses = async function(){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/delivery_addresses/", 
         baseURL: server_url, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL FROM USER
 mongoose_manager.get_all_delivery_addresses_from_user = async function(user){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/delivery_addresses/", 
         baseURL: server_url, 
         params: {
             user: user.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
@@ -318,20 +318,20 @@ mongoose_manager.get_all_delivery_addresses_from_user = async function(user){
 
 // POST
 mongoose_manager.post_ratings = async function(ratings){
-    const res = await axios.post({
+    let response = await axios.post({
         url: "/ratings/", 
         baseURL: server_url, 
         data: {
             body: ratings
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // PUT
 mongoose_manager.put_ratings = async function(ratings, user, product){
-    const res = await axios.put({
+    let response = await axios.put({
         url: "/ratings/", 
         baseURL: server_url, 
         params: {
@@ -342,13 +342,13 @@ mongoose_manager.put_ratings = async function(ratings, user, product){
             body: ratings
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE
 mongoose_manager.delete_ratings = async function(user, product){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/ratings/", 
         baseURL: server_url, 
         params: {
@@ -356,39 +356,39 @@ mongoose_manager.delete_ratings = async function(user, product){
             product: product.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE ALL FROM USER
 mongoose_manager.delete_all_ratings_from_user = async function(user){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/ratings/", 
         baseURL: server_url, 
         params: {
             user: user.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE ALL FROM PRODUCT
 mongoose_manager.delete_all_ratings_from_product = async function(product){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/ratings/", 
         baseURL: server_url, 
         params: {
             product: product.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET
 mongoose_manager.get_ratings = async function(user, product){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/ratings/", 
         baseURL: server_url, 
         params: {
@@ -396,43 +396,43 @@ mongoose_manager.get_ratings = async function(user, product){
             product: product.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL
 mongoose_manager.get_all_ratings = async function(){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/ratings/", 
         baseURL: server_url, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL FROM USER
 mongoose_manager.get_all_ratings_from_user = async function(user){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/ratings/", 
         baseURL: server_url, 
         params: {
             user: user.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL FROM PRODUCT
 mongoose_manager.get_all_ratings_from_product = async function(product){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/ratings/", 
         baseURL: server_url, 
         params: {
             product: product.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
@@ -441,20 +441,20 @@ mongoose_manager.get_all_ratings_from_product = async function(product){
 
 // POST
 mongoose_manager.post_shopping_cart = async function(shopping_cart){
-    const res = await axios.post({
+    let response = await axios.post({
         url: "/shopping_carts/", 
         baseURL: server_url, 
         data: {
             body: shopping_cart
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // PUT
 mongoose_manager.put_shopping_cart = async function(shopping_cart, user, invoice){
-    const res = await axios.put({
+    let response = await axios.put({
         url: "/shopping_carts/", 
         baseURL: server_url, 
         params: {
@@ -465,13 +465,13 @@ mongoose_manager.put_shopping_cart = async function(shopping_cart, user, invoice
             body: shopping_cart
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE
 mongoose_manager.delete_shopping_cart = async function(user, invoice){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/shopping_carts/", 
         baseURL: server_url, 
         params: {
@@ -479,26 +479,26 @@ mongoose_manager.delete_shopping_cart = async function(user, invoice){
             invoice: invoice.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE ALL FROM USER
 mongoose_manager.delete_all_shopping_carts_from_user = async function(user){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/shopping_carts/", 
         baseURL: server_url, 
         params: {
             user: user.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET
 mongoose_manager.get_shopping_cart = async function(user, invoice){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/shopping_carts/", 
         baseURL: server_url, 
         params: {
@@ -506,30 +506,30 @@ mongoose_manager.get_shopping_cart = async function(user, invoice){
             invoice: invoice.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL
 mongoose_manager.get_all_shopping_carts = async function(){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/shopping_carts/", 
         baseURL: server_url, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL FROM USER
 mongoose_manager.get_all_shopping_carts_from_user = async function(user){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/shopping_carts/", 
         baseURL: server_url, 
         params: {
             user: user.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
@@ -538,20 +538,20 @@ mongoose_manager.get_all_shopping_carts_from_user = async function(user){
 
 // POST
 mongoose_manager.post_cart_product = async function(cart_product){
-    const res = await axios.post({
+    let response = await axios.post({
         url: "/cart_products/", 
         baseURL: server_url, 
         data: {
             body: cart_product
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // PUT
 mongoose_manager.put_cart_product = async function(cart_product, user, cart, product){
-    const res = await axios.put({
+    let response = await axios.put({
         url: "/cart_products/", 
         baseURL: server_url, 
         params: {
@@ -563,13 +563,13 @@ mongoose_manager.put_cart_product = async function(cart_product, user, cart, pro
             body: cart_product
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE
 mongoose_manager.delete_cart_product = async function(user, cart, product){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/cart_products/", 
         baseURL: server_url, 
         params: {
@@ -578,13 +578,13 @@ mongoose_manager.delete_cart_product = async function(user, cart, product){
             product: product.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE ALL FROM USER
 mongoose_manager.delete_all_cart_products_from_shopping_cart = async function(user, cart){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/cart_products/", 
         baseURL: server_url, 
         params: {
@@ -592,13 +592,13 @@ mongoose_manager.delete_all_cart_products_from_shopping_cart = async function(us
             cart: cart.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET
 mongoose_manager.get_cart_product = async function(user, cart, product){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/cart_products/", 
         baseURL: server_url, 
         params: {
@@ -607,23 +607,23 @@ mongoose_manager.get_cart_product = async function(user, cart, product){
             product: product.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL
 mongoose_manager.get_all_cart_products = async function(){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/cart_products/", 
         baseURL: server_url, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL FROM USER
 mongoose_manager.get_all_cart_products_from_shopping_cart = async function(user, cart){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/cart_products/", 
         baseURL: server_url, 
         params: {
@@ -631,7 +631,7 @@ mongoose_manager.get_all_cart_products_from_shopping_cart = async function(user,
             cart: cart.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
@@ -640,20 +640,20 @@ mongoose_manager.get_all_cart_products_from_shopping_cart = async function(user,
 
 // POST
 mongoose_manager.post_product = async function(product){
-    const res = await axios.post({
+    let response = await axios.post({
         url: "/products/", 
         baseURL: server_url, 
         data: {
             body: product
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // PUT
 mongoose_manager.put_product = async function(product, id){
-    const res = await axios.put({
+    let response = await axios.put({
         url: "/products/", 
         baseURL: server_url, 
         params: {
@@ -663,69 +663,67 @@ mongoose_manager.put_product = async function(product, id){
             body: product
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE (by id)
 mongoose_manager.delete_product_by_id = async function(id){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/products/", 
         baseURL: server_url, 
         params: {
             id: id.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE (by title)
 mongoose_manager.delete_product_by_title = async function(title){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/products/", 
         baseURL: server_url, 
         params: {
             title: title.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET (by id)
 mongoose_manager.get_product_by_id = async function(id){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/products/", 
         baseURL: server_url, 
         params: {
             id: id.toString()
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET (by title)
 mongoose_manager.get_product_by_title = async function(title){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/products/", 
         baseURL: server_url, 
         params: {
             title: title.toString()
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL
 mongoose_manager.get_all_products = async function(){
-    const res = await axios.get({
-        url: "/products/", 
-        baseURL: server_url, 
-    });
-    return res;
+    let response = await axios.get("/products");
+    response = await response.data;
+    return response;
 }
 
 
@@ -734,20 +732,20 @@ mongoose_manager.get_all_products = async function(){
 
 // POST
 mongoose_manager.post_category = async function(category){
-    const res = await axios.post({
+    let response = await axios.post({
         url: "/categories/", 
         baseURL: server_url, 
         data: {
             body: category
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // PUT
 mongoose_manager.put_category = async function(category, id){
-    const res = await axios.put({
+    let response = await axios.put({
         url: "/categories/", 
         baseURL: server_url, 
         params: {
@@ -757,69 +755,69 @@ mongoose_manager.put_category = async function(category, id){
             body: category
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE (by id)
 mongoose_manager.delete_category_by_id = async function(id){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/categories/", 
         baseURL: server_url, 
         params: {
             id: id.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE (by name)
 mongoose_manager.delete_category_by_name = async function(name){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/categories/", 
         baseURL: server_url, 
         params: {
             name: name.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET (by id)
 mongoose_manager.get_category_by_id = async function(id){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/categories/", 
         baseURL: server_url, 
         params: {
             id: id.toString()
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET (by name)
 mongoose_manager.get_category_by_name = async function(name){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/categories/", 
         baseURL: server_url, 
         params: {
             name: name.toString()
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL
 mongoose_manager.get_all_categories = async function(){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/categories/", 
         baseURL: server_url, 
     });
-    return res;
+    return response;
 }
 
 
@@ -828,20 +826,20 @@ mongoose_manager.get_all_categories = async function(){
 
 // POST
 mongoose_manager.post_product_category = async function(product_category){
-    const res = await axios.post({
+    let response = await axios.post({
         url: "/product_categories/", 
         baseURL: server_url, 
         data: {
             body: product_category
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // PUT
 mongoose_manager.put_product_category = async function(product_category, product, category){
-    const res = await axios.put({
+    let response = await axios.put({
         url: "/product_categories/", 
         baseURL: server_url, 
         params: {
@@ -852,13 +850,13 @@ mongoose_manager.put_product_category = async function(product_category, product
             body: product_category
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE
 mongoose_manager.delete_product_category = async function(product, category){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/product_categories/", 
         baseURL: server_url, 
         params: {
@@ -866,26 +864,26 @@ mongoose_manager.delete_product_category = async function(product, category){
             category: category.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // DELETE ALL FROM PRODUCT
 mongoose_manager.delete_all_product_categories_from_product = async function(product){
-    const res = await axios.delete({
+    let response = await axios.delete({
         url: "/product_categories/", 
         baseURL: server_url, 
         params: {
             product: product.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET
 mongoose_manager.get_product_category = async function(product, category){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/product_categories/", 
         baseURL: server_url, 
         params: {
@@ -893,30 +891,30 @@ mongoose_manager.get_product_category = async function(product, category){
             category: category.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL
 mongoose_manager.get_all_product_categories = async function(){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/product_categories/", 
         baseURL: server_url, 
     });
-    return res;
+    return response;
 }
 
 
 // GET ALL FROM PRODUCT
 mongoose_manager.get_all_product_categories_from_product = async function(product){
-    const res = await axios.get({
+    let response = await axios.get({
         url: "/product_categories/", 
         baseURL: server_url, 
         params: {
             product: product.toString(), 
         }, 
     });
-    return res;
+    return response;
 }
 
 

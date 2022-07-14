@@ -2,25 +2,43 @@
 
 // Dependências
 import mongoose from "mongoose";
-import db from "../models/index.js";
+import { db_url } from "../config/db.config.js";
+
+// Modelos esquemáticos do banco de dados
+import cart_product_schema from "../models/cart_product.model.js";
+import category_schema from "../models/category.model.js";
+import credit_card_schema from "../models/credit_card.model.js";
+import delivery_address_schema from "../models/delivery_address.model.js";
+import product_category_schema from "../models/product_category.model.js";
+import product_schema from "../models/product.model.js";
+import ratings_schema from "../models/ratings.model.js";
+import shopping_cart_schema from "../models/shopping_cart.model.js";
+import user_schema from "../models/user.model.js";
 
 // Conexão
-db.mongoose.connect(db.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+await mongoose.connect(db_url);
 
-// Esquemas
-const user_model = mongoose.model("user");
-const product_model = mongoose.model("product");
-const category_model = mongoose.model("category");
-const product_category_model = mongoose.model("product_category");
+// Aviso
+console.log("Connected to the database successfully.")
+
+// Atribuição dos modelos
+mongoose.model("cart_product", cart_product_schema);
+mongoose.model("ratings", ratings_schema);
+mongoose.model("shopping_cart", shopping_cart_schema);
+const credit_card_model = mongoose.model("credit_card", credit_card_schema);
+const delivery_address_model = mongoose.model("delivery_address", delivery_address_schema);
+const category_model = mongoose.model("category", category_schema);
+const product_category_model = mongoose.model("product_category", product_category_schema);
+const product_model = mongoose.model("product", product_schema);
+const user_model = mongoose.model("user", user_schema);
 
 // Remoção
-user_model.remove({})
-product_model.remove({})
-category_model.remove({})
-product_category_model.remove({})
+await category_model.deleteMany({});
+await product_category_model.deleteMany({});
+await product_model.deleteMany({});
+await user_model.deleteMany({});
+await credit_card_model.deleteMany({});
+await delivery_address_model.deleteMany({});
 
 // Livros
 const products = [
@@ -38,7 +56,7 @@ const products = [
         language: "Portugol", 
         pages: 128, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: "../public/src/assets/sample-books/arduino_led.jpg",
+        image_source: "arduino_led.jpg",
     }, 
     {
         id: 1, 
@@ -54,7 +72,7 @@ const products = [
         language: "Português", 
         pages: 145, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: "../public/src/assets/sample-books/changing_stuff.jpg",
+        image_source: "changing_stuff.jpg",
     },
     {
         id: 2, 
@@ -70,7 +88,7 @@ const products = [
         language: "Português", 
         pages: 242, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: "../public/src/assets/sample-books/commit_messages.jpeg",
+        image_source: "commit_messages.jpeg",
     },
     {
         id: 3, 
@@ -86,7 +104,7 @@ const products = [
         language: "Inglês", 
         pages: 199, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: "../public/src/assets/sample-books/convoluted_coding.jpg",
+        image_source: "convoluted_coding.jpg",
     },
     {
         id: 4, 
@@ -102,7 +120,7 @@ const products = [
         language: "Alemão", 
         pages: 58, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: "../public/src/assets/sample-books/hoping_this_works.jpg",
+        image_source: "hoping_this_works.jpg",
     },
     {
         id: 5, 
@@ -118,7 +136,7 @@ const products = [
         language: "Latim", 
         pages: 120, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: "../public/src/assets/sample-books/ignoring_deprecation.jpg",
+        image_source: "ignoring_deprecation.jpg",
     },
     {
         id: 6, 
@@ -134,7 +152,7 @@ const products = [
         language: "Latim", 
         pages: 79, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: "../public/src/assets/sample-books/interview_questions.jpg",
+        image_source: "interview_questions.jpg",
     },
     {
         id: 7, 
@@ -150,7 +168,7 @@ const products = [
         language: "Inglês", 
         pages: 690, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: "../public/src/assets/sample-books/regex.jpg",
+        image_source: "regex.jpg",
     },
     {
         id: 8, 
@@ -166,7 +184,7 @@ const products = [
         language: "Português", 
         pages: 310, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: "../public/src/assets/sample-books/resolving_dependencies.webp",
+        image_source: "resolving_dependencies.webp",
     },
     {
         id: 9, 
@@ -182,7 +200,7 @@ const products = [
         language: "Inglês", 
         pages: 107, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: "../public/src/assets/sample-books/title_goes_here.webp",
+        image_source: "title_goes_here.webp",
     },
     {
         id: 10, 
@@ -198,7 +216,7 @@ const products = [
         language: "Latim", 
         pages: 420, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: "../public/src/assets/sample-books/trying_stuff.jpg", 
+        image_source: "trying_stuff.jpg", 
     }, 
     {
         id: 11, 
@@ -214,15 +232,15 @@ const products = [
         language: "Espanhol", 
         pages: 624, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: "../public/src/assets/sample-books/what_is_ligma.png",
+        image_source: "what_is_ligma.png",
     },
 ];
 
 // Salva os livros
-products.forEach(product => {
-    let item = new product_model(product);
-    item.save();
-});
+for(const product of products){
+    let element = new product_model(product);
+    await element.save();
+}
 
 // Usuários
 const users = [
@@ -247,10 +265,136 @@ const users = [
 ];
 
 // Salva os usuários
-users.forEach(user => {
-    let item = new user_model(user);
-    item.save();
+users.forEach(async (user) => {
+    let element = new user_model(user);
+    await element.save();
 });
+
+// Cartões de crédito
+const credit_cards = [
+    {
+        user: 0, 
+        number: "2901 9934 5421 5555", 
+        title: "Cartão-1", 
+        security_code: "928", 
+        cardholder: "Customer", 
+        expiration_date: "2026-09", 
+    }, 
+    {
+        user: 0, 
+        number: "1005 2994 3302 1098", 
+        title: "Cartão-2", 
+        security_code: "414", 
+        cardholder: "Josivaldo", 
+        expiration_date: "2027-02", 
+    }, 
+    {
+        user: 0, 
+        number: "7885 6652 1982 0094", 
+        title: "Cartão-3", 
+        security_code: "200", 
+        cardholder: "Helena", 
+        expiration_date: "2025-12", 
+    }, 
+    {
+        user: 1, 
+        number: "9999 8888 7777 6666", 
+        title: "Cartão-Mestre", 
+        security_code: "300", 
+        cardholder: "ADM", 
+        expiration_date: "2025-10", 
+    }, 
+    {
+        user: 1, 
+        number: "7550 4450 8872 3009", 
+        title: "Cartão de Administração", 
+        security_code: "666", 
+        cardholder: "O Administrador", 
+        expiration_date: "2999-12", 
+    }, 
+];
+
+// Salva os cartões
+for(const credit_card of credit_cards){
+    const element = new credit_card_model(credit_card);
+    await element.save();
+}
+
+// Endereços de entrega
+const delivery_addresses = [
+    {
+        user: 0, 
+        zip: "15900-200", 
+        title: "Endereço-0", 
+        state: "Minas Gerais", 
+        city: "Cidade-X", 
+        district: "Alagoinha", 
+        street: "Rua das Almofadas", 
+        number: 9920, 
+        complement: "", 
+    }, 
+    {
+        user: 0, 
+        zip: "12866-790", 
+        title: "Casalabresa", 
+        state: "São Paulo", 
+        city: "São Paulo", 
+        district: "Distrito-XYZ", 
+        street: "Avenida Alves Cunha Limonada", 
+        number: 192, 
+        complement: "Apto 87", 
+    }, 
+    {
+        user: 0, 
+        zip: "16999-122", 
+        title: "Endereço 42", 
+        state: "Rio Grande do Sul", 
+        city: "Sulinha", 
+        district: "Sulinova", 
+        street: "Rua das Sulis", 
+        number: 1872, 
+        complement: "Ed. Sul Apto. 11", 
+    }, 
+    {
+        user: 0, 
+        zip: "09887-444", 
+        title: "Endereço Qualquer Aí", 
+        state: "Bahia", 
+        city: "Soninho", 
+        district: "Soneca", 
+        street: "Rua do Sono", 
+        number: 778, 
+        complement: "", 
+    }, 
+    {
+        user: 1, 
+        zip: "96669-666", 
+        title: "Endereço do ADM", 
+        state: "Rio de Janeiro", 
+        city: "Adminópolis", 
+        district: "Admin-District", 
+        street: "Avenida dos Supremos", 
+        number: 625, 
+        complement: "Ed. dos ADMs, Apto. 64", 
+    }, 
+    {
+        user: 1, 
+        zip: "15550-877", 
+        title: "Casa Dele", 
+        state: "São Paulo", 
+        city: "Desconhecida", 
+        district: "Não Sei", 
+        street: "Avenida da Falta de Ideias", 
+        number: 998, 
+        complement: "Apto. 44", 
+    }, 
+];
+
+// Salva os endereços
+for(const delivery_address of delivery_addresses){
+    const element = new delivery_address_model(delivery_address);
+    await element.save();
+}
 
 // Categorias
 const categories = [
@@ -267,10 +411,10 @@ const categories = [
 ];
 
 // Salva as categorias
-categories.forEach(category => {
-    let item = new category_model(category);
-    item.save();
-});
+for(const category of categories){
+    const element = new category_model(category);
+    await element.save();
+}
 
 // Relacionamento entre os livros e as categorias
 const product_categories = [
@@ -322,11 +466,11 @@ const product_categories = [
 ];
 
 // Salva as categorias dos livros
-product_categories.forEach(element => {
-    let item = new product_category_model(element);
-    item.save();
-});
+for(const product_category of product_categories){
+    let element = new product_category_model(product_category);
+    await element.save();
+}
 
-// Avisa e sai
-console.log("Todos os registros foram adicionados com sucesso.");
+// Avisa e encerra o processo
+console.log("Data registered successfully.");
 process.exit()
