@@ -243,7 +243,7 @@ users.forEach(user => {
 
 // Categorias
 const categories = [
-    {id: 0, name: ""}, 
+    {id: 0, name: "None"}, 
     {id: 1, name: "Infantil"}, 
     {id: 2, name: "Literatura Internacional"}, 
     {id: 3, name: "Literatura Brasileira"}, 
