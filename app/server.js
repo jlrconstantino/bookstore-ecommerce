@@ -5,7 +5,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
-import { db_url } from "../config/db.config.js";
+import { db_url } from "./config/db.config.js";
 
 // Rotas a serem adicionadas
 import cart_product_router from "./routes/cart_product.route.js";
