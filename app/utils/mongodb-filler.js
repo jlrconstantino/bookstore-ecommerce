@@ -3,13 +3,24 @@
 // Dependências
 import mongoose from "mongoose";
 import db from "../models/index.js";
-db;
+
+// Conexão
+db.mongoose.connect(db.url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
 
 // Esquemas
 const user_model = mongoose.model("user");
 const product_model = mongoose.model("product");
 const category_model = mongoose.model("category");
 const product_category_model = mongoose.model("product_category");
+
+// Remoção
+user_model.remove({})
+product_model.remove({})
+category_model.remove({})
+product_category_model.remove({})
 
 // Livros
 const products = [
@@ -315,3 +326,7 @@ product_categories.forEach(element => {
     let item = new product_category_model(element);
     item.save();
 });
+
+// Avisa e sai
+console.log("Todos os registros foram adicionados com sucesso.");
+process.exit()
