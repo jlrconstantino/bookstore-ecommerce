@@ -32,7 +32,11 @@ export async function select_all_users() {
 // Retorna o usuário especificado
 export async function select_user_by_id(id) {
     if(users == null) {
-        await select_all_users();
+        let output = null;
+        await mongoose_manager.get_user_by_id(id).then(res => {
+            output = res;
+        });
+        return output;
     }
     return users.find(user => {
         return user.id == id;
@@ -43,7 +47,11 @@ export async function select_user_by_id(id) {
 // Retorna o usuário especificado
 export async function select_user_by_email(email) {
     if(users == null) {
-        await select_all_users();
+        let output = null;
+        await mongoose_manager.get_user_by_email(email).then(res => {
+            output = res;
+        });
+        return output;
     }
     return users.find(user => {
         return user.email == email;
@@ -54,14 +62,15 @@ export async function select_user_by_email(email) {
 // Atualiza o usuário especificado
 export async function update_user(user) {
     if(users == null){
-        await select_all_users();
-    }
-    let index = users.findIndex(u => {
-        return u.id == user.id;
-    });
-    if(index >= 0) {
-        users[index] = user;
-        await mongoose_manager.put_user_by_id(user, user.id);
+        mongoose_manager.put_user_by_id(user, user.id);
+    }else{
+        let index = users.findIndex(u => {
+            return u.id == user.id;
+        });
+        if(index >= 0) {
+            users[index] = user;
+            mongoose_manager.put_user_by_id(user, user.id);
+        }
     }
 }
 
@@ -87,53 +96,36 @@ export async function add_user(user) {
     }
 
     // Adição do usuário à base de dados
-    if(users == null) {
-        await select_all_users();
+    if(users != null) {
+        users.push(user);
     }
     mongoose_manager.post_user(user);
-    users.push(user);
 }
 
 
-// Deleta o usuário especificado a partir do ID
-export async function delete_user_by_id(id) {
-
-    // Para sinalização de remoção
-    let flag = false;
+// Deleta o usuário especificado
+export async function delete_user(user) {
 
     // Remoção local
     if(users != null){
-        if(id < users.length && id >= 0){
-
-            // Sinalização
-            flag = true;
+        let index = users.findIndex(u => {return u.id == user.id});
+        if(index >= 0){
 
             // Efeito em cascata no cache local
-            users.splice(id, 1);
+            users.splice(index, 1);
             credit_cards = null;
             delivery_addresses = null;
             shopping_carts = null;
             ratings = null;
         }
     }
-
-    // Remoção na base de dados
-    if(flag === true) {
-
-        // Efeito em cascata na base de dados
-        mongoose_manager.delete_user_by_id(id);
-        mongoose_manager.delete_all_credit_cards_from_user(id);
-        mongoose_manager.delete_all_delivery_addresses_from_user(id);
-        mongoose_manager.delete_all_shopping_carts_from_user(id);
-        mongoose_manager.delete_all_ratings_from_user(id);
-
-    }
-}
-
-
-// Deleta o usuário especificado
-export async function delete_user(user) {
-    await delete_user_by_id(user.id);
+    
+    // Efeito em cascata na base de dados
+    mongoose_manager.delete_user_by_id(id);
+    mongoose_manager.delete_all_credit_cards_from_user(id);
+    mongoose_manager.delete_all_delivery_addresses_from_user(id);
+    mongoose_manager.delete_all_shopping_carts_from_user(id);
+    mongoose_manager.delete_all_ratings_from_user(id);
 }
 
 
@@ -154,7 +146,13 @@ export async function select_all_credit_cards() {
 // Retorna todos os cartões de crédito do usuário especificado
 export async function select_user_credit_cards(user_id) {
     if(credit_cards == null) {
-        await select_all_credit_cards();
+        let output = [];
+        await mongoose_manager.get_all_credit_cards_from_user(user_id).then(res => {
+            if(res != null){
+                output = res;
+            }
+        });
+        return output;
     }
     return credit_cards.filter(card => {
         return card.user == user_id;
@@ -165,7 +163,11 @@ export async function select_user_credit_cards(user_id) {
 // Retorna o cartão de crédito especificado
 export async function select_credit_card(user_id, card_number) {
     if(credit_cards == null){
-        await select_all_credit_cards();
+        let output = null;
+        await mongoose_manager.get_credit_card(user_id, card_number).then(res => {
+            output = res;
+        });
+        return output;
     }
     return credit_cards.find(card => {
         return (card.user == user_id && card.number == card_number);
@@ -175,18 +177,17 @@ export async function select_credit_card(user_id, card_number) {
 
 // Atualiza o endereço de entrega especificado
 export async function update_credit_card(previous_number, credit_card) {
-    if(credit_cards == null){
-        await select_all_credit_cards();
-    }
-    let index = credit_cards.findIndex(cc => {
-        return (
-            cc.user == credit_card.user &&
-            cc.number == previous_number
-        );
-    });
-    if(index >= 0) {
-        mongoose_manager.put_credit_card(credit_card, credit_cards[index].user, credit_cards[index].number);
-        credit_cards[index] = credit_card;
+    mongoose_manager.put_credit_card(credit_card, credit_card.user, previous_number);
+    if(credit_cards != null){
+        let index = credit_cards.findIndex(cc => {
+            return (
+                cc.user == credit_card.user &&
+                cc.number == previous_number
+            );
+        });
+        if(index >= 0) {
+            credit_cards[index] = credit_card;
+        }
     }
 }
 
@@ -210,23 +211,10 @@ export async function add_credit_card(credit_card) {
     }
 
     // Adição do cartão de crédito à base de dados
-    if(credit_cards == null) {
-        await select_all_credit_cards();
+    if(credit_cards != null) {
+        credit_cards.push(credit_card);
     }
     mongoose_manager.post_credit_card(credit_card);
-    credit_cards.push(credit_card);
-}
-
-
-// Deleta o cartão de crédito especificado a partir do ID
-export async function delete_credit_card_by_id(id) {
-    if(credit_cards == null){
-        await select_all_credit_cards();
-    }
-    if(id < credit_cards.length && id >= 0){
-        mongoose_manager.delete_credit_card(credit_cards[id].user, credit_cards[id].number);
-        credit_cards.splice(id, 1);
-    }
 }
 
 
@@ -266,7 +254,13 @@ export async function select_all_delivery_addresses() {
 // Retorna todos os endereços de entrega do usuário especificado
 export async function select_user_delivery_addresses(user_id) {
     if(delivery_addresses == null) {
-        await select_all_delivery_addresses();
+        let output = [];
+        await mongoose_manager.get_all_delivery_addresses_from_user(user_id).then(res => {
+            if(res != null){
+                output = res;
+            }
+        });
+        return output;
     }
     return delivery_addresses.filter(address => {
         return address.user == user_id;
@@ -277,7 +271,11 @@ export async function select_user_delivery_addresses(user_id) {
 // Retorna o endereço de entrega especificado
 export async function select_delivery_address(user_id, address_zip) {
     if(delivery_addresses == null) {
-        await select_all_delivery_addresses();
+        let output = null;
+        await mongoose_manager.get_delivery_address(user_id, address_zip).then(res => {
+            output = res;
+        });
+        return output;
     }
     return delivery_addresses.find(address => {
         return (address.user == user_id && address.zip == address_zip);
@@ -287,18 +285,17 @@ export async function select_delivery_address(user_id, address_zip) {
 
 // Atualiza o cartão de crédito especificado
 export async function update_delivery_address(previous_zip, delivery_address) {
-    if(delivery_addresses == null){
-        await select_all_delivery_addresses();
-    }
-    let index = delivery_addresses.findIndex(da => {
-        return (
-            da.user == delivery_address.user &&
-            da.zip == previous_zip
-        );
-    });
-    if(index >= 0) {
-        delivery_addresses[index] = delivery_address;
-        set_item("delivery_address#" + index.toString(), delivery_address);
+    mongoose_manager.put_delivery_address(delivery_address, delivery_address.user, previous_zip);
+    if(delivery_addresses != null){
+        let index = delivery_addresses.findIndex(da => {
+            return (
+                da.user == delivery_address.user &&
+                da.zip == previous_zip
+            );
+        });
+        if(index >= 0) {
+            delivery_addresses[index] = delivery_address;
+        }
     }
 }
 
@@ -328,42 +325,26 @@ export async function add_delivery_address(delivery_address) {
     }
 
     // Adição do endereço de entrega à base de dados
-    if(delivery_addresses == null) {
-        await select_all_delivery_addresses();
+    if(delivery_addresses != null) {
+        delivery_addresses.push(delivery_address);
     }
-    set_item("delivery_address#" + delivery_addresses.length.toString(), delivery_address);
-    delivery_addresses.push(delivery_address);
-}
-
-
-// Deleta o endereço de entrega especificado
-export async function delete_delivery_address_by_id(id) {
-    if(delivery_addresses != null){
-        if(id < delivery_addresses.length && id >= 0){
-            delivery_addresses.splice(id, 1);
-            delete_item("delivery_address#" + id.toString());
-        }
-    }
-    else{
-        delete_item("delivery_address#" + id.toString());
-    }
+    mongoose_manager.post_delivery_address(delivery_address);
 }
 
 
 // Deleta o endereço de entrega especificado
 export async function delete_delivery_address(user_id, delivery_address_zip) {
-    if(delivery_addresses == null) {
-        await select_all_delivery_addresses();
-    }
-    let index = delivery_addresses.findIndex(da => {
-        return (
-            da.user == user_id && 
-            da.zip == delivery_address_zip
-        );
-    });
-    if(index >= 0){
-        delivery_addresses.splice(index, 1);
-        delete_item("delivery_address#" + index.toString());
+    mongoose_manager.delete_delivery_address(user_id, delivery_address_zip);
+    if(delivery_addresses != null) {
+        let index = delivery_addresses.findIndex(da => {
+            return (
+                da.user == user_id && 
+                da.zip == delivery_address_zip
+            );
+        });
+        if(index >= 0){
+            delivery_addresses.splice(index, 1);
+        }
     }
 }
 
@@ -374,7 +355,7 @@ export async function delete_delivery_address(user_id, delivery_address_zip) {
 // Retorna todas as avaliações
 export async function select_all_ratings() {
     if(ratings == null) {
-        await load_local_storage_elements("ratings#").then(res => {
+        await mongoose_manager.get_all_ratings().then(res => {
             ratings = res;
         });
     }
@@ -385,7 +366,13 @@ export async function select_all_ratings() {
 // Retorna todos os avaliações do usuário especificado
 export async function select_user_ratings(user_id) {
     if(ratings == null) {
-        await select_all_ratings();
+        let output = [];
+        await mongoose_manager.get_all_ratings_from_user(user_id).then(res => {
+            if(res != null){
+                output = res;
+            }
+        });
+        return output;
     }
     return ratings.filter(rating => {
         return rating.user == user_id;
@@ -396,7 +383,13 @@ export async function select_user_ratings(user_id) {
 // Retorna todos os avaliações do produto especificado
 export async function select_product_ratings(product_id) {
     if(ratings == null) {
-        await select_all_ratings();
+        let output = [];
+        await mongoose_manager.get_all_ratings_from_product(product_id).then(res => {
+            if(res != null){
+                output = res;
+            }
+        });
+        return output;
     }
     return ratings.filter(rating => {
         return rating.product == product_id;
@@ -407,7 +400,11 @@ export async function select_product_ratings(product_id) {
 // Retorna a avaliação do usuário em relação ao produto especificado
 export async function select_user_product_rating(user_id, product_id) {
     if(ratings == null) {
-        await select_all_ratings();
+        let output = null;
+        await mongoose_manager.get_ratings(user_id, product_id).then(res => {
+            output = res;
+        });
+        return output;
     }
     return ratings.find(rating => {
         return (rating.user == user_id && rating.product == product_id);
@@ -428,42 +425,26 @@ export async function add_rating(rating) {
     }
 
     // Adição da avaliação à base de dados
-    if(ratings == null) {
-        await select_all_ratings();
+    if(ratings != null) {
+        ratings.push(rating);
     }
-    set_item("ratings#" + ratings.length.toString(), rating);
-    ratings.push(rating);
-}
-
-
-// Deleta a avaliação especificada a partir do ID
-export async function delete_rating_by_id(id) {
-    if(ratings != null){
-        if(id < ratings.length && id >= 0){
-            ratings.splice(id, 1);
-            delete_item("ratings#" + id.toString());
-        }
-    }
-    else{
-        delete_item("ratings#" + id.toString());
-    }
+    mongoose_manager.post_ratings(rating);
 }
 
 
 // Deleta a avaliação especificada
 export async function delete_rating(rating) {
-    if(ratings == null) {
-        await select_all_ratings();
-    }
-    let index = ratings.findIndex(r => {
-        return (
-            r.user == rating.user && 
-            r.product == rating.product
-        );
-    });
-    if(index >= 0){
-        ratings.splice(index, 1);
-        delete_item("ratings#" + index.toString());
+    mongoose_manager.delete_ratings(rating.user, rating.product);
+    if(ratings != null) {
+        let index = ratings.findIndex(r => {
+            return (
+                r.user == rating.user && 
+                r.product == rating.product
+            );
+        });
+        if(index >= 0){
+            ratings.splice(index, 1);
+        }
     }
 }
 
@@ -474,7 +455,7 @@ export async function delete_rating(rating) {
 // Retorna todas os carrinhos de compras
 export async function select_all_shopping_carts() {
     if(shopping_carts == null) {
-        await load_local_storage_elements("shopping_cart#").then(res => {
+        await mongoose_manager.get_all_shopping_carts().then(res => {
             shopping_carts = res;
         });
     }
@@ -485,7 +466,13 @@ export async function select_all_shopping_carts() {
 // Retorna todos os carrinhos de compras pertencentes ao usuário especificado
 export async function select_user_shopping_carts(user_id) {
     if(shopping_carts == null) {
-        await select_all_shopping_carts();
+        let output = [];
+        await mongoose_manager.get_all_shopping_carts_from_user(user_id).then(res => {
+            if(res != null){
+                output = res;
+            }
+        });
+        return output;
     }
     return shopping_carts.filter(cart => {
         return cart.user == user_id;
@@ -496,7 +483,11 @@ export async function select_user_shopping_carts(user_id) {
 // Retorna um carrinho de compras específico
 export async function select_shopping_cart(user_id, invoice) {
     if(shopping_carts == null) {
-        await select_all_shopping_carts();
+        let output = null;
+        await mongoose_manager.get_shopping_cart(user_id, invoice).then(res => {
+            output = res;
+        });
+        return output;
     }
     return shopping_carts.find(cart => {
         return (cart.user == user_id && cart.invoice == invoice);
@@ -521,42 +512,26 @@ export async function add_shopping_cart(shopping_cart) {
     }
 
     // Adição do carrinho de compras à base de dados
-    if(shopping_carts == null) {
-        await select_all_shopping_carts();
+    if(shopping_carts != null) {
+        shopping_carts.push(shopping_cart);
     }
-    set_item("shopping_cart#" + shopping_carts.length.toString(), shopping_cart);
-    shopping_carts.push(shopping_cart);
-}
-
-
-// Deleta o carrinho de compras especificado a partir do ID
-export async function delete_shopping_cart_by_id(id) {
-    if(shopping_carts != null){
-        if(id < shopping_carts.length && id >= 0){
-            shopping_carts.splice(id, 1);
-            delete_item("shopping_cart#" + id.toString());
-        }
-    }
-    else{
-        delete_item("shopping_cart#" + id.toString());
-    }
+    mongoose_manager.post_shopping_cart(shopping_cart);
 }
 
 
 // Deleta o carrinho de compras especificado
 export async function delete_shopping_cart(shopping_cart) {
-    if(shopping_carts == null) {
-        await select_all_shopping_carts();
-    }
-    let index = shopping_carts.findIndex(sc => {
-        return (
-            sc.user == shopping_cart.user && 
-            sc.invoice == shopping_cart.invoice
-        );
-    });
-    if(index >= 0){
-        shopping_carts.splice(index, 1);
-        delete_item("shopping_cart#" + index.toString());
+    mongoose_manager.delete_shopping_cart(shopping_cart.user, shopping_cart.invoice);
+    if(shopping_carts != null) {
+        let index = shopping_carts.findIndex(sc => {
+            return (
+                sc.user == shopping_cart.user && 
+                sc.invoice == shopping_cart.invoice
+            );
+        });
+        if(index >= 0){
+            shopping_carts.splice(index, 1);
+        }
     }
 }
 
@@ -567,7 +542,7 @@ export async function delete_shopping_cart(shopping_cart) {
 // Retorna todas os itens dos carrinhos de compras
 export async function select_all_cart_products() {
     if(cart_products == null) {
-        await load_local_storage_elements("cart_product#").then(res => {
+        await mongoose_manager.get_all_cart_products().then(res => {
             cart_products = res;
         });
     }
@@ -578,7 +553,13 @@ export async function select_all_cart_products() {
 // Retorna todos os itens do carrinhos de compras especificado
 export async function select_cart_products(user_id, invoice) {
     if(cart_products == null) {
-        await select_all_cart_products();
+        let output = [];
+        await mongoose_manager.get_all_cart_products_from_shopping_cart(user_id, invoice).then(res => {
+            if(res != null){
+                output = res;
+            }
+        });
+        return output;
     }
     return cart_products.filter(cp => {
         return (cp.user == user_id && cp.cart == invoice);
@@ -589,7 +570,11 @@ export async function select_cart_products(user_id, invoice) {
 // Retorna um item de carrinho de compras específico
 export async function select_cart_product(user_id, cart_invoice, product_id) {
     if(cart_products == null) {
-        await select_all_cart_products();
+        let output = null;
+        await mongoose_manager.get_cart_product(user_id, cart_invoice, product_id).then(res => {
+            output = res;
+        });
+        return output;
     }
     return cart_products.find(cp => {
         return (cp.user == user_id && cp.cart == cart_invoice && cp.product == product_id);
@@ -614,43 +599,27 @@ export async function add_cart_product(cart_product) {
     }
 
     // Adição da avaliação à base de dados
-    if(cart_products == null) {
-        await select_all_cart_products();
+    if(cart_products != null) {
+        cart_products.push(cart_product);
     }
-    set_item("cart_product#" + cart_products.length.toString(), cart_product);
-    cart_products.push(cart_product);
-}
-
-
-// Deleta o item de carrinho de compras especificado a partir do ID
-export async function delete_cart_product_by_id(id) {
-    if(cart_products != null){
-        if(id < cart_products.length && id >= 0){
-            cart_products.splice(id, 1);
-            delete_item("cart_product#" + id.toString());
-        }
-    }
-    else{
-        delete_item("cart_product#" + id.toString());
-    }
+    mongoose_manager.post_cart_product(cart_product);
 }
 
 
 // Deleta o item de carrinho de compras especificado
 export async function delete_cart_product(cart_product) {
-    if(cart_products == null) {
-        await select_all_cart_products();
-    }
-    let index = cart_products.findIndex(cp => {
-        return (
-            cp.user == cart_product.user && 
-            cp.cart == cart_product.cart && 
-            cp.product == cart_product.product
-        );
-    });
-    if(index >= 0){
-        cart_products.splice(index, 1);
-        delete_item("cart_product#" + index.toString());
+    mongoose_manager.delete_cart_product(cart_product.user, cart_product.cart, cart_product.product);
+    if(cart_products != null) {
+        let index = cart_products.findIndex(cp => {
+            return (
+                cp.user == cart_product.user && 
+                cp.cart == cart_product.cart && 
+                cp.product == cart_product.product
+            );
+        });
+        if(index >= 0){
+            cart_products.splice(index, 1);
+        }
     }
 }
 
@@ -661,7 +630,7 @@ export async function delete_cart_product(cart_product) {
 // Retorna todos os livros
 export async function select_all_products() {
     if(products == null){
-        await load_local_storage_elements("product#").then(res => {
+        await mongoose_manager.get_all_products().then(res => {
             products = res;
         });
     }
@@ -672,7 +641,11 @@ export async function select_all_products() {
 // Retorna o produto especificado
 export async function select_product_by_id(id) {
     if(products == null) {
-        await select_all_products();
+        let output = null;
+        await mongoose_manager.get_product_by_id(id).then(res => {
+            output = res;
+        });
+        return output;
     }
     return products.find(product => {
         return product.id == id;
@@ -683,7 +656,11 @@ export async function select_product_by_id(id) {
 // Retorna o produto especificado
 export async function select_product_by_title(title) {
     if(products == null) {
-        await select_all_products();
+        let output = null;
+        await mongoose_manager.get_product_by_title(title).then(res => {
+            output = res;
+        });
+        return output;
     }
     return products.find(product => {
         return product.title == title;
@@ -694,13 +671,11 @@ export async function select_product_by_title(title) {
 // Adiciona o produto especificado
 export async function add_product(product) {
 
-    // Para referência
-    if(products == null) {
-        await select_all_products();
-    }
-
     // Validação da estrutura do produto
     if(Object.prototype.hasOwnProperty.call(product, "id") === false){
+        if(products == null) {
+            await select_all_products();
+        }
         product["id"] = products.length;
         //throw TypeError("product must have an 'id' property");
     }else if(Object.prototype.hasOwnProperty.call(product, "title") === false){
@@ -732,22 +707,23 @@ export async function add_product(product) {
     }
 
     // Adição do produto à base de dados
-    set_item("product#" + products.length.toString(), product);
-    products.push(product);
+    if(products != null){
+        products.push(product);
+    }
+    mongoose_manager.post_product(product);
 }
 
 
 // Atualiza o produto especificado
 export async function update_product(product) {
-    if(products == null){
-        await select_all_products();
-    }
-    let index = products.findIndex(p => {
-        return p.id == product.id;
-    });
-    if(index >= 0) {
-        products[index] = product;
-        set_item("product#" + index.toString(), product);
+    mongoose_manager.put_product(product, product.id);
+    if(products != null){
+        let index = products.findIndex(p => {
+            return p.id == product.id;
+        });
+        if(index >= 0) {
+            products[index] = product;
+        }
     }
 }
 
@@ -772,47 +748,45 @@ export async function update_product_rating(product_id) {
     }
     total_rating = total_rating / product_ratings.length;
 
-    // Aquisição do produto
-    if(products == null){
-        await select_all_products();
+    // Aquisição do produto via dados locais
+    if(products != null){
+        const product = products.find(p => {return p.id == product_id});
+        if(product != null){
+
+            // Atualização do produto
+            product.rating = total_rating;
+            mongoose_manager.put_product(product, product.id);
+        }
     }
-    const product = products.find(p => {return p.id == product_id});
-    if(product != null){
+
+    // Aquisição do produto via dados não cacheados
+    else {
+        let product = null;
+        await mongoose_manager.get_product_by_id(product_id).then(res => {
+            product = res;
+        });
 
         // Atualização do produto
-        product.rating = total_rating;
-        set_item("product#" + product.id.toString(), product);
+        if(product != null){
+            product.rating = total_rating;
+            mongoose_manager.put_product(product, product.id);
+        }
     }
 
     return total_rating;
 }
 
 
-// Deleta o produto especificado a partir do ID
-export async function delete_product_by_id(id) {
-    if(products != null){
-        if(id < products.length && id >= 0){
-            products.splice(id, 1);
-            delete_item("product#" + id.toString());
-        }
-    }
-    else{
-        delete_item("product#" + id.toString());
-    }
-}
-
-
 // Deleta o produto especificado
 export async function delete_product(product) {
-    if(products == null) {
-        await select_all_products();
-    }
-    let index = products.findIndex(p => {
-        return (p.id == product.id);
-    });
-    if(index >= 0){
-        products.splice(index, 1);
-        delete_item("product#" + index.toString());
+    mongoose_manager.delete_product_by_id(product.id);
+    if(products != null) {
+        let index = products.findIndex(p => {
+            return (p.id == product.id);
+        });
+        if(index >= 0){
+            products.splice(index, 1);
+        }
     }
 }
 
@@ -823,7 +797,7 @@ export async function delete_product(product) {
 // Retorna todas as categorias
 export async function select_all_categories() {
     if(categories == null) {
-        await load_local_storage_elements("category#").then(res => {
+        await mongoose_manager.get_all_categories().then(res => {
             categories = res;
         });
     }
@@ -834,7 +808,11 @@ export async function select_all_categories() {
 // Retorna a categoria especificada
 export async function select_category_by_id(id) {
     if(categories == null) {
-        await select_all_categories();
+        let output = null;
+        await mongoose_manager.get_category_by_id(id).then(res => {
+            output = res;
+        });
+        return output;
     }
     return categories.find(category => {
         return category.id == id;
@@ -845,7 +823,11 @@ export async function select_category_by_id(id) {
 // Retorna a categoria especificada
 export async function select_category_by_name(name) {
     if(categories == null) {
-        await select_all_categories();
+        let output = null;
+        await mongoose_manager.get_category_by_name(name).then(res => {
+            output = res;
+        });
+        return output;
     }
     return categories.find(category => {
         return category.name == name;
@@ -864,39 +846,23 @@ export async function add_category(category) {
     }
 
     // Adição da categoria à base de dados
-    if(categories == null) {
-        await select_all_categories();
+    if(categories != null) {
+        categories.push(category);
     }
-    set_item("category#" + categories.length.toString(), category);
-    categories.push(category);
-}
-
-
-// Deleta a categoria especificada a partir do ID
-export async function delete_category_by_id(id) {
-    if(categories != null){
-        if(id < categories.length && id >= 0){
-            categories.splice(id, 1);
-            delete_item("category#" + id.toString());
-        }
-    }
-    else{
-        delete_item("category#" + id.toString());
-    }
+    mongoose_manager.post_category(category);
 }
 
 
 // Deleta a categoria especificada
 export async function delete_category(category) {
-    if(categories == null) {
-        await select_all_categories();
-    }
-    let index = categories.findIndex(c => {
-        return (c.id == category.id);
-    });
-    if(index >= 0){
-        categories.splice(index, 1);
-        delete_item("category#" + index.toString());
+    mongoose_manager.delete_category_by_id(category.id);
+    if(categories != null) {
+        let index = categories.findIndex(c => {
+            return (c.id == category.id);
+        });
+        if(index >= 0){
+            categories.splice(index, 1);
+        }
     }
 }
 
@@ -907,7 +873,7 @@ export async function delete_category(category) {
 // Retorna todas as categorias dos produtos
 export async function select_all_product_categories() {
     if(product_categories == null) {
-        await load_local_storage_elements("product_category#").then(res => {
+        await mongoose_manager.get_all_product_categories().then(res => {
             product_categories = res;
         });
     }
@@ -918,7 +884,13 @@ export async function select_all_product_categories() {
 // Retorna todas as categorias do produto especificado
 export async function select_product_categories(product_id) {
     if(product_categories == null) {
-        await select_all_product_categories();
+        let output = [];
+        await mongoose_manager.get_all_product_categories_from_product(product_id).then(res => {
+            if(res != null){
+                output = res;
+            }
+        });
+        return output;
     }
     return product_categories.filter(pc => {
         return pc.product == product_id;
@@ -937,38 +909,22 @@ export async function add_product_category(product_category) {
     }
 
     // Adição da categoria à base de dados
-    if(product_categories == null) {
-        await select_all_product_categories();
+    if(product_categories != null) {
+        product_categories.push(product_category);
     }
-    set_item("product_category#" + product_categories.length.toString(), product_category);
-    product_categories.push(product_category);
-}
-
-
-// Deleta a categoria especificada a partir do ID
-export async function delete_product_category_by_id(id) {
-    if(product_categories != null){
-        if(id < product_categories.length && id >= 0){
-            product_categories.splice(id, 1);
-            delete_item("product_category#" + id.toString());
-        }
-    }
-    else{
-        delete_item("product_category#" + id.toString());
-    }
+    mongoose_manager.post_product_category(product_category);
 }
 
 
 // Deleta a categoria especificada
 export async function delete_product_category(product_category) {
-    if(product_categories == null) {
-        await select_all_product_categories();
-    }
-    let index = product_categories.findIndex(c => {
-        return (c.id == product_category.id);
-    });
-    if(index >= 0){
-        product_categories.splice(index, 1);
-        delete_item("product_category#" + index.toString());
+    mongoose_manager.delete_product_category(product_category.product, product_category.category);
+    if(product_categories != null) {
+        let index = product_categories.findIndex(c => {
+            return (c.id == product_category.id);
+        });
+        if(index >= 0){
+            product_categories.splice(index, 1);
+        }
     }
 }
