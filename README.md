@@ -153,6 +153,12 @@ npm run install-client
 npm run build-client
 ```
 
+- Adicione os dados iniciais da base de dados:
+
+```
+npm run create-database
+```
+
 - Execute o servidor:
 
 ```

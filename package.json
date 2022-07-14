@@ -6,6 +6,7 @@
   "scripts": {
     "install-client": "cd ./app/public && npm install", 
     "build-client": "cd ./app/public && npm run build", 
+    "create-database": "node ./app/utils/mongodb-filler.js", 
     "server": "node ./app/server.js", 
     "client": "cd ./app/public && npm run serve"
   },
