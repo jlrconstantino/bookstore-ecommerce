@@ -27,7 +27,7 @@ const products = [
         language: "Portugol", 
         pages: 128, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: require("../public/src/assets/sample-books/arduino_led.jpg"),
+        image_source: "../public/src/assets/sample-books/arduino_led.jpg",
     }, 
     {
         id: 1, 
@@ -43,7 +43,7 @@ const products = [
         language: "Português", 
         pages: 145, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: require("../public/src/assets/sample-books/changing_stuff.jpg"),
+        image_source: "../public/src/assets/sample-books/changing_stuff.jpg",
     },
     {
         id: 2, 
@@ -59,7 +59,7 @@ const products = [
         language: "Português", 
         pages: 242, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: require("../public/src/assets/sample-books/commit_messages.jpeg"),
+        image_source: "../public/src/assets/sample-books/commit_messages.jpeg",
     },
     {
         id: 3, 
@@ -75,7 +75,7 @@ const products = [
         language: "Inglês", 
         pages: 199, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: require("../public/src/assets/sample-books/convoluted_coding.jpg"),
+        image_source: "../public/src/assets/sample-books/convoluted_coding.jpg",
     },
     {
         id: 4, 
@@ -91,7 +91,7 @@ const products = [
         language: "Alemão", 
         pages: 58, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: require("../public/src/assets/sample-books/hoping_this_works.jpg"),
+        image_source: "../public/src/assets/sample-books/hoping_this_works.jpg",
     },
     {
         id: 5, 
@@ -107,7 +107,7 @@ const products = [
         language: "Latim", 
         pages: 120, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: require("../public/src/assets/sample-books/ignoring_deprecation.jpg"),
+        image_source: "../public/src/assets/sample-books/ignoring_deprecation.jpg",
     },
     {
         id: 6, 
@@ -123,7 +123,7 @@ const products = [
         language: "Latim", 
         pages: 79, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: require("../public/src/assets/sample-books/interview_questions.jpg"),
+        image_source: "../public/src/assets/sample-books/interview_questions.jpg",
     },
     {
         id: 7, 
@@ -139,7 +139,7 @@ const products = [
         language: "Inglês", 
         pages: 690, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: require("../public/src/assets/sample-books/regex.jpg"),
+        image_source: "../public/src/assets/sample-books/regex.jpg",
     },
     {
         id: 8, 
@@ -155,7 +155,7 @@ const products = [
         language: "Português", 
         pages: 310, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: require("../public/src/assets/sample-books/resolving_dependencies.webp"),
+        image_source: "../public/src/assets/sample-books/resolving_dependencies.webp",
     },
     {
         id: 9, 
@@ -171,7 +171,7 @@ const products = [
         language: "Inglês", 
         pages: 107, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: require("../public/src/assets/sample-books/title_goes_here.webp"),
+        image_source: "../public/src/assets/sample-books/title_goes_here.webp",
     },
     {
         id: 10, 
@@ -187,7 +187,7 @@ const products = [
         language: "Latim", 
         pages: 420, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: require("../public/src/assets/sample-books/trying_stuff.jpg"), 
+        image_source: "../public/src/assets/sample-books/trying_stuff.jpg", 
     }, 
     {
         id: 11, 
@@ -203,7 +203,7 @@ const products = [
         language: "Espanhol", 
         pages: 624, 
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis quam ultricies, dapibus mi quis, euismod enim. Curabitur id vehicula.",
-        image_source: require("../public/src/assets/sample-books/what_is_ligma.png"),
+        image_source: "../public/src/assets/sample-books/what_is_ligma.png",
     },
 ];
 
