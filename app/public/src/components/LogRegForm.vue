@@ -179,6 +179,7 @@
                 reg_email_is_valid: true, 
                 reg_email_is_empty: false, 
                 reg_email_is_registered: false, 
+                registering: false, 
 
                 // Controle de senha de cadastro
                 reg_password: "", 
@@ -376,47 +377,55 @@
             // Cadastro de uma nova conta
             register: async function() {
 
-                // Por garantia
-                this.reg_email_is_registered = false;
+                // Verificação de sincronismo
+                if(this.registering === false){
 
-                // Validação
-                if(this.validate_register()){
+                    // Sincronismo
+                    this.registering = true;
 
-                    // Verificação de usuário pré-existente
-                    let existent_user = null;
-                    await select_user_by_email(this.reg_email).then(res => {
-                        if(res != null && res.length > 0){
+                    // Por garantia
+                    this.reg_email_is_registered = false;
+
+                    // Validação
+                    if(this.validate_register()){
+
+                        // Verificação de usuário pré-existente
+                        let existent_user = null;
+                        await select_user_by_email(this.reg_email).then(res => {
                             existent_user = res;
+                        });
+                        if(existent_user == null){
+
+                            // Criação da nova conta
+                            let new_user = {
+                                id: this.users.length, 
+                                email: this.reg_email, 
+                                name: this.name, 
+                                password: this.reg_password, 
+                                phone_number: this.phone_number, 
+                                birth_date: this.birth_date, 
+                                role: "customer", 
+                            };
+
+                            // Adição da nova conta
+                            add_user(new_user);
+
+                            // Atualização dos usuários
+                            this.users.push(new_user);
+
+                            // Login
+                            this.$store.commit("set_user", new_user);
+                            this.$router.go(-1);
                         }
-                    });
-                    if(existent_user == null){
 
-                        // Criação da nova conta
-                        let new_user = {
-                            id: this.users.length, 
-                            email: this.reg_email, 
-                            name: this.name, 
-                            password: this.reg_password, 
-                            phone_number: this.phone_number, 
-                            birth_date: this.birth_date, 
-                            role: "customer", 
-                        };
-
-                        // Adição da nova conta
-                        add_user(new_user);
-
-                        // Atualização dos usuários
-                        this.users.push(new_user);
-
-                        // Login
-                        this.$store.commit("set_user", new_user);
-                        this.$router.go(-1);
+                        // E-mail já registrado
+                        else {
+                            this.reg_email_is_registered = true;
+                        }
                     }
 
-                    // E-mail já registrado
-                    else {
-                        this.reg_email_is_registered = true;
-                    }
+                    // Sincronismo
+                    this.registering = false;
                 }
             }, 
 
