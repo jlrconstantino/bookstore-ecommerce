@@ -123,6 +123,9 @@ A seguir, o Modelo Relacional, específico para implementação de base de dados
 
 ## 6. Procedimentos de execução
 
+- Instale o servidor do MongoDB [deste link](https://www.mongodb.com/try/download/community?tck=docs_server)
+  - O serviço MongoDB deve estar em execução para a criação da base de dados ocorrer corretamente
+
 - Obtenha uma cópia do repositório:
 
 ```
