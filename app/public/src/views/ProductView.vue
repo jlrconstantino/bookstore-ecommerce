@@ -93,7 +93,10 @@
     </div>
 
     <!-- Avaliação -->
-    <div id="product-rate-container" class="product-container-div product-bordered-container" v-if="!this.$store.getters.is_admin">
+    <div 
+        id="product-rate-container" 
+        class="product-container-div product-bordered-container" 
+        v-if="!this.$store.getters.is_admin && this.$store.getters.is_authenticated">
         <div class="form-vertical-section">
             <h3 class="product-subtitle">Avaliação</h3>
             <template v-if="!has_rating">
