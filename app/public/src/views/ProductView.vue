@@ -10,7 +10,7 @@
             <!-- Imagem de exibição -->
             <div id="product-overview-image-container">
                 <div id="product-current-display-image-container">
-                    <img :src="product.image_source" alt="product's image" id="product-current-display-image">
+                    <img :src="require(`@/assets/sample-books/${product.image_source}`)" alt="product's image" id="product-current-display-image">
                 </div>
             </div>
 

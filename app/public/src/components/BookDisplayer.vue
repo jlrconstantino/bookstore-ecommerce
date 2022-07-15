@@ -21,9 +21,6 @@
                 public_path: process.env.BASE_URL
             }
         }, 
-        created() {
-            console.log(`${this.public_path}/sample-books/${this.book.image_source}`);
-        }, 
         methods: {
             go_to_product_page(book) {
                 this.$router.push({name: 'product', query: {id: book.id}, params: {title: book.title}});

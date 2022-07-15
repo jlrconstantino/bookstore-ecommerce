@@ -9,7 +9,7 @@
 
             <!-- Imagem do item -->
             <div class="cart-item-image-container">
-                <img :src="book.image_source" alt="product's image" class="cart-item-image">
+                <img :src="require(`@/assets/sample-books/${book.image_source}`)" alt="product's image" class="cart-item-image">
             </div>
 
             <!-- Descrição do item -->
