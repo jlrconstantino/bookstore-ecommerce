@@ -2,7 +2,7 @@
 <template>
     <div class="book-displayer-container">
         <div class="book-displayer-img-container">
-            <img :src="require(`@/sample-books/${book.image_source}`)" class="book-displayer-img">
+            <img :src="require(`@/assets/sample-books/${book.image_source}`)" class="book-displayer-img">
         </div>
         <h3 class="text-center book-displayer-title">{{book.title}}</h3>
         <h4 class="text-center book-displayer-price">{{format_price(book.price)}}</h4>
