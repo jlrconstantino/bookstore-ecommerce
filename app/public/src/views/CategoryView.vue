@@ -72,6 +72,7 @@
             let categories = [];
             await select_all_categories().then(res => {
                 categories = res;
+                categories.splice(0, 1);
             });
 
             // Obtém o ID da categoria sendo requisitada
@@ -107,7 +108,7 @@
                         // Para cada livro, seleciona aqueles com a categoria fornecida
                         return this.books.filter(book => {
                             let categories = this.books_categories.filter(book_category => {
-                                return book_category.product === book.id; 
+                                return book_category.product == book.id; 
                             });
                             if(categories.length > 0){
                                 return categories.some(book_category => {

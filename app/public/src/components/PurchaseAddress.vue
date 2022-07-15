@@ -208,10 +208,10 @@
     import { 
         validate_attribute_by_regex, 
         validate_attribute_by_callback, 
-        validate_optional_attribute_by_regex,
+        validate_alphanumeric_attribute, 
+        validate_optional_alphanumeric_attribute,
         validate_password_by_id  
     } from "@/utils/form-validation.js";
-    import { alphanumeric_parser } from '@/utils/utils';
 
     // Lógica local
     export default {
@@ -398,10 +398,9 @@
 
                 // Validação de título
                 if (
-                    validate_attribute_by_regex (
+                    validate_alphanumeric_attribute (
                         this, 
                         this.address_title, 
-                        alphanumeric_parser, 
                         "address_title_is_empty", 
                         "address_title_is_valid"
                     ) === false
@@ -424,10 +423,9 @@
 
                 // Validação de estado
                 if (
-                    validate_attribute_by_regex (
+                    validate_alphanumeric_attribute (
                         this, 
                         this.address_state, 
-                        alphanumeric_parser, 
                         "address_state_is_empty", 
                         "address_state_is_valid"
                     ) === false
@@ -437,10 +435,9 @@
 
                 // Validação de cidade
                 if (
-                    validate_attribute_by_regex (
+                    validate_alphanumeric_attribute (
                         this, 
                         this.city, 
-                        alphanumeric_parser, 
                         "city_is_empty", 
                         "city_is_valid"
                     ) === false
@@ -450,10 +447,9 @@
 
                 // Validação de bairro
                 if (
-                    validate_attribute_by_regex (
+                    validate_alphanumeric_attribute (
                         this, 
                         this.district, 
-                        alphanumeric_parser, 
                         "district_is_empty", 
                         "district_is_valid"
                     ) === false
@@ -463,10 +459,9 @@
 
                 // Validação de rua
                 if (
-                    validate_attribute_by_regex (
+                    validate_alphanumeric_attribute (
                         this, 
                         this.street, 
-                        alphanumeric_parser, 
                         "street_is_empty", 
                         "street_is_valid"
                     ) === false
@@ -489,10 +484,9 @@
 
                 // Validação de complemento (opcional)
                 if (
-                    validate_optional_attribute_by_regex (
+                    validate_optional_alphanumeric_attribute (
                         this, 
                         this.complement, 
-                        alphanumeric_parser, 
                         "complement_is_valid"
                     ) === false
                 ){

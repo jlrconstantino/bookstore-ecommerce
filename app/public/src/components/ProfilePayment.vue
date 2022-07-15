@@ -154,8 +154,12 @@
     import { add_credit_card, delete_credit_card, select_user_credit_cards, update_credit_card } from '@/utils/database-management';
 
     // Para manipulação de formulários
-    import { validate_attribute_by_callback, validate_attribute_by_regex, validate_password_by_id } from '@/utils/form-validation';
-    import { alphanumeric_parser } from '@/utils/utils';
+    import { 
+        validate_attribute_by_callback, 
+        validate_attribute_by_regex, 
+        validate_alphanumeric_attribute, 
+        validate_password_by_id 
+    } from '@/utils/form-validation';
 
     // Lógica local
     export default {
@@ -280,10 +284,9 @@
 
                 // Validação de título de cartão
                 if (
-                    validate_attribute_by_regex (
+                    validate_alphanumeric_attribute (
                         this, 
                         this.card_title, 
-                        alphanumeric_parser, 
                         "card_title_is_empty", 
                         "card_title_is_valid"
                     ) === false
@@ -321,10 +324,9 @@
 
                 // Validação de proprietário
                 if (
-                    validate_attribute_by_regex (
+                    validate_alphanumeric_attribute (
                         this, 
                         this.cardholder, 
-                        alphanumeric_parser, 
                         "cardholder_is_empty", 
                         "cardholder_is_valid"
                     ) === false

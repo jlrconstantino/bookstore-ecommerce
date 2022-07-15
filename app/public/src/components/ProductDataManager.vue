@@ -181,8 +181,13 @@
     import { add_product, select_product_by_id, update_product } from '@/utils/database-management';
 
     // Para manipulação de formulários
-    import { validate_attribute_by_callback, validate_attribute_by_regex, validate_password_by_id } from '@/utils/form-validation';
-    import { alphanumeric_parser, text_parser } from '@/utils/utils';
+    import { 
+        validate_alphanumeric_attribute, 
+        validate_attribute_by_callback, 
+        validate_attribute_by_regex, 
+        validate_text_attribute, 
+        validate_password_by_id 
+    } from '@/utils/form-validation';
 
     // Lógica local
     export default {
@@ -311,10 +316,9 @@
 
                 // Validação de título
                 if (
-                    validate_attribute_by_regex (
+                    validate_alphanumeric_attribute (
                         this, 
                         this.title, 
-                        alphanumeric_parser, 
                         "title_is_empty", 
                         "title_is_valid"
                     ) === false
@@ -350,10 +354,9 @@
 
                 // Validação de autoria
                 if (
-                    validate_attribute_by_regex (
+                    validate_alphanumeric_attribute (
                         this, 
                         this.author, 
-                        alphanumeric_parser, 
                         "author_is_empty", 
                         "author_is_valid"
                     ) === false
@@ -363,10 +366,9 @@
 
                 // Validação de editora
                 if (
-                    validate_attribute_by_regex (
+                    validate_alphanumeric_attribute (
                         this, 
                         this.publisher, 
-                        alphanumeric_parser, 
                         "publisher_is_empty", 
                         "publisher_is_valid"
                     ) === false
@@ -376,10 +378,9 @@
 
                 // Validação de acabamento
                 if (
-                    validate_attribute_by_regex (
+                    validate_alphanumeric_attribute (
                         this, 
                         this.finishing, 
-                        alphanumeric_parser, 
                         "finishing_is_empty", 
                         "finishing_is_valid"
                     ) === false
@@ -402,10 +403,9 @@
 
                 // Validação de linguagem
                 if (
-                    validate_attribute_by_regex (
+                    validate_alphanumeric_attribute (
                         this, 
                         this.language, 
-                        alphanumeric_parser, 
                         "language_is_empty", 
                         "language_is_valid"
                     ) === false
@@ -428,10 +428,9 @@
 
                 // Validação de descrição
                 if (
-                    validate_attribute_by_regex (
+                    validate_text_attribute (
                         this, 
                         this.description, 
-                        text_parser, 
                         "description_is_empty", 
                         "description_is_valid"
                     ) === false
@@ -441,10 +440,9 @@
 
                 // Validação de fonte de imagem
                 if (
-                    validate_attribute_by_regex (
+                    validate_text_attribute (
                         this, 
                         this.image_source, 
-                        text_parser, 
                         "image_source_is_empty", 
                         "image_source_is_valid"
                     ) === false

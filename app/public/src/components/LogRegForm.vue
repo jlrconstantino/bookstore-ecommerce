@@ -137,8 +137,12 @@
     import { add_user, select_user_by_email, select_all_users } from "@/utils/database-management.js";
 
     // Para manipulação de formulários
-    import { validate_attribute_by_regex, validate_attribute_by_callback } from "@/utils/form-validation.js";
-    import { alphanumeric_parser } from "@/utils/utils";
+    import { 
+        validate_alphanumeric_attribute, 
+        validate_attribute_by_regex, 
+        validate_attribute_by_callback, 
+        validate_email_attribute
+    } from "@/utils/form-validation.js";
 
     // Lógica local
     export default {
@@ -300,16 +304,12 @@
 
                 // Para controle do resultado
                 let output = true;
-                /* eslint-disable */
-                const email_parser = new RegExp("^([a-zA-Z0-9_]+@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+)$", "g");
-                /* eslint-enable */
 
                 // Validação de nome
                 if (
-                    validate_attribute_by_regex(
+                    validate_alphanumeric_attribute (
                         this, 
                         this.name, 
-                        alphanumeric_parser, 
                         "name_is_empty", 
                         "name_is_valid"
                     ) === false
@@ -319,10 +319,9 @@
 
                 // Validação de e-mail
                 if (
-                    validate_attribute_by_regex(
+                    validate_email_attribute(
                         this, 
                         this.reg_email, 
-                        email_parser, 
                         "reg_email_is_empty", 
                         "reg_email_is_valid"
                     ) === false

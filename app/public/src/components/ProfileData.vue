@@ -119,8 +119,13 @@
     import { select_user_by_id, update_user } from '@/utils/database-management';
 
     // Para validação de formulário
-    import { validate_attribute_by_callback, validate_attribute_by_regex } from '@/utils/form-validation';
-    import { alphanumeric_parser, birth_date_parser, email_parser } from '@/utils/utils';
+    import { 
+        validate_attribute_by_callback, 
+        validate_attribute_by_regex, 
+        validate_alphanumeric_attribute, 
+        validate_email_attribute, 
+        validate_birth_date_attribute, 
+    } from '@/utils/form-validation';
 
     // Lógica local
     export default {
@@ -204,10 +209,9 @@
 
                 // Validação de nome
                 if (
-                    validate_attribute_by_regex (
+                    validate_alphanumeric_attribute (
                         this, 
                         this.user_data.name, 
-                        alphanumeric_parser, 
                         "name_is_empty", 
                         "name_is_valid"
                     ) === false
@@ -217,10 +221,9 @@
 
                 // Validação de e-mail
                 if (
-                    validate_attribute_by_regex (
+                    validate_email_attribute (
                         this, 
                         this.user_data.email, 
-                        email_parser, 
                         "email_is_empty", 
                         "email_is_valid"
                     ) === false
@@ -243,10 +246,9 @@
 
                 // Validação de data de nascimento
                 if (
-                    validate_attribute_by_regex (
+                    validate_birth_date_attribute (
                         this, 
                         this.user_data.birth, 
-                        birth_date_parser, 
                         "birth_date_is_empty", 
                         "birth_date_is_valid"
                     ) === false
