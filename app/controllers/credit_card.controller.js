@@ -12,7 +12,7 @@ const credit_card_controller = {};
 // Post
 credit_card_controller.post = async (req, res) => {
     try{
-        const item = new credit_card(req.body);
+        const item = new credit_card(req.body.data.body);
         await item.save();
         res.status(201).send({
             message: "New credit_card registered successfully."
@@ -30,6 +30,7 @@ credit_card_controller.post = async (req, res) => {
 // Put
 credit_card_controller.put = async (req, res) => {
     try{
+        const data_reference = req.body.data.body;
         await credit_card.findOneAndUpdate(
             {
                 active: true, 
@@ -37,12 +38,12 @@ credit_card_controller.put = async (req, res) => {
                 number: req.params.number
             }, 
             { $set: {
-                user: req.body.user, 
-                number: req.body.number, 
-                title: req.body.title, 
-                security_code: req.body.security_code, 
-                cardholder: req.body.cardholder, 
-                expiration_date: req.body.expiration_date
+                user: data_reference.user, 
+                number: data_reference.number, 
+                title: data_reference.title, 
+                security_code: data_reference.security_code, 
+                cardholder: data_reference.cardholder, 
+                expiration_date: data_reference.expiration_date
             } }
         );
         res.status(201).send({

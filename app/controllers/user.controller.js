@@ -8,11 +8,10 @@ const user = db.mongoose.model("user");
 const user_controller = {};
 
 
-
 // Post
 user_controller.post = async (req, res) => {
     try{
-        const item = new user(req.body);
+        const item = new user(req.body.data.body);
         await item.save();
         res.status(201).send({
             message: "New user registered successfully."
@@ -30,19 +29,20 @@ user_controller.post = async (req, res) => {
 // Put (by id)
 user_controller.put_by_id = async (req, res) => {
     try{
+        const data_reference = req.body.data.body;
         await user.findOneAndUpdate(
             {
                 active: true, 
                 id: req.params.id
             }, 
             { $set: {
-                id: req.body.id, 
-                email: req.body.email, 
-                name: req.body.name, 
-                password: req.body.password, 
-                phone_number: req.body.phone_number, 
-                birth_date: req.body.birth_date, 
-                role: req.body.role
+                id: data_reference.id, 
+                email: data_reference.email, 
+                name: data_reference.name, 
+                password: data_reference.password, 
+                phone_number: data_reference.phone_number, 
+                birth_date: data_reference.birth_date, 
+                role: data_reference.role
             } }
         );
         res.status(201).send({
@@ -61,19 +61,20 @@ user_controller.put_by_id = async (req, res) => {
 // Put (by email)
 user_controller.put_by_email = async (req, res) => {
     try{
+        const data_reference = req.body.data.body;
         await user.findOneAndUpdate(
             {
                 active: true, 
                 email: req.params.email
             }, 
             { $set: {
-                id: req.body.id, 
-                email: req.body.email, 
-                name: req.body.name, 
-                password: req.body.password, 
-                phone_number: req.body.phone_number, 
-                birth_date: req.body.birth_date, 
-                role: req.body.role
+                id: data_reference.id, 
+                email: data_reference.email, 
+                name: data_reference.name, 
+                password: data_reference.password, 
+                phone_number: data_reference.phone_number, 
+                birth_date: data_reference.birth_date, 
+                role: data_reference.role
             } }
         );
         res.status(201).send({

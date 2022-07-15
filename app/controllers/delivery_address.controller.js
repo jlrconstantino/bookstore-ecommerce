@@ -12,7 +12,7 @@ const delivery_address_controller = {};
 // Post
 delivery_address_controller.post = async (req, res) => {
     try{
-        const item = new delivery_address(req.body);
+        const item = new delivery_address(req.body.data.body);
         await item.save();
         res.status(201).send({
             message: "New delivery_address registered successfully."
@@ -30,6 +30,7 @@ delivery_address_controller.post = async (req, res) => {
 // Put
 delivery_address_controller.put = async (req, res) => {
     try{
+        const data_reference = req.body.data.body;
         await delivery_address.findOneAndUpdate(
             {
                 active: true, 
@@ -37,15 +38,15 @@ delivery_address_controller.put = async (req, res) => {
                 zip: req.params.zip
             }, 
             { $set: {
-                user: req.body.user, 
-                zip: req.body.zip, 
-                title: req.body.title, 
-                state: req.body.state, 
-                city: req.body.city, 
-                district: req.body.district, 
-                street: req.body.street, 
-                number: req.body.number, 
-                complement: req.body.complement
+                user: data_reference.user, 
+                zip: data_reference.zip, 
+                title: data_reference.title, 
+                state: data_reference.state, 
+                city: data_reference.city, 
+                district: data_reference.district, 
+                street: data_reference.street, 
+                number: data_reference.number, 
+                complement: data_reference.complement
             } }
         );
         res.status(201).send({

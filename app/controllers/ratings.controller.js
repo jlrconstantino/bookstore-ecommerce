@@ -12,7 +12,7 @@ const ratings_controller = {};
 // Post
 ratings_controller.post = async (req, res) => {
     try{
-        const item = new ratings(req.body);
+        const item = new ratings(req.body.data.body);
         await item.save();
         res.status(201).send({
             message: "New ratings sample registered successfully."
@@ -30,6 +30,7 @@ ratings_controller.post = async (req, res) => {
 // Put
 ratings_controller.put = async (req, res) => {
     try{
+        const data_reference = req.body.data.body;
         await ratings.findOneAndUpdate(
             {
                 active: true, 
@@ -37,9 +38,9 @@ ratings_controller.put = async (req, res) => {
                 product: req.params.product
             }, 
             { $set: {
-                user: req.body.user, 
-                product: req.body.product, 
-                rating: req.body.rating
+                user: data_reference.user, 
+                product: data_reference.product, 
+                rating: data_reference.rating
             } }
         );
         res.status(201).send({

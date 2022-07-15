@@ -12,7 +12,7 @@ const shopping_cart_controller = {};
 // Post
 shopping_cart_controller.post = async (req, res) => {
     try{
-        const item = new shopping_cart(req.body);
+        const item = new shopping_cart(req.body.data.body);
         await item.save();
         res.status(201).send({
             message: "New shopping_cart registered successfully."
@@ -30,6 +30,7 @@ shopping_cart_controller.post = async (req, res) => {
 // Put
 shopping_cart_controller.put = async (req, res) => {
     try{
+        const data_reference = req.body.data.body;
         await shopping_cart.findOneAndUpdate(
             {
                 active: true, 
@@ -37,11 +38,11 @@ shopping_cart_controller.put = async (req, res) => {
                 invoice: req.params.invoice
             }, 
             { $set: {
-                user: req.body.user, 
-                invoice: req.body.invoice, 
-                datetime: req.body.datetime, 
-                subtotal: req.body.subtotal, 
-                freight: req.body.freight
+                user: data_reference.user, 
+                invoice: data_reference.invoice, 
+                datetime: data_reference.datetime, 
+                subtotal: data_reference.subtotal, 
+                freight: data_reference.freight
             } }
         );
         res.status(201).send({

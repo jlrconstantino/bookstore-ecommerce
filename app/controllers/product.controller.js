@@ -12,7 +12,7 @@ const product_controller = {};
 // Post
 product_controller.post = async (req, res) => {
     try{
-        const item = new product(req.body);
+        const item = new product(req.body.data.body);
         await item.save();
         res.status(201).send({
             message: "New product registered successfully."
@@ -30,26 +30,27 @@ product_controller.post = async (req, res) => {
 // Put
 product_controller.put = async (req, res) => {
     try{
+        const data_reference = req.body.data.body;
         await product.findOneAndUpdate(
             {
                 active: true, 
                 id: req.params.id
             }, 
             { $set: {
-                id: req.body.id, 
-                title: req.body.title, 
-                price: req.body.price, 
-                stock: req.body.stock, 
-                rating: req.body.rating, 
-                sales: req.body.sales, 
-                author: req.body.author, 
-                publisher: req.body.publisher, 
-                finishing: req.body.finishing, 
-                year: req.body.year, 
-                language: req.body.language, 
-                pages: req.body.pages, 
-                description: req.body.description, 
-                image_source: req.body.image_source, 
+                id: data_reference.id, 
+                title: data_reference.title, 
+                price: data_reference.price, 
+                stock: data_reference.stock, 
+                rating: data_reference.rating, 
+                sales: data_reference.sales, 
+                author: data_reference.author, 
+                publisher: data_reference.publisher, 
+                finishing: data_reference.finishing, 
+                year: data_reference.year, 
+                language: data_reference.language, 
+                pages: data_reference.pages, 
+                description: data_reference.description, 
+                image_source: data_reference.image_source, 
             } }
         );
         res.status(201).send({

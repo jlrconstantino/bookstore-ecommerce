@@ -78,6 +78,7 @@
                 }">
             <p v-if="!reg_email_is_valid" class="failed-input-text">O e-mail informado é inválido.</p>
             <p v-if="reg_email_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
+            <p v-if="reg_email_is_registered" class="failed-input-text">Este e-mail já está em uso.</p>
 
             <!-- Seção de senha -->
             <p class="text-darker-color">Senha</p>
@@ -123,7 +124,7 @@
             <p v-if="phone_number_is_empty" class="failed-input-text">Este campo é obrigatório.</p>
             
             <!-- Submit -->
-            <button class="standard-button" @click.once="register()" @keyup.enter="register()">Cadastrar</button>
+            <button class="standard-button" @click="register()" @keyup.enter="register()">Cadastrar</button>
 
         </div>
     </div>
@@ -177,6 +178,7 @@
                 reg_email: "", 
                 reg_email_is_valid: true, 
                 reg_email_is_empty: false, 
+                reg_email_is_registered: false, 
 
                 // Controle de senha de cadastro
                 reg_password: "", 
@@ -372,31 +374,49 @@
             }, 
 
             // Cadastro de uma nova conta
-            register() {
+            register: async function() {
+
+                // Por garantia
+                this.reg_email_is_registered = false;
 
                 // Validação
                 if(this.validate_register()){
 
-                    // Criação da nova conta
-                    let new_user = {
-                        id: this.users.length, 
-                        email: this.reg_email, 
-                        name: this.name, 
-                        password: this.reg_password, 
-                        phone_number: this.phone_number, 
-                        birth_date: this.birth_date, 
-                        role: "customer", 
-                    };
+                    // Verificação de usuário pré-existente
+                    let existent_user = null;
+                    await select_user_by_email(this.reg_email).then(res => {
+                        if(res != null && res.length > 0){
+                            existent_user = res;
+                        }
+                    });
+                    if(existent_user == null){
 
-                    // Adição da nova conta
-                    add_user(new_user);
+                        // Criação da nova conta
+                        let new_user = {
+                            id: this.users.length, 
+                            email: this.reg_email, 
+                            name: this.name, 
+                            password: this.reg_password, 
+                            phone_number: this.phone_number, 
+                            birth_date: this.birth_date, 
+                            role: "customer", 
+                        };
 
-                    // Atualização dos usuários
-                    this.users.push(new_user);
+                        // Adição da nova conta
+                        add_user(new_user);
 
-                    // Login
-                    this.$store.commit("set_user", new_user);
-                    this.$router.go(-1);
+                        // Atualização dos usuários
+                        this.users.push(new_user);
+
+                        // Login
+                        this.$store.commit("set_user", new_user);
+                        this.$router.go(-1);
+                    }
+
+                    // E-mail já registrado
+                    else {
+                        this.reg_email_is_registered = true;
+                    }
                 }
             }, 
 
