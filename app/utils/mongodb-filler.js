@@ -1,36 +1,22 @@
 ///////// Preenchimento da base de dados ///////////
 
 // Dependências
-import mongoose from "mongoose";
-import { db_url } from "../config/db.config.js";
-
-// Modelos esquemáticos do banco de dados
-import cart_product_schema from "../models/cart_product.model.js";
-import category_schema from "../models/category.model.js";
-import credit_card_schema from "../models/credit_card.model.js";
-import delivery_address_schema from "../models/delivery_address.model.js";
-import product_category_schema from "../models/product_category.model.js";
-import product_schema from "../models/product.model.js";
-import ratings_schema from "../models/ratings.model.js";
-import shopping_cart_schema from "../models/shopping_cart.model.js";
-import user_schema from "../models/user.model.js";
+import db from "../config/models.config.js";
+import "../config/models.config.js";
 
 // Conexão
-await mongoose.connect(db_url);
+await db.mongoose.connect(db.url);
 
 // Aviso
 console.log("Connected to the database successfully.")
 
-// Atribuição dos modelos
-mongoose.model("cart_product", cart_product_schema);
-mongoose.model("ratings", ratings_schema);
-mongoose.model("shopping_cart", shopping_cart_schema);
-const credit_card_model = mongoose.model("credit_card", credit_card_schema);
-const delivery_address_model = mongoose.model("delivery_address", delivery_address_schema);
-const category_model = mongoose.model("category", category_schema);
-const product_category_model = mongoose.model("product_category", product_category_schema);
-const product_model = mongoose.model("product", product_schema);
-const user_model = mongoose.model("user", user_schema);
+// Aquisição dos modelos
+const credit_card_model = db.mongoose.model("credit_card");
+const delivery_address_model = db.mongoose.model("delivery_address");
+const category_model = db.mongoose.model("category");
+const product_category_model = db.mongoose.model("product_category");
+const product_model = db.mongoose.model("product");
+const user_model = db.mongoose.model("user");
 
 // Remoção
 await category_model.deleteMany({});
@@ -473,4 +459,5 @@ for(const product_category of product_categories){
 
 // Avisa e encerra o processo
 console.log("Data registered successfully.");
-process.exit()
+await db.mongoose.disconnect();
+process.exit();

@@ -1,8 +1,8 @@
 // Dependências
-import mongoose from "mongoose";
+import db from "../config/models.config.js";
 
 // Esquema
-const user = mongoose.model("user");
+const user = db.mongoose.model("user");
 
 // Instanciação do controlador
 const user_controller = {};

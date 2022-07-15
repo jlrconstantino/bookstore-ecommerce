@@ -1,8 +1,8 @@
 // Dependências
-import mongoose from "mongoose";
+import db from "../config/models.config.js";
 
 // Esquema
-const credit_card = mongoose.model("credit_card");
+const credit_card = db.mongoose.model("credit_card");
 
 // Instanciação do controlador
 const credit_card_controller = {};

@@ -1,8 +1,8 @@
 // Dependências
-import mongoose from "mongoose";
+import db from "../config/models.config.js";
 
 // Esquema
-const delivery_address = mongoose.model("delivery_address");
+const delivery_address = db.mongoose.model("delivery_address");
 
 // Instanciação do controlador
 const delivery_address_controller = {};

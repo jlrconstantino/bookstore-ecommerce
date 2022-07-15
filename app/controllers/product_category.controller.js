@@ -1,8 +1,8 @@
 // Dependências
-import mongoose from "mongoose";
+import db from "../config/models.config.js";
 
 // Esquema
-const product_category = mongoose.model("product_category");
+const product_category = db.mongoose.model("product_category");
 
 // Instanciação do controlador
 const product_category_controller = {};

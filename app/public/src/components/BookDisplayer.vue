@@ -2,7 +2,7 @@
 <template>
     <div class="book-displayer-container">
         <div class="book-displayer-img-container">
-            <img :src="`${public_path}/sample-books/${book.image_source}`" class="book-displayer-img">
+            <img :src="require(`@/sample-books/${book.image_source}`)" class="book-displayer-img">
         </div>
         <h3 class="text-center book-displayer-title">{{book.title}}</h3>
         <h4 class="text-center book-displayer-price">{{format_price(book.price)}}</h4>
@@ -20,6 +20,9 @@
             return {
                 public_path: process.env.BASE_URL
             }
+        }, 
+        created() {
+            console.log(`${this.public_path}/sample-books/${this.book.image_source}`);
         }, 
         methods: {
             go_to_product_page(book) {

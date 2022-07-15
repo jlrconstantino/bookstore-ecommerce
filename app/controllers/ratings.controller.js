@@ -1,8 +1,8 @@
 // Dependências
-import mongoose from "mongoose";
+import db from "../config/models.config.js";
 
 // Esquema
-const ratings = mongoose.model("ratings");
+const ratings = db.mongoose.model("ratings");
 
 // Instanciação do controlador
 const ratings_controller = {};

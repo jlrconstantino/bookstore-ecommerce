@@ -4,8 +4,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import mongoose from "mongoose";
-import { db_url } from "./config/db.config.js";
+import db from "./config/models.config.js";
 
 // Rotas a serem adicionadas
 import cart_product_router from "./routes/cart_product.route.js";
@@ -47,8 +46,8 @@ app.use("/shopping_carts", shopping_cart_router);
 app.use("/users", user_router);
 
 // Conexão à base de dados
-mongoose
-  .connect(db_url, {
+db.mongoose
+  .connect(db.url, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })

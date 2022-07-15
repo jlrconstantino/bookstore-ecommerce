@@ -1,8 +1,8 @@
 // Dependências
-import mongoose from "mongoose";
+import db from "../config/models.config.js";
 
 // Esquema
-const shopping_cart = mongoose.model("shopping_cart");
+const shopping_cart = db.mongoose.model("shopping_cart");
 
 // Instanciação do controlador
 const shopping_cart_controller = {};
