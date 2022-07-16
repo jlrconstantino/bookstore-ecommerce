@@ -256,6 +256,7 @@
             select_credit_card(card, index){
                 this.active_card = index;
                 store.commit("set_payment_method", card);
+                store.commit("set_freight", 14.90);
             }, 
             
             // Inicializa a adição de um novo cartão de crédito

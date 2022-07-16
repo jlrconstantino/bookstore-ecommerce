@@ -37,11 +37,6 @@
 
                     <!-- Calculadora de frete -->
                     <calculator :freight="freight" @update:freight="freight = $event"></calculator>
-                    <p 
-                        class="text form-failed-input-text freight-failure"
-                        v-if="freight <= 0.0">
-                        Para continuar, forneça uma localidade para cálculo de frete.
-                    </p>
 
                 </div>
 
@@ -93,14 +88,7 @@
                         <button class="standard-button" @click="go_home()">Retornar às Compras</button>
                         <button 
                             class="orange-button" 
-                            @click="finalize_purchase()"
-                            v-if="may_continue">
-                            Finalizar Esta Compra
-                        </button>
-                        <button 
-                            class="gray-button" 
-                            @click="alert_may_not_continue()"
-                            v-if="!may_continue">
+                            @click="finalize_purchase()">
                             Finalizar Esta Compra
                         </button>
                     </div>
@@ -164,13 +152,6 @@
         // Atributos computados
         computed: {
 
-            // Validação
-            may_continue() {
-                return (
-                    this.freight > 0.0
-                );
-            }, 
-
             // Frete
             freight: {
                 get() {
@@ -203,7 +184,10 @@
 
             // Para representação em string
             freight_view() {
-                return format_number_to_price(this.freight);
+                if(this.freight > 0.0){
+                    return format_number_to_price(this.freight);
+                }
+                return "???";
             }, 
             subtotal_view() {
                 return format_number_to_price(this.subtotal);

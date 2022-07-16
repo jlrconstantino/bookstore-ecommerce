@@ -14,6 +14,7 @@ import LogRegForm from '@/components/LogRegForm.vue';
 import ProductsManager from '@/components/ProductsManager.vue';
 import ProductView from '@/views/ProductView.vue';
 import ProfileAddresses from '@/components/ProfileAddresses.vue';
+import ProfileCartHistory from '@/components/ProfileCartHistory.vue';
 import ProfileData from '@/components/ProfileData.vue';
 import ProfilePayment from '@/components/ProfilePayment.vue';
 import PurchasePayment from '@/components/PurchasePayment.vue';
@@ -141,6 +142,13 @@ const routes = [
             name: 'profile-addresses', 
             path: 'addresses', 
             component: ProfileAddresses
+          }, 
+
+          // Página de histórico de compras
+          {
+            name: 'profile-cart-history', 
+            path: 'cart-history', 
+            component: ProfileCartHistory
           }, 
 
           // Página de gerenciamento de usuários

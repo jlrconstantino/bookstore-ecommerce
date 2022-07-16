@@ -170,6 +170,12 @@
                             this.pages.length = 1;
                             this.routes.length = 1;
                             break;
+                        
+                        case "profile-cart-history":
+                            page_name = "Histórico de Compras";
+                            this.pages.length = 1;
+                            this.routes.length = 1;
+                            break;
 
                         // Gerenciar usuários
                         case "manage-users":
