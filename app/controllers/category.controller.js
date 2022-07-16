@@ -12,7 +12,7 @@ const category_controller = {};
 // Post
 category_controller.post = async (req, res) => {
     try{
-        const item = new category(req.body.data.body);
+        const item = new category(req.body.data);
         await item.save();
         res.status(201).send({
             message: "New category registered successfully."
@@ -37,7 +37,7 @@ category_controller.put = async (req, res) => {
             }, 
             { $set: {
                 id: req.params.id, 
-                name: req.body.data.body.name 
+                name: req.body.data.name 
             } }
         );
         res.status(201).send({

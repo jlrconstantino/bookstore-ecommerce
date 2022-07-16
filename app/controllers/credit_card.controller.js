@@ -12,7 +12,7 @@ const credit_card_controller = {};
 // Post
 credit_card_controller.post = async (req, res) => {
     try{
-        const item = new credit_card(req.body.data.body);
+        const item = new credit_card(req.body.data);
         await item.save();
         res.status(201).send({
             message: "New credit_card registered successfully."
@@ -30,7 +30,7 @@ credit_card_controller.post = async (req, res) => {
 // Put
 credit_card_controller.put = async (req, res) => {
     try{
-        const data_reference = req.body.data.body;
+        const data_reference = req.body.data;
         await credit_card.findOneAndUpdate(
             {
                 active: true, 

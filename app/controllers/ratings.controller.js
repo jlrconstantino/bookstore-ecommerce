@@ -12,7 +12,7 @@ const ratings_controller = {};
 // Post
 ratings_controller.post = async (req, res) => {
     try{
-        const item = new ratings(req.body.data.body);
+        const item = new ratings(req.body.data);
         await item.save();
         res.status(201).send({
             message: "New ratings sample registered successfully."
@@ -30,7 +30,7 @@ ratings_controller.post = async (req, res) => {
 // Put
 ratings_controller.put = async (req, res) => {
     try{
-        const data_reference = req.body.data.body;
+        const data_reference = req.body.data;
         await ratings.findOneAndUpdate(
             {
                 active: true, 

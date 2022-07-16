@@ -12,7 +12,7 @@ const cart_product_controller = {};
 // Post
 cart_product_controller.post = async (req, res) => {
     try{
-        const item = new cart_product(req.body.data.body);
+        const item = new cart_product(req.body.data);
         await item.save();
         res.status(201).send({
             message: "New cart_product registered successfully."
@@ -30,7 +30,7 @@ cart_product_controller.post = async (req, res) => {
 // Put
 cart_product_controller.put = async (req, res) => {
     try{
-        const data_reference = req.body.data.body;
+        const data_reference = req.body.data;
         await cart_product.findOneAndUpdate(
             {
                 active: true, 

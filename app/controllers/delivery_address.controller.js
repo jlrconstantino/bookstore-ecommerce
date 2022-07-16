@@ -12,7 +12,7 @@ const delivery_address_controller = {};
 // Post
 delivery_address_controller.post = async (req, res) => {
     try{
-        const item = new delivery_address(req.body.data.body);
+        const item = new delivery_address(req.body.data);
         await item.save();
         res.status(201).send({
             message: "New delivery_address registered successfully."
@@ -30,7 +30,7 @@ delivery_address_controller.post = async (req, res) => {
 // Put
 delivery_address_controller.put = async (req, res) => {
     try{
-        const data_reference = req.body.data.body;
+        const data_reference = req.body.data;
         await delivery_address.findOneAndUpdate(
             {
                 active: true, 
@@ -139,7 +139,6 @@ delivery_address_controller.get_all = async (_, res) => {
 
 // Get all from user
 delivery_address_controller.get_all_from_user = async (req, res) => {
-    console.log("get_all_from_user (DAs) -- request: ", req);
     try{
         const data = await delivery_address.find({
             active: true, 

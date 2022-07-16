@@ -11,7 +11,7 @@ const user_controller = {};
 // Post
 user_controller.post = async (req, res) => {
     try{
-        const item = new user(req.body.data.body);
+        const item = new user(req.body.data);
         await item.save();
         res.status(201).send({
             message: "New user registered successfully."
@@ -29,7 +29,7 @@ user_controller.post = async (req, res) => {
 // Put (by id)
 user_controller.put_by_id = async (req, res) => {
     try{
-        const data_reference = req.body.data.body;
+        const data_reference = req.body.data;
         await user.findOneAndUpdate(
             {
                 active: true, 
@@ -61,7 +61,7 @@ user_controller.put_by_id = async (req, res) => {
 // Put (by email)
 user_controller.put_by_email = async (req, res) => {
     try{
-        const data_reference = req.body.data.body;
+        const data_reference = req.body.data;
         await user.findOneAndUpdate(
             {
                 active: true, 

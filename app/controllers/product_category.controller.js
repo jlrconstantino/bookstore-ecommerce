@@ -12,7 +12,7 @@ const product_category_controller = {};
 // Post
 product_category_controller.post = async (req, res) => {
     try{
-        const item = new product_category(req.body.data.body);
+        const item = new product_category(req.body.data);
         await item.save();
         res.status(201).send({
             message: "New product_category registered successfully."
@@ -30,7 +30,7 @@ product_category_controller.post = async (req, res) => {
 // Put
 product_category_controller.put = async (req, res) => {
     try{
-        const data_reference = req.body.data.body;
+        const data_reference = req.body.data;
         await product_category.findOneAndUpdate(
             {
                 active: true, 
