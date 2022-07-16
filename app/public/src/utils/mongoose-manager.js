@@ -267,7 +267,9 @@ mongoose_manager.get_all_delivery_addresses_from_user = async function(user){
             user: user.toString(), 
         }, 
     });
+    console.log("Response = ", response);
     response = await response.data;
+    console.log("Data = ", response);
     return response;
 }
 

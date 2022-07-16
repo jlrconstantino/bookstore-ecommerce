@@ -139,6 +139,7 @@ delivery_address_controller.get_all = async (_, res) => {
 
 // Get all from user
 delivery_address_controller.get_all_from_user = async (req, res) => {
+    console.log("get_all_from_user (DAs) -- request: ", req);
     try{
         const data = await delivery_address.find({
             active: true, 
