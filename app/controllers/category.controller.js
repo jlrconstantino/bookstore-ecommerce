@@ -116,7 +116,7 @@ category_controller.get_by_name = async (req, res) => {
     try{
         const data = await category.findOne({
             active: true, 
-            name: req.params.name
+            name: {$regex: new RegExp(req.params.name, "i")}
         });
         res.status(200).send(data);
     }catch(e){

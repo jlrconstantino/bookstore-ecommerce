@@ -842,7 +842,10 @@ export async function add_category(category) {
 
     // Validação da estrutura da categoria
     if(Object.prototype.hasOwnProperty.call(category, "id") === false){
-        throw TypeError("category must have an 'id' property");
+        if(categories == null) {
+            await select_all_categories();
+        }
+        category.id = categories.length;
     }else if(Object.prototype.hasOwnProperty.call(category, "name") === false){
         throw TypeError("category must have a 'name' property");
     }
@@ -852,6 +855,8 @@ export async function add_category(category) {
         categories.push(category);
     }
     mongoose_manager.post_category(category);
+
+    return category;
 }
 
 
@@ -904,10 +909,10 @@ export async function select_product_categories(product_id) {
 export async function add_product_category(product_category) {
 
     // Validação da estrutura da categoria
-    if(Object.prototype.hasOwnProperty.call(product_category, "id") === false){
-        throw TypeError("product_category must have an 'id' property");
-    }else if(Object.prototype.hasOwnProperty.call(product_category, "name") === false){
-        throw TypeError("product_category must have a 'name' property");
+    if(Object.prototype.hasOwnProperty.call(product_category, "product") === false){
+        throw TypeError("product_category must have an 'product' property");
+    }else if(Object.prototype.hasOwnProperty.call(product_category, "category") === false){
+        throw TypeError("product_category must have a 'category' property");
     }
 
     // Adição da categoria à base de dados
@@ -919,11 +924,14 @@ export async function add_product_category(product_category) {
 
 
 // Deleta a categoria especificada
-export async function delete_product_category(product_category) {
-    mongoose_manager.delete_product_category(product_category.product, product_category.category);
+export async function delete_product_category(product, category) {
+    mongoose_manager.delete_product_category(product, category);
     if(product_categories != null) {
-        let index = product_categories.findIndex(c => {
-            return (c.id == product_category.id);
+        let index = product_categories.findIndex(pc => {
+            return (
+                pc.product == product && 
+                pc.category == category
+            );
         });
         if(index >= 0){
             product_categories.splice(index, 1);

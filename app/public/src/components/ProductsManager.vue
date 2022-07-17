@@ -146,8 +146,10 @@
             <!-- Botões de ação -->
             <div class="form-update-buttons-section margin-top-div">
                 <button @click="start_data_update()" class="standard-button">Atualizar Dados</button>
-                <button @click="start_categories_update()" class="standard-button">Gerenciar Categorias</button>
                 <button @click="start_product_removal()" class="red-button">Remover Produto</button>
+                <button @click="start_categories_update()" class="standard-button">Gerenciar Categorias</button>
+            </div>
+            <div class="form-update-buttons-section margin-top-div">
                 <button @click="return_to_table()" class="gray-button">Voltar</button>
             </div>
 
@@ -184,6 +186,65 @@
             <product-manager @submit="cancel_product_removal()"></product-manager>
         </div>
 
+        <!-- Seção de gerenciamento de categorias -->
+        <div v-if="updating_categories">
+
+            <!-- Apresentação -->
+            <h2 class="form-h2">Categorias do Produto</h2>
+            <p class="text-common-color">Quantia de categorias cadastradas: {{product_categories.length}}.</p>
+            <br>
+
+            <!-- Categorias -->
+            <table class="form-table" v-if="product_categories.length > 0">
+
+                <!-- Cabeçalho da tabela -->
+                <tr class="form-table-header-row">
+                    <th class="form-table-title-item">Nome da Categoria</th>
+                    <th class="form-table-center-item">ID</th>
+                    <th class="form-table-last-item">Remover</th>
+                </tr>
+
+                <!-- Itens da tabela -->
+                <tr 
+                    v-for="(product_category, index) in product_categories" 
+                    :key="product_category" 
+                    :class="index % 2 === 0 ? 'form-table-item-row-0' : 'form-table-item-row-1'">
+                    <td>
+                        <label>{{product_category.name}}</label>
+                    </td>
+                    <td>
+                        <label>{{product_category.id}}</label>
+                    </td>
+                    <td>
+                        <img 
+                            class="thrash-icon" 
+                            src="../assets/icons/trash.svg" 
+                            @click="remove_category(product_category, index)">
+                    </td>
+                </tr>
+
+            </table>
+
+            <!-- Adição de Categoria -->
+            <h3 class="form-h3 margin-top-div">Adicionar Categoria</h3>
+            <input 
+                v-model="category_name" 
+                placeholder="Nome"
+                type="text" 
+                class="form-info-container text"
+                :class="{'form-normal-input-text': category_name_is_valid && !category_name_is_empty}"
+                @keyup.enter="add_category()">
+            <p v-if="!category_name_is_valid" class="form-failed-input-text">A categoria informada é inválida.</p>
+            <p v-if="category_name_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
+
+            <!-- Botões para remoção -->
+            <div class="form-update-buttons-section">
+                <button @click="add_category()" class="standard-button">Adicionar</button>
+                <button @click="cancel_category_update()" class="gray-button">Voltar</button>
+            </div>
+
+        </div>
+
     </div>
 
     <!-- Novo produto -->
@@ -198,10 +259,19 @@
 <script>
 
     // Para manipulação da base de dados
-    import { delete_product, select_all_products } from '@/utils/database-management';
+    import { 
+        add_category, 
+        add_product_category, 
+        delete_product, 
+        delete_product_category, 
+        select_all_products, 
+        select_category_by_id, 
+        select_category_by_name, 
+        select_product_categories
+    } from '@/utils/database-management';
 
     // Para manipulação de formulários
-    import { validate_attribute_by_callback, validate_password_by_id } from '@/utils/form-validation';
+    import { validate_alphanumeric_attribute, validate_attribute_by_callback, validate_password_by_id } from '@/utils/form-validation';
 
     // Importação de componentes
     import ProductDataManager from './ProductDataManager.vue';
@@ -251,6 +321,12 @@
                 password: "", 
                 password_is_empty: false, 
                 password_is_valid: true, 
+
+                // Categorias do produto
+                product_categories: [], 
+                category_name: "", 
+                category_name_is_valid: true, 
+                category_name_is_empty: false, 
             };
         }, 
 
@@ -277,6 +353,9 @@
                 this.password = "";
                 this.password_is_empty = false;
                 this.password_is_valid = true;
+                this.category_name = "";
+                this.category_name_is_empty = false;
+                this.category_name_is_valid = true;
             }, 
             
             // Visualização / atualização do produto
@@ -313,12 +392,90 @@
             }, 
 
             // Inicializa o gerenciamento de categorias
-            start_categories_update() {
-                this.updating_security = true;
+            start_categories_update: async function() {
+
+                // Sinalização
+                this.updating_security = false;
                 this.updating_data = false;
                 this.updating_categories = true;
                 this.adding_product = false;
+
+                // Obtenção das categorias
+                if(this.selected_product.id >= 0){
+                    await select_product_categories(this.selected_product.id).then(res => {
+                        if(res != null){
+                            this.product_categories = res;
+                        }
+                    });
+                    this.product_categories.forEach(async (pc, index) => {
+                        await select_category_by_id(pc.category).then(res => {
+                            if(res != null){
+                                this.product_categories[index] = res;
+                            }
+                        });
+                    });
+                }
+
+                // Rolagem
                 window.scrollTo(0,60);
+            }, 
+
+            // Remove uma categoria
+            remove_category(product_category, index) {
+                this.product_categories.splice(index, 1);
+                delete_product_category(this.selected_product.id, product_category.id);
+            }, 
+
+            // Valida a categoria
+            validate_category_name() {
+                
+                // Para controle de resultado
+                let output = true;
+
+                // Validação de nome
+                if (
+                    validate_alphanumeric_attribute (
+                        this, 
+                        this.category_name, 
+                        "category_name_is_empty", 
+                        "category_name_is_valid"
+                    ) === false
+                ){
+                    output = false;
+                }
+
+                return output;
+            }, 
+
+            // Adiciona uma categoria
+            add_category: async function() {
+
+                // Validação
+                if(this.validate_category_name() === true){
+
+                    // Verificação de pré-existência
+                    let category = null;
+                    await select_category_by_name(this.category_name).then(res => {
+                        category = res;
+                    });
+
+                    // Categoria inexistente: cria-se uma nova
+                    if(category == null){
+                        await add_category({name: this.category_name}).then(res => {
+                            category = res;
+                        });
+                    }
+
+                    // Adição da categoria de produto
+                    const product_category = {
+                        product: this.selected_product.id, 
+                        category: category.id
+                    };
+                    await add_product_category(product_category);
+
+                    // Adição estática
+                    this.product_categories.push(category);
+                }
             }, 
 
             // Valida a remoção
@@ -373,9 +530,14 @@
             // Cancela a remoção
             cancel_product_removal() {
                 this.reset_form();
-                this.updating_data = false;
                 this.updating_security = false;
-                this.adding_product = false;
+                window.scrollTo(0,60);
+            }, 
+
+            // Cancela a gerência de categorias
+            cancel_category_update() {
+                this.reset_form();
+                this.updating_categories = false;
                 window.scrollTo(0,60);
             }, 
         }, 
@@ -497,6 +659,19 @@
     /* Subtítulo de estatísitcas */
     .statistics-section {
         margin: 2rem 0;
+    }
+
+
+    /* TABELA DE CATEGORIAS */
+    /* Ícone de remoção */
+    .thrash-icon {
+        height: 1.5rem;
+        width: auto;
+        transition: 0.3s all ease-out;
+    }
+    .thrash-icon:hover {
+        cursor: pointer;
+        filter: brightness(0) drop-shadow(4px 4px 8px #acacac);
     }
 
 </style>

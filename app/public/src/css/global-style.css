@@ -28,7 +28,7 @@ a {
 }
 
 /* Cursor de link */
-a, router-link, .hover-interaction-link:hover, .hover-interaction-link-alternative:hover, .hover-interaction-link-darker:hover {
+a, button, router-link, .hover-interaction-link:hover, .hover-interaction-link-alternative:hover, .hover-interaction-link-darker:hover {
     cursor: pointer;
 }
 
