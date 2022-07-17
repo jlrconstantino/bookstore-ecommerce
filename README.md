@@ -64,7 +64,7 @@ Trabalho de finalização da disciplina de Introdução ao Desenvolvimento Web, 
 
 - Todos os meios de pagamento cadastrados devem ser apresentados em uma seção da página de perfil.
 
-### 1.6. Sistema de classificação
+### 1.6. Sistema de classificação (funcionalidade extra)
 
 - Na página de produto, deve ser apresentado a classificação pública dada ao produto pelos usuários.
 
