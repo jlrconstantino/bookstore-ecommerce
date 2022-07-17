@@ -72,7 +72,6 @@
             let categories = [];
             await select_all_categories().then(res => {
                 categories = res;
-                categories.splice(0, 1);
             });
 
             // Obtém o ID da categoria sendo requisitada

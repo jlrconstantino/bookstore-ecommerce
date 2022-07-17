@@ -58,7 +58,8 @@
             v-model="card_title" 
             type="text"
             class="form-info-container text"
-            :class="{'form-normal-input-text': card_title_is_valid && !card_title_is_empty}">
+            :class="{'form-normal-input-text': card_title_is_valid && !card_title_is_empty}"
+            @keyup.enter="add_card()">
         <p v-if="!card_title_is_valid" class="form-failed-input-text">O título informado é inválido (deve conter somente caracteres alfanuméricos).</p>
         <p v-if="card_title_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
@@ -73,7 +74,8 @@
                     placeholder="1111 2222 3333 4444"
                     maxlength="19"
                     class="form-info-container text"
-                    :class="{'form-normal-input-text': card_number_is_valid && !card_number_is_empty}">
+                    :class="{'form-normal-input-text': card_number_is_valid && !card_number_is_empty}"
+                    @keyup.enter="add_card()">
                 <p v-if="!card_number_is_valid" class="form-failed-input-text">O número informado é inválido.</p>
                 <p v-if="card_number_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
@@ -86,7 +88,8 @@
                     placeholder=""
                     type="text" 
                     class="form-info-container text"
-                    :class="{'form-normal-input-text': cardholder_is_valid && !cardholder_is_empty}">
+                    :class="{'form-normal-input-text': cardholder_is_valid && !cardholder_is_empty}"
+                    @keyup.enter="add_card()">
                 <p v-if="!cardholder_is_valid" class="form-failed-input-text">O nome informado é inválido.</p>
                 <p v-if="cardholder_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
@@ -102,7 +105,8 @@
                     v-model="expiration_date" 
                     type="month" 
                     class="form-info-container text"
-                    :class="{'form-normal-input-text': expiration_date_is_valid && !expiration_date_is_empty}">
+                    :class="{'form-normal-input-text': expiration_date_is_valid && !expiration_date_is_empty}"
+                    @keyup.enter="add_card()">
                 <p v-if="!expiration_date_is_valid" class="form-failed-input-text">A data informada é inválida.</p>
                 <p v-if="expiration_date_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
@@ -116,7 +120,8 @@
                     type="text" 
                     maxlength="3"
                     class="form-info-container text"
-                    :class="{'form-normal-input-text': security_code_is_valid && !security_code_is_empty}">
+                    :class="{'form-normal-input-text': security_code_is_valid && !security_code_is_empty}"
+                    @keyup.enter="add_card()">
                 <p v-if="!security_code_is_valid" class="form-failed-input-text">O código informado é inválido.</p>
                 <p v-if="security_code_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
@@ -130,14 +135,16 @@
             placeholder="⋅⋅⋅"
             type="password" 
             class="form-info-container text"
-            :class="{'form-normal-input-text': password_is_valid && !password_is_empty}">
+            :class="{'form-normal-input-text': password_is_valid && !password_is_empty}"
+            @keyup.enter="add_card()">
         <p v-if="!password_is_valid" class="form-failed-input-text">A senha informada é inválida.</p>
         <p v-if="password_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
         <div class="form-info-container text" style="margin-bottom:2rem;">
             <input class="save-card-input"
                 v-model="save_card"
                 value="false"
-                type="checkbox">
+                type="checkbox"
+                @keyup.enter="add_card()">
             <span class="text">Salvar este cartão em sua conta.</span>
         </div>
 
@@ -256,7 +263,6 @@
             select_credit_card(card, index){
                 this.active_card = index;
                 store.commit("set_payment_method", card);
-                store.commit("set_freight", 14.90);
             }, 
             
             // Inicializa a adição de um novo cartão de crédito

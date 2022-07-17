@@ -17,6 +17,9 @@ const category_model = db.mongoose.model("category");
 const product_category_model = db.mongoose.model("product_category");
 const product_model = db.mongoose.model("product");
 const user_model = db.mongoose.model("user");
+const ratings_model = db.mongoose.model("ratings");
+const cart_product_model = db.mongoose.model("cart_product");
+const shopping_cart_model = db.mongoose.model("shopping_cart");
 
 // Remoção
 await category_model.deleteMany({});
@@ -25,6 +28,9 @@ await product_model.deleteMany({});
 await user_model.deleteMany({});
 await credit_card_model.deleteMany({});
 await delivery_address_model.deleteMany({});
+await ratings_model.deleteMany({});
+await cart_product_model.deleteMany({});
+await shopping_cart_model.deleteMany({});
 
 // Livros
 const products = [
@@ -384,16 +390,15 @@ for(const delivery_address of delivery_addresses){
 
 // Categorias
 const categories = [
-    {id: 0, name: "None"}, 
-    {id: 1, name: "Infantil"}, 
-    {id: 2, name: "Literatura Internacional"}, 
-    {id: 3, name: "Literatura Brasileira"}, 
-    {id: 4, name: "Ficção Científica"}, 
-    {id: 5, name: "História"}, 
-    {id: 6, name: "Biografia"}, 
-    {id: 7, name: "Autoajuda"}, 
-    {id: 8, name: "Psicologia"}, 
-    {id: 9, name: "Terror"}, 
+    {id: 0, name: "Infantil"}, 
+    {id: 1, name: "Literatura Internacional"}, 
+    {id: 2, name: "Literatura Brasileira"}, 
+    {id: 3, name: "Ficção Científica"}, 
+    {id: 4, name: "História"}, 
+    {id: 5, name: "Biografia"}, 
+    {id: 6, name: "Autoajuda"}, 
+    {id: 7, name: "Psicologia"}, 
+    {id: 8, name: "Terror"}, 
 ];
 
 // Salva as categorias

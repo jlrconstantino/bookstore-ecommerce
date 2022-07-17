@@ -77,8 +77,24 @@
         Nenhum produto selecionado.
     </p>
 
+    <!-- Valores da Compra -->
+    <h2 class="form-h2">Valores</h2>
+    <div class="form-double-section" style="margin-bottom:2rem;">
+        <div class="form-vertical-section">
+            <h3 class="form-h3">Subtotal:</h3>
+            <p class="form-info-container text">{{format_subtotal()}}</p>
+        </div>
+        <div class="form-vertical-section">
+            <h3 class="form-h3">Frete:</h3>
+            <p class="form-info-container text">{{format_freight()}}</p>
+        </div>
+    </div>
+    <h3 class="form-h3">Total:</h3>
+    <p class="form-info-container text">{{format_total()}}</p>
+
     <!-- Finalização de compra -->
     <button
+        class="form-button"
         :class="is_ready === true ? 'standard-button' : 'gray-button'"
         @click="end_purchase()">
         Finalizar Compra
@@ -135,6 +151,23 @@
             // Formata um preço para string
             format_price(price) {
                 return format_number_to_price(price);
+            }, 
+
+            // Obtêm informações de valores
+            format_subtotal(){
+                return format_number_to_price(this.subtotal);
+            }, 
+            format_freight(){
+                if(this.freight > 0.0){
+                    return format_number_to_price(this.freight);
+                }
+                return "???";
+            }, 
+            format_total(){
+                if(this.freight > 0.0){
+                    return format_number_to_price(this.subtotal + this.freight);
+                }
+                return "???";
             }, 
 
             // Finaliza a compra
@@ -218,6 +251,12 @@
                     this.has_products
                 );
             }, 
+            freight() {
+                return store.getters.freight;
+            }, 
+            subtotal() {
+                return store.getters.get_shopping_cart_subtotal;
+            }, 
         }, 
 
         // Computa os títulos a cada modificação no carrinho
@@ -249,5 +288,6 @@
         min-width: auto;
         width: 30%;
         margin-bottom: 0.5rem;
+        margin-top: 2rem;
     }
 </style>

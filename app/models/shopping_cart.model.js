@@ -12,7 +12,7 @@ const shopping_cart_schema = new mongoose.Schema({
         required: true, 
     }, 
     datetime: {
-        type: String, 
+        type: Date, 
         required: true, 
     }, 
     subtotal: {

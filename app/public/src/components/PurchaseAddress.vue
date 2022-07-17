@@ -58,7 +58,8 @@
             v-model="address_title" 
             type="text"
             class="form-info-container text"
-            :class="{'form-normal-input-text': address_title_is_valid && !address_title_is_empty}">
+            :class="{'form-normal-input-text': address_title_is_valid && !address_title_is_empty}"
+            @keyup.enter="add_address()">
         <p v-if="!address_title_is_valid" class="form-failed-input-text">O título informado é inválido (deve conter somente caracteres alfanuméricos).</p>
         <p v-if="address_title_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
@@ -70,7 +71,8 @@
             type="text" 
             placeholder="12345-123"
             class="form-info-container text"
-            :class="{'form-normal-input-text': cep_is_valid && !cep_is_empty}">
+            :class="{'form-normal-input-text': cep_is_valid && !cep_is_empty}"
+            @keyup.enter="add_address()">
         <p v-if="!cep_is_valid" class="form-failed-input-text">O CEP informado é inválido.</p>
         <p v-if="cep_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
@@ -97,7 +99,8 @@
                     v-model="city" 
                     type="text" 
                     class="form-info-container text"
-                    :class="{'form-normal-input-text': city_is_valid && !city_is_empty}">
+                    :class="{'form-normal-input-text': city_is_valid && !city_is_empty}"
+                    @keyup.enter="add_address()">
                 <p v-if="!city_is_valid" class="form-failed-input-text">A cidade informada é inválida.</p>
                 <p v-if="city_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
@@ -114,7 +117,8 @@
                     v-model="district" 
                     type="text" 
                     class="form-info-container text"
-                    :class="{'form-normal-input-text': district_is_valid && !district_is_empty}">
+                    :class="{'form-normal-input-text': district_is_valid && !district_is_empty}"
+                    @keyup.enter="add_address()">
                 <p v-if="!district_is_valid" class="form-failed-input-text">O bairro informado é inválido.</p>
                 <p v-if="district_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
@@ -126,7 +130,8 @@
                     v-model="street" 
                     type="text" 
                     class="form-info-container text"
-                    :class="{'form-normal-input-text': street_is_valid && !street_is_empty}">
+                    :class="{'form-normal-input-text': street_is_valid && !street_is_empty}"
+                    @keyup.enter="add_address()">
                 <p v-if="!street_is_valid" class="form-failed-input-text">A rua informada é inválida.</p>
                 <p v-if="street_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
@@ -144,7 +149,8 @@
                     type="text" 
                     maxlength="8"
                     class="form-info-container text"
-                    :class="{'form-normal-input-text': number_is_valid && !number_is_empty}">
+                    :class="{'form-normal-input-text': number_is_valid && !number_is_empty}"
+                    @keyup.enter="add_address()">
                 <p v-if="!number_is_valid" class="form-failed-input-text">O número informado é inválido.</p>
                 <p v-if="number_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
             </div>
@@ -158,7 +164,8 @@
                     type="text" 
                     maxlength="16"
                     class="form-info-container text"
-                    :class="{'form-normal-input-text': complement_is_valid}">
+                    :class="{'form-normal-input-text': complement_is_valid}"
+                    @keyup.enter="add_address()">
                 <p v-if="!complement_is_valid" class="form-failed-input-text">O complemento informado é inválido.</p>
             </div>
 
@@ -179,7 +186,8 @@
             <input class="save-address-input"
                 v-model="save_address"
                 value="false"
-                type="checkbox">
+                type="checkbox"
+                @keyup.enter="add_address()">
             <span class="text">Salvar este endereço em sua conta.</span>
         </div>
 
@@ -321,6 +329,7 @@
             select_delivery_address(address, index) {
                 this.active_address = index;
                 store.commit("set_delivery_address", address);
+                store.commit("set_freight", 14.90);
             }, 
 
             // Obtém a pré-visualização de um endereço
@@ -559,6 +568,7 @@
                             complement: this.complement, 
                         };
                         store.commit("set_delivery_address", delivery_address);
+                        store.commit("set_freight", 14.90);
 
                         // Caso queira salvar em base de dados
                         if(this.save_address === true) {

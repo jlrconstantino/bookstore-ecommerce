@@ -1,7 +1,7 @@
 // Dependências
 import db from "../config/models.config.js";
 
-// Esquema
+// Esquemas
 const product = db.mongoose.model("product");
 
 // Instanciação do controlador
@@ -154,7 +154,6 @@ product_controller.get_all = async (_, res) => {
         });
     }
 };
-
 
 
 // Exportação do controlador
