@@ -11,8 +11,7 @@
         v-model="search_string" 
         type="text" 
         placeholder="Pesquisar por nome ou por ID" 
-        id="searcher"
-        class="margin-bot-div">
+        id="searcher">
 
     <!-- Adição de Categoria -->
     <h3 class="form-h3">Adicionar Categoria</h3>
@@ -27,7 +26,7 @@
     <p v-if="category_name_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
     <p v-if="category_name_is_used" class="form-failed-input-text">A categoria informada já está cadastrada.</p>
 
-    <!-- Botões para controle -->
+    <!-- Botão para controle -->
     <button @click="add_category()" class="form-button standard-button margin-bot-div">Adicionar</button>
 
     <!-- Categorias -->
@@ -55,7 +54,7 @@
                 <img 
                     class="thrash-icon" 
                     src="../assets/icons/trash.svg" 
-                    @click="remove_category(category, index)">
+                    @click="remove_category(category)">
             </td>
         </tr>
 
@@ -86,12 +85,21 @@
         // Dados locais
         data() {
             return {
+
+                // Categorias
                 categories: [], 
+
+                // Formulário
                 category_name: "", 
                 category_name_is_valid: true, 
                 category_name_is_empty: false, 
-                category_name_is_used: false, 
+                category_name_is_used: false,
+
+                // Pesquisa
                 search_string: "", 
+
+                // Sincronismo
+                adding_category: false, 
             };
         }, 
 
@@ -108,9 +116,14 @@
         methods: {
 
             // Remove uma categoria
-            remove_category(category, index) {
-                this.categories.splice(index, 1);
+            remove_category(category) {
                 delete_category(category);
+                let index = this.categories.findIndex(c => {
+                    return c.id == category.id;
+                });
+                if(index >= 0){
+                    this.categories.splice(index, 1);
+                }
             }, 
 
             // Valida a categoria
@@ -137,25 +150,35 @@
             // Adiciona uma categoria
             add_category: async function() {
 
-                // Validação
-                if(this.validate_category_name() === true){
+                // Sincronização
+                if(this.adding_category === false){
 
-                    // Verificação de pré-existência
-                    let category = null;
-                    await select_category_by_name(this.category_name).then(res => {
-                        category = res;
-                    });
+                    // Sinalização
+                    this.adding_category = true;
 
-                    // Categoria inexistente: cria-se uma nova
-                    if(category == null){
-                        this.category_name_is_used = false;
-                        await add_category({name: this.category_name}).then(res => {
+                    // Validação
+                    if(this.validate_category_name() === true){
+
+                        // Verificação de pré-existência
+                        let category = null;
+                        await select_category_by_name(this.category_name).then(res => {
                             category = res;
                         });
-                        this.categories.push(category);
-                    }else{
-                        this.category_name_is_used = true;
+
+                        // Categoria inexistente: cria-se uma nova
+                        if(category == null){
+                            this.category_name_is_used = false;
+                            await add_category({name: this.category_name}).then(res => {
+                                category = res;
+                            });
+                            this.categories.push(category);
+                        }else{
+                            this.category_name_is_used = true;
+                        }
                     }
+
+                    // Sinalização
+                    this.adding_category = false;
                 }
             }, 
         }, 
@@ -205,7 +228,18 @@
         border: var(--header-searcher-border);
         box-shadow: var(--box-shadow-minimized);
         padding: 1rem;
-        margin-bottom: 1rem;
+        margin-bottom: 3rem;
+    }
+
+    /* Input */
+    input {
+        width: 55%;
+    }
+
+    /* Botão de adição */
+    button {
+        margin-left: 1rem;
+        width: 10%;
     }
 
     /* Margem inferior */
