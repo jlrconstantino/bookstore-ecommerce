@@ -84,18 +84,6 @@
                 </div>
             </div>
 
-            <!-- Avaliação e Total de vendas -->
-            <div class="form-double-section margin-bottom-div">
-                <div class="form-vertical-section">
-                    <h3 class="form-h3">Avaliação Média</h3>
-                    <p class="form-info-container text">{{selected_product.rating}}</p>
-                </div>
-                <div class="form-vertical-section">
-                    <h3 class="form-h3">Total de Vendas</h3>
-                    <p class="form-info-container text">{{selected_product.sales}}</p>
-                </div>
-            </div>
-
             <!-- Autor e Editora -->
             <div class="form-double-section margin-bottom-div">
                 <div class="form-vertical-section">
@@ -140,10 +128,26 @@
             <h3 class="form-h3">Fonte da Imagem</h3>
             <p class="form-info-container text">{{selected_product.image_source}}</p>
 
+            <!-- Seção de Estatísticas -->
+            <h2 class="form-h2 statistics-section">Estatísticas do Produto</h2>
+
+            <!-- Avaliação e Total de vendas -->
+            <div class="form-double-section margin-bottom-div">
+                <div class="form-vertical-section">
+                    <h3 class="form-h3">Avaliação Média</h3>
+                    <p class="form-info-container text">{{selected_product.rating}}</p>
+                </div>
+                <div class="form-vertical-section">
+                    <h3 class="form-h3">Total de Vendas</h3>
+                    <p class="form-info-container text">{{selected_product.sales}}</p>
+                </div>
+            </div>
+
             <!-- Botões de ação -->
             <div class="form-update-buttons-section margin-top-div">
                 <button @click="start_data_update()" class="standard-button">Atualizar Dados</button>
                 <button @click="start_product_removal()" class="red-button">Remover Produto</button>
+                <button @click="return_to_table()" class="gray-button">Voltar</button>
             </div>
 
         </div>
@@ -268,6 +272,12 @@
                 this.$router.push({name: 'manage-products', query: {id: product_id}});
                 window.scrollTo(0,60);
             }, 
+            
+            // Retorna à visualização da tabela
+            return_to_table() {
+                this.$router.push({name: 'manage-products'});
+                window.scrollTo(0,60);
+            }, 
 
             // Reseta o formulário
             reset_form() {
@@ -341,7 +351,7 @@
                             alert("Produto removido com sucesso.");
                             this.updating_security = false;
                             this.$router.push({name: 'manage-products'});
-                            window.scrollTo(0,0);
+                            window.scrollTo(0,60);
                         }
                         else{
                             this.password_is_valid = false;
@@ -353,7 +363,9 @@
             // Cancela a remoção
             cancel_product_removal() {
                 this.reset_form();
-                this.updating_security = true;
+                this.updating_data = false;
+                this.updating_security = false;
+                window.scrollTo(0,60);
             }, 
         }, 
 
@@ -468,6 +480,11 @@
         margin-top: 0.5rem;
         margin-bottom: 2rem;
         width: 50%;
+    }
+
+    /* Subtítulo de estatísitcas */
+    .statistics-section {
+        margin: 2rem 0;
     }
 
 </style>
