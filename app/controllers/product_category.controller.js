@@ -96,6 +96,26 @@ product_category_controller.delete_all_from_product = async (req, res) => {
 
 
 
+// Delete all from category
+product_category_controller.delete_all_from_category = async (req, res) => {
+    try{
+        await product_category.remove ({
+            active: true, 
+            category: req.params.category
+        });
+        res.status(200).send({
+            message: "Removed product_categories successfully."
+        });
+    }catch(e){
+        res.status(400).send({
+            message: "Failed to remove product_categories.", 
+            data: e
+        });
+    }
+};
+
+
+
 // Get
 product_category_controller.get = async (req, res) => {
     try{

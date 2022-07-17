@@ -320,16 +320,23 @@ mongoose_manager.put_cart_product = async function(cart_product, user, cart, pro
 }
 
 
-// DELETE
-mongoose_manager.delete_cart_product = async function(user, cart, product){
-    let response = await axios.delete(`/cart_products/${user}/${cart}/${product}`);
+// DELETE ALL FROM USER
+mongoose_manager.delete_all_cart_products_from_user = async function(user){
+    let response = await axios.delete(`/cart_products/${user}`);
     return response;
 }
 
 
-// DELETE ALL FROM USER
+// DELETE ALL FROM SHOPPING CART
 mongoose_manager.delete_all_cart_products_from_shopping_cart = async function(user, cart){
     let response = await axios.delete(`/cart_products/${user}/${cart}`);
+    return response;
+}
+
+
+// DELETE
+mongoose_manager.delete_cart_product = async function(user, cart, product){
+    let response = await axios.delete(`/cart_products/${user}/${cart}/${product}`);
     return response;
 }
 
@@ -494,7 +501,14 @@ mongoose_manager.delete_product_category = async function(product, category){
 
 // DELETE ALL FROM PRODUCT
 mongoose_manager.delete_all_product_categories_from_product = async function(product){
-    let response = await axios.delete(`/product_categories/${product}`);
+    let response = await axios.delete(`/product_categories/product/${product}`);
+    return response;
+}
+
+
+// DELETE ALL FROM CATEGORY
+mongoose_manager.delete_all_product_categories_from_category = async function(category){
+    let response = await axios.delete(`/product_categories/category/${category}`);
     return response;
 }
 

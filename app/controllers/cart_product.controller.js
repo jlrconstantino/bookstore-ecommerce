@@ -102,6 +102,26 @@ cart_product_controller.delete_all_from_shopping_cart = async (req, res) => {
 
 
 
+// Delete all from user
+cart_product_controller.delete_all_from_shopping_cart = async (req, res) => {
+    try{
+        await cart_product.remove ({
+            active: true, 
+            user: req.params.user
+        });
+        res.status(200).send({
+            message: "Removed cart_products successfully."
+        });
+    }catch(e){
+        res.status(400).send({
+            message: "Failed to remove cart_products.", 
+            data: e
+        });
+    }
+};
+
+
+
 // Get
 cart_product_controller.get = async (req, res) => {
     try{

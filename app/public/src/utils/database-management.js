@@ -116,6 +116,7 @@ export async function delete_user(user) {
             credit_cards = null;
             delivery_addresses = null;
             shopping_carts = null;
+            cart_products = null;
             ratings = null;
         }
     }
@@ -125,6 +126,7 @@ export async function delete_user(user) {
     mongoose_manager.delete_all_credit_cards_from_user(user.id);
     mongoose_manager.delete_all_delivery_addresses_from_user(user.id);
     mongoose_manager.delete_all_shopping_carts_from_user(user.id);
+    mongoose_manager.delete_all_cart_products_from_user(user.id);
     mongoose_manager.delete_all_ratings_from_user(user.id);
 }
 
@@ -523,7 +525,11 @@ export async function add_shopping_cart(shopping_cart) {
 
 // Deleta o carrinho de compras especificado
 export async function delete_shopping_cart(shopping_cart) {
+
+    // Remoção da base de dados
     mongoose_manager.delete_shopping_cart(shopping_cart.user, shopping_cart.invoice);
+
+    // Remoção local
     if(shopping_carts != null) {
         let index = shopping_carts.findIndex(sc => {
             return (
@@ -535,6 +541,10 @@ export async function delete_shopping_cart(shopping_cart) {
             shopping_carts.splice(index, 1);
         }
     }
+
+    // Cascateamento
+    mongoose_manager.delete_all_cart_products_from_shopping_cart(shopping_cart.user, shopping_cart.invoice);
+    cart_products = null;
 }
 
 
@@ -610,7 +620,11 @@ export async function add_cart_product(cart_product) {
 
 // Deleta o item de carrinho de compras especificado
 export async function delete_cart_product(cart_product) {
+
+    // Remoção da base de dados
     mongoose_manager.delete_cart_product(cart_product.user, cart_product.cart, cart_product.product);
+
+    // Remoção local
     if(cart_products != null) {
         let index = cart_products.findIndex(cp => {
             return (
@@ -781,7 +795,11 @@ export async function update_product_rating(product_id) {
 
 // Deleta o produto especificado
 export async function delete_product(product) {
+
+    // Remoção da base de dados
     mongoose_manager.delete_product_by_id(product.id);
+
+    // Remoção local
     if(products != null) {
         let index = products.findIndex(p => {
             return (p.id == product.id);
@@ -790,6 +808,12 @@ export async function delete_product(product) {
             products.splice(index, 1);
         }
     }
+
+    // Cascateamento
+    mongoose_manager.delete_all_ratings_from_product(product.id);
+    ratings = null;
+    mongoose_manager.delete_all_product_categories_from_product(product.id);
+    product_categories = null;
 }
 
 
@@ -862,7 +886,11 @@ export async function add_category(category) {
 
 // Deleta a categoria especificada
 export async function delete_category(category) {
+
+    // Remoção da base de dados
     mongoose_manager.delete_category_by_id(category.id);
+
+    // Remoção local
     if(categories != null) {
         let index = categories.findIndex(c => {
             return (c.id == category.id);
@@ -871,6 +899,10 @@ export async function delete_category(category) {
             categories.splice(index, 1);
         }
     }
+    
+    // Cascateamento
+    mongoose_manager.delete_all_product_categories_from_category(category.id);
+    product_categories = null;
 }
 
 
@@ -937,4 +969,18 @@ export async function delete_product_category(product, category) {
             product_categories.splice(index, 1);
         }
     }
+}
+
+
+// Deleta todas as categorias do produto
+export async function delete_all_product_categories_from_product(product) {
+    mongoose_manager.delete_all_product_categories_from_product(product);
+    product_categories = null;
+}
+
+
+// Cascateia todas as remoções de categoria
+export async function delete_all_product_categories_from_category(category) {
+    mongoose_manager.delete_all_product_categories_from_category(category);
+    product_categories = null;
 }
