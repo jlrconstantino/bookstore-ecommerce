@@ -8,6 +8,7 @@ import store from '@/store/index.js';
 import AccountWrapperView from '@/views/AccountWrapperView.vue';
 import AccountNavigationView from '@/views/AccountNavigationView.vue';
 import CartView from '@/views/CartView.vue';
+import CategoriesManager from '@/components/CategoriesManager.vue';
 import CategoryView from '@/views/CategoryView.vue';
 import HomeView from '@/views/HomeView.vue';
 import LogRegForm from '@/components/LogRegForm.vue';
@@ -166,6 +167,16 @@ const routes = [
             name: 'manage-products', 
             path: 'manage-products', 
             component: ProductsManager, 
+            meta: {
+              requires_admin_role: true, 
+            }, 
+          }, 
+
+          // Página de gerenciamento de categorias
+          {
+            name: 'manage-categories', 
+            path: 'manage-categories', 
+            component: CategoriesManager, 
             meta: {
               requires_admin_role: true, 
             }, 

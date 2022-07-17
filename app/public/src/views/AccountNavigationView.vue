@@ -71,6 +71,7 @@
                 sidebar_admin_options: [
                     {to: {name: 'manage-users'}, title: "Gerenciar Usuários"}, 
                     {to: {name: 'manage-products'}, title: "Gerenciar Produtos"}, 
+                    {to: {name: 'manage-categories'}, title: "Gerenciar Categorias"}, 
                 ], 
             };
         }, 

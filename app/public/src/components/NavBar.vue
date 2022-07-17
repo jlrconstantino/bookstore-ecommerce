@@ -191,6 +191,13 @@
                             this.routes.length = 1;
                             break;
 
+                        // Gerenciar categorias
+                        case "manage-categories":
+                            page_name = "Gerenciar Categorias";
+                            this.pages.length = 1;
+                            this.routes.length = 1;
+                            break;
+
                         // Finalização de compra
                         case "purchase":
                             page_name = "Finalizar Compra";

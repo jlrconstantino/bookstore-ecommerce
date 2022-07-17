@@ -103,7 +103,7 @@ cart_product_controller.delete_all_from_shopping_cart = async (req, res) => {
 
 
 // Delete all from user
-cart_product_controller.delete_all_from_shopping_cart = async (req, res) => {
+cart_product_controller.delete_all_from_user = async (req, res) => {
     try{
         await cart_product.remove ({
             active: true, 

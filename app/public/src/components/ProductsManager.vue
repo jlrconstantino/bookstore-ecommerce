@@ -237,7 +237,7 @@
             <p v-if="!category_name_is_valid" class="form-failed-input-text">A categoria informada é inválida.</p>
             <p v-if="category_name_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
 
-            <!-- Botões para remoção -->
+            <!-- Botões para controle -->
             <div class="form-update-buttons-section">
                 <button @click="add_category()" class="standard-button">Adicionar</button>
                 <button @click="cancel_category_update()" class="gray-button">Voltar</button>
