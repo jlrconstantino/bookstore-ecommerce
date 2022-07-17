@@ -62,7 +62,7 @@
     <div v-if="selected_product_id != null">
         
         <!-- Seção de dados -->
-        <div v-if="!updating_data && !updating_security">
+        <div v-if="!updating_data && !updating_security && !updating_categories">
 
             <!-- Apresentação -->
             <h2 class="form-h2">Dados do Produto</h2>
@@ -146,6 +146,7 @@
             <!-- Botões de ação -->
             <div class="form-update-buttons-section margin-top-div">
                 <button @click="start_data_update()" class="standard-button">Atualizar Dados</button>
+                <button @click="start_categories_update()" class="standard-button">Gerenciar Categorias</button>
                 <button @click="start_product_removal()" class="red-button">Remover Produto</button>
                 <button @click="return_to_table()" class="gray-button">Voltar</button>
             </div>
@@ -180,14 +181,14 @@
 
         <!-- Atualização dos dados -->
         <div v-if="updating_data">
-            <product-manager></product-manager>
+            <product-manager @submit="cancel_product_removal()"></product-manager>
         </div>
 
     </div>
 
     <!-- Novo produto -->
     <div v-if="adding_product">
-        <product-manager @submit="adding_product = false"></product-manager>
+        <product-manager @submit="cancel_product_removal()"></product-manager>
     </div>
 
 </template>
@@ -204,9 +205,6 @@
 
     // Importação de componentes
     import ProductDataManager from './ProductDataManager.vue';
-
-    // REGEX numérico
-    const numeric_parser = new RegExp("^[0-9]+$", "g");
 
     // Lógica local
     export default {
@@ -246,6 +244,7 @@
                 search_string: "", 
                 updating_data: false, 
                 updating_security: false, 
+                updating_categories: false, 
                 adding_product: false, 
 
                 // Para controle de formulário
@@ -266,13 +265,7 @@
 
         // Métodos auxiliares
         methods: {
-            
-            // Visualização / atualização do produto
-            start_product_update(product_id) {
-                this.$router.push({name: 'manage-products', query: {id: product_id}});
-                window.scrollTo(0,60);
-            }, 
-            
+
             // Retorna à visualização da tabela
             return_to_table() {
                 this.$router.push({name: 'manage-products'});
@@ -285,28 +278,45 @@
                 this.password_is_empty = false;
                 this.password_is_valid = true;
             }, 
+            
+            // Visualização / atualização do produto
+            start_product_update(product_id) {
+                this.$router.push({name: 'manage-products', query: {id: product_id}});
+                window.scrollTo(0,60);
+            }, 
 
             // Adição de produto
             start_product_insertion() {
                 this.updating_security = false;
                 this.updating_data = false;
+                this.updating_categories = false;
                 this.adding_product = true;
                 window.scrollTo(0,60);
             }, 
 
             // Atualizações de permissão
             start_data_update() {
-                this.reset_form();
                 this.updating_security = false;
                 this.updating_data = true;
+                this.updating_categories = false;
                 this.adding_product = false;
+                window.scrollTo(0,60);
             }, 
 
             // Inicializa a remoção
             start_product_removal() {
-                this.reset_form();
                 this.updating_security = true;
                 this.updating_data = false;
+                this.updating_categories = false;
+                this.adding_product = false;
+                window.scrollTo(0,60);
+            }, 
+
+            // Inicializa o gerenciamento de categorias
+            start_categories_update() {
+                this.updating_security = true;
+                this.updating_data = false;
+                this.updating_categories = true;
                 this.adding_product = false;
                 window.scrollTo(0,60);
             }, 
@@ -365,6 +375,7 @@
                 this.reset_form();
                 this.updating_data = false;
                 this.updating_security = false;
+                this.adding_product = false;
                 window.scrollTo(0,60);
             }, 
         }, 
@@ -407,9 +418,10 @@
                 const pattern = new RegExp(this.search_string.toLowerCase(), "g");
 
                 // Padrão numérico
+                const numeric_parser = new RegExp("^[0-9]+$", "g");
                 if(numeric_parser.test(this.search_string) === true){
                     return this.products_data.filter(product => {
-                        return pattern.test(product.id);
+                        return pattern.test(product.id.toString());
                     });
                 }
 
