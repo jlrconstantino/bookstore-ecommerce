@@ -404,7 +404,7 @@ export async function select_user_product_rating(user_id, product_id) {
     if(ratings == null) {
         let output = null;
         await mongoose_manager.get_ratings(user_id, product_id).then(res => {
-            if(res != null && res.length > 0){
+            if(res != null){
                 output = res;
             }
         });

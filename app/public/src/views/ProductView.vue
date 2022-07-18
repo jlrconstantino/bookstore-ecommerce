@@ -197,24 +197,28 @@
             this.half_star = require("@/assets/icons/half-star.svg");
             this.null_star = require("@/assets/icons/null-star.svg");
 
-            // Produto
+            // Obtenção dos itens
             try{
+
+                // Produto
                 await select_product_by_id(this.$route.query.id).then(res => {
                     if(res != null){
                         this.product = res;
-
-                        // Avaliação
-                        select_user_product_rating(this.$store.getters.user_id, this.$route.query.id).then(res => {
-                            if(res != null) {
-                                this.rating = res.rating;
-                                this.has_rating = true;
-                            }
-                        });
                     }
                     this.data_is_ready = true;
                 });
+
+                // Avaliação
+                if(this.data_is_ready === true){
+                    await select_user_product_rating(this.$store.getters.user_id, this.$route.query.id).then(res => {
+                        if(res != null) {
+                            this.rating = res.rating;
+                            this.has_rating = true;
+                        }
+                    });
+                }
             }catch(_){
-                this.data_is_ready
+                this.data_is_ready = true;
             }
         }, 
 
