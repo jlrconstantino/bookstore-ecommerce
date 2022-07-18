@@ -212,7 +212,7 @@
                 if(this.data_is_ready === true){
                     try {
                         await select_user_product_rating(this.$store.getters.user_id, this.$route.query.id).then(res => {
-                            if(res != null) {
+                            if(res != null && res.rating !== undefined) {
                                 this.rating = res.rating;
                                 this.has_rating = true;
                             }
