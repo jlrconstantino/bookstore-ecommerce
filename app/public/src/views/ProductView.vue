@@ -29,7 +29,7 @@
                     <img :src="rating_stars[2]" alt="product's review" class="product-review-image">
                     <img :src="rating_stars[3]" alt="product's review" class="product-review-image">
                     <img :src="rating_stars[4]" alt="product's review" class="product-review-image">
-                    <p id="product-review-number-displayer">({{format_rating()}})</p>
+                    <p id="product-review-number-displayer">({{this.product.rating}})</p>
                 </div>
 
                 <!-- Título e informações -->
@@ -204,19 +204,22 @@
                 await select_product_by_id(this.$route.query.id).then(res => {
                     if(res != null){
                         this.product = res;
-                        this.rating = this.product.rating;
                     }
                     this.data_is_ready = true;
                 });
 
                 // Avaliação
                 if(this.data_is_ready === true){
-                    await select_user_product_rating(this.$store.getters.user_id, this.$route.query.id).then(res => {
-                        if(res != null) {
-                            this.rating = res.rating;
-                            this.has_rating = true;
-                        }
-                    });
+                    try {
+                        await select_user_product_rating(this.$store.getters.user_id, this.$route.query.id).then(res => {
+                            if(res != null) {
+                                this.rating = res.rating;
+                                this.has_rating = true;
+                            }
+                        });
+                    } catch(_) {
+                        this.has_rating = false;
+                    }
                 }
             }catch(_){
                 this.data_is_ready = true;
