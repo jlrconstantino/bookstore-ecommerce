@@ -14,7 +14,7 @@ ratings_router.delete("/product/:product", ratings_controller.delete_all_from_pr
 ratings_router.get("/:user/:product", ratings_controller.get);
 ratings_router.get("/", ratings_controller.get_all);
 ratings_router.get("/user/:user", ratings_controller.get_all_from_user);
-ratings_router.get("/product/:product", ratings_controller.get_all_from_product);
+ratings_router.get("/:product", ratings_controller.get_all_from_product);
 
 // Exportação do roteador
 export default ratings_router;

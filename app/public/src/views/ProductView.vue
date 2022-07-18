@@ -105,7 +105,8 @@
                     type="number" 
                     step="0.1"
                     class="form-info-container text"
-                    :class="{'form-normal-input-text': rating_is_valid && !rating_is_empty}">
+                    :class="{'form-normal-input-text': rating_is_valid && !rating_is_empty}"
+                    @keyup.enter="rate_product()">
                 <p v-if="!rating_is_valid" class="form-failed-input-text">A avaliação informada é inválida: deve estar entre 0.0 e 5.0 (inclusive).</p>
                 <p v-if="rating_is_empty" class="form-failed-input-text">Este campo é obrigatório.</p>
                 <button @click="rate_product()" class="form-button standard-button">Submeter</button>
@@ -276,7 +277,7 @@
                         product: this.product.id, 
                         rating: this.rating, 
                     };
-                    add_rating(rating);
+                    await add_rating(rating);
 
                     // Atualização da página
                     alert("Avaliação enviada com sucesso.");

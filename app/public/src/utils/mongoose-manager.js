@@ -242,7 +242,7 @@ mongoose_manager.get_all_ratings_from_user = async function(user){
 
 // GET ALL FROM PRODUCT
 mongoose_manager.get_all_ratings_from_product = async function(product){
-    let response = await axios.get(`/ratings/product/${product}`);
+    let response = await axios.get(`/ratings/${product}`);
     response = await response.data;
     return response;
 }
