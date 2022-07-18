@@ -29,7 +29,7 @@
                     <img :src="rating_stars[2]" alt="product's review" class="product-review-image">
                     <img :src="rating_stars[3]" alt="product's review" class="product-review-image">
                     <img :src="rating_stars[4]" alt="product's review" class="product-review-image">
-                    <p id="product-review-number-displayer">({{product.rating.toFixed(1)}})</p>
+                    <p id="product-review-number-displayer">({{format_rating()}})</p>
                 </div>
 
                 <!-- Título e informações -->
@@ -229,7 +229,11 @@
                 return "Ou em até " + installments.toString() + "x de R$ " + (price/installments).toFixed(2).toString().replace('.', ',') + "."
             }, 
             format_rating() {
-                return parseFloat(this.rating).toFixed(1).replace('.', ',')
+                try {
+                    return parseFloat(this.rating).toFixed(1).replace('.', ',')
+                } catch(_) {
+                    return "???";
+                }
             }, 
 
             // Navegação
