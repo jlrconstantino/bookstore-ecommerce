@@ -214,6 +214,8 @@
                         if(res != null) {
                             this.rating = res.rating;
                             this.has_rating = true;
+                        }else{
+                            this.rating = this.product.rating;
                         }
                     });
                 }
