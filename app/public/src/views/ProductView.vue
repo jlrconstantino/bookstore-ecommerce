@@ -204,6 +204,7 @@
                 await select_product_by_id(this.$route.query.id).then(res => {
                     if(res != null){
                         this.product = res;
+                        this.rating = this.product.rating;
                     }
                     this.data_is_ready = true;
                 });
@@ -214,8 +215,6 @@
                         if(res != null) {
                             this.rating = res.rating;
                             this.has_rating = true;
-                        }else{
-                            this.rating = this.product.rating;
                         }
                     });
                 }
