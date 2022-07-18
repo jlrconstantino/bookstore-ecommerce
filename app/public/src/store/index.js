@@ -148,14 +148,9 @@ const store = createStore({
       let index = state.cart.findIndex(item => {
         return item.product == product_id;
       });
-
-      // Adição de uma unidade a um item pré-existente
-      if(index !== -1) {
-        state.cart[index].quantity += 1;
-      }
       
       // Adição de um novo item
-      else{
+      if(index < 0){
         state.cart.push({
           product: product_id, 
           quantity: 1, 

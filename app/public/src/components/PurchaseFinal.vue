@@ -206,7 +206,7 @@
                         await select_product_by_id(cart_product.product).then(res => {
                             if(res != null){
                                 let product = res;
-                                product.stock -= 1;
+                                product.stock -= item.quantity;
                                 update_product(product);
                             }
                         });
