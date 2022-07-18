@@ -480,18 +480,6 @@
                         await validate_password_by_id(this.$store.getters.user_id, this.password).then(res => {
                             if(res === true) {
                                 this.password_is_valid = true;
-                                
-                                // Tentativa de requisição da fonte informada
-                                let image_source = "";
-                                if(this.image_source !== this.product.image_source){
-                                    try {
-                                        image_source = require(this.image_source);
-                                    } catch(_) {
-                                        image_source = require("@/assets/sample-books/404.jpg");
-                                    }
-                                }else{
-                                    image_source = this.product.image_source;
-                                }
 
                                 // Produto a ser adicionado
                                 const product = {
@@ -508,7 +496,7 @@
                                     language: this.language, 
                                     pages: this.pages, 
                                     description: this.description, 
-                                    image_source: image_source, 
+                                    image_source: this.image_source, 
                                 };
 
                                 // Adição do produto à base de dados
@@ -530,14 +518,6 @@
                     // Ausência de necessidade de validação de senha
                     else {
 
-                        // Tentativa de requisição da fonte informada
-                        let image_source = "";
-                        try {
-                            image_source = require(this.image_source);
-                        } catch(_) {
-                            image_source = require("@/assets/sample-books/404.jpg");
-                        }
-
                         // Produto a ser adicionado
                         const product = {
                             title: this.title, 
@@ -552,7 +532,7 @@
                             language: this.language, 
                             pages: this.pages, 
                             description: this.description, 
-                            image_source: image_source, 
+                            image_source: this.image_source, 
                         };
 
                         // Adição do produto à base de dados
