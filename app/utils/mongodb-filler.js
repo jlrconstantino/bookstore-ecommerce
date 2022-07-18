@@ -410,50 +410,50 @@ for(const category of categories){
 // Relacionamento entre os livros e as categorias
 const product_categories = [
 
+    // Livro 0
+    {product: 0, category: 1}, 
+    {product: 0, category: 3}, 
+
     // Livro 1
-    {product: 1, category: 1}, 
-    {product: 1, category: 3}, 
+    {product: 1, category: 5}, 
 
     // Livro 2
-    {product: 2, category: 5}, 
+    {product: 2, category: 6}, 
 
     // Livro 3
-    {product: 3, category: 6}, 
+    {product: 3, category: 4}, 
 
     // Livro 4
-    {product: 4, category: 4}, 
+    {product: 4, category: 0}, 
+    {product: 4, category: 2}, 
 
     // Livro 5
-    {product: 5, category: 0}, 
-    {product: 5, category: 2}, 
+    {product: 5, category: 6}, 
+    {product: 5, category: 1}, 
 
     // Livro 6
-    {product: 6, category: 6}, 
+    {product: 6, category: 7}, 
     {product: 6, category: 1}, 
 
     // Livro 7
-    {product: 7, category: 7}, 
-    {product: 7, category: 1}, 
+    {product: 7, category: 4}, 
+    {product: 7, category: 2}, 
 
     // Livro 8
     {product: 8, category: 4}, 
-    {product: 8, category: 2}, 
+    {product: 8, category: 8}, 
 
     // Livro 9
-    {product: 9, category: 4}, 
+    {product: 9, category: 2}, 
     {product: 9, category: 8}, 
 
     // Livro 10
-    {product: 10, category: 2}, 
+    {product: 10, category: 1}, 
+    {product: 10, category: 3}, 
     {product: 10, category: 8}, 
 
     // Livro 11
-    {product: 11, category: 1}, 
-    {product: 11, category: 3}, 
     {product: 11, category: 8}, 
-
-    // Livro 12
-    {product: 12, category: 8}, 
 ];
 
 // Salva as categorias dos livros
